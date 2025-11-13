@@ -1,5 +1,5 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import { gameParticipantsTable, gamesTable, playerSportsTable, usersTable } from "./src/db/tables";
 import { generateId } from "./src/lib/id";
 import { sign } from "./src/lib/crypto";
@@ -17,7 +17,7 @@ if (!sessionSecret) {
   throw new Error("SESSION_SECRET environment variable is required");
 }
 
-const client = postgres(databaseUrl);
+const client = new Pool({ connectionString: databaseUrl });
 const db = drizzle(client);
 
 // San Francisco coordinates (main user location)
