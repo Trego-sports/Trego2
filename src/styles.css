@@ -67,7 +67,7 @@ code {
 }
 
 :root {
-  /* Paper amber on lime - minimalist markdown-inspired palette */
+  /* minimalist markdown-inspired palette */
   --background: oklch(97% 0.02 85); /* Warm paper white with slight amber tint */
   --foreground: oklch(25% 0.015 120); /* Deep olive green, almost black */
   --card: oklch(98% 0.015 85); /* Slightly lighter paper */
