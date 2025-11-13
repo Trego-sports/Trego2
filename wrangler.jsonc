@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trego-2",
+  "main": "./src/server.ts",
+  "compatibility_date": "2025-10-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "placement": {
+    "mode": "smart"
+  },
+  "routes": [
+    {
+      "pattern": "trego.alakhpc.com",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "d931bec0e0ed4db8952095e33d993a5d"
+    }
+  ]
+}
