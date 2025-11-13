@@ -14,7 +14,7 @@ export const createGameSchema = z.object({
     lat: z.coerce.number<string>().min(-90).max(90),
     lon: z.coerce.number<string>().min(-180).max(180),
   }),
-  scheduledAt: z.date(),
+  scheduledAt: z.date().min(new Date(Date.now() + 60000), "Scheduled at must be in the future"),
   durationMinutes: z.int().positive("Duration must be positive"),
   allowedSkillLevels: z.array(skillLevelSchema).min(1, "Select at least one skill level"),
   spotsTotal: z.int().min(2, "Need at least 2 spots"),

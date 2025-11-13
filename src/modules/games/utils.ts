@@ -49,7 +49,7 @@ export async function buildGamesQuery(db: DBContext, userId: string, conditions:
     title: game.title,
     locationName: game.locationName,
     location: game.location,
-    scheduledAt: game.scheduledAt,
+    scheduledAt: game.scheduledAt.getTime(),
     durationMinutes: game.durationMinutes,
     spotsTotal: game.spotsTotal,
     spotsFilled: game.spotsFilled,

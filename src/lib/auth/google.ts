@@ -15,7 +15,7 @@ export const googleClaimsSchema = z.object({
   sub: z.string(),
   email: z.string(),
   email_verified: z.boolean(),
-  picture: z.string(),
+  picture: z.string().optional(),
   name: z.string(),
 });
 
@@ -84,6 +84,5 @@ export const $handleGoogleCallback = createServerOnlyFn(async () => {
 
   const idToken = tokens.idToken();
   const claims = decodeIdToken(idToken);
-
   return googleClaimsSchema.parse(claims);
 });
