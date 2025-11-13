@@ -27,7 +27,7 @@ function HomePage() {
               <span className="text-sm font-medium text-primary">Connect. Play. Repeat.</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-              Organize sports games
+              Organize sports games!
               <br />
               <span className="text-primary">with your friends</span>
             </h1>
