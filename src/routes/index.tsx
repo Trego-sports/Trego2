@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import tregoLogo from "@/static/trego1.png";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -23,6 +24,9 @@ function HomePage() {
       <section className="border-b bg-gradient-to-b from-background to-muted/30">
         <div className="mx-auto max-w-6xl px-6 py-20 md:py-32">
           <div className="text-center space-y-6">
+            <div className="flex justify-center mb-6">
+              <img src={tregoLogo} alt="Trego Logo" className="h-24 md:h-32" />
+            </div>
             <div className="inline-block px-4 py-1.5 bg-primary/10 border border-primary/20 mb-4">
               <span className="text-sm font-medium text-primary">Connect. Play. Repeat.</span>
             </div>
@@ -204,9 +208,12 @@ function HomePage() {
       <footer className="border-t py-12">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-center md:text-left">
-              <p className="text-2xl font-bold">Trego</p>
-              <p className="text-sm text-muted-foreground">Organize sports games with your friends</p>
+            <div className="text-center md:text-left flex items-center gap-3">
+              <img src={tregoLogo} alt="Trego Logo" className="h-8" />
+              <div>
+                <p className="text-2xl font-bold">Trego</p>
+                <p className="text-sm text-muted-foreground">Organize sports games with your friends</p>
+              </div>
             </div>
             <div className="text-center md:text-right">
               <p className="text-sm text-muted-foreground">© 2025 Trego. All rights reserved.</p>
