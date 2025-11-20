@@ -55,7 +55,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <p>YOOOOOOOOOOOOOOOOOOOOOOOOOO TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</p>
         <ToastProvider>
           <div className="root">{children}</div>
           <ReactQueryDevtools />
