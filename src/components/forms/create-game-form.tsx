@@ -1,8 +1,23 @@
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { type CreateGameInput, createGameSchema } from "@/modules/games/create-game";
 import { useCreateGame } from "@/modules/games/mutations";
 import { skillLevelSchema, sportsSchema } from "@/modules/sports/sports";
 import { useAppForm } from "./form-context";
+
+const locations = [
+  {
+    name: "PAC Gym",
+    latitude: 43.47207760272214,
+    longitude: -80.546056,
+  },
+  {
+    name: "CIF Gym",
+    latitude: 43.474972,
+    longitude: -80.548167,
+  },
+];
 
 export function CreateGameForm() {
   const createGame = useCreateGame();
@@ -42,10 +57,43 @@ export function CreateGameForm() {
         {(field) => <field.TextField label="Game Title" placeholder="e.g., Pickup Basketball at University Gym" />}
       </form.AppField>
 
-      {/* Location Name */}
-      <form.AppField name="locationName">
-        {(field) => <field.TextField label="Location Name" placeholder="e.g., University Gym" />}
-      </form.AppField>
+      {/* Location Dropdown */}
+      <form.Subscribe selector={(state) => state.values.locationName}>
+        {(locationName) => (
+          <div className="grid gap-2">
+            <Label>Location</Label>
+            <Select
+              value={locationName || ""}
+              onValueChange={(value) => {
+                const selectedLocation = locations.find((loc) => loc.name === value);
+                if (selectedLocation) {
+                  form.setFieldValue("locationName", selectedLocation.name);
+                  form.setFieldValue("location.lat", selectedLocation.latitude.toString());
+                  form.setFieldValue("location.lon", selectedLocation.longitude.toString());
+                }
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {locations.map((location) => (
+                  <SelectItem key={location.name} value={location.name}>
+                    {location.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+      </form.Subscribe>
+
+      {/* Location Name - Hidden, populated by dropdown */}
+      <div className="hidden">
+        <form.AppField name="locationName">
+          {(field) => <field.TextField label="Location Name" placeholder="e.g., University Gym" />}
+        </form.AppField>
+      </div>
 
       {/* Coordinates */}
       <div className="grid grid-cols-2 gap-4">
