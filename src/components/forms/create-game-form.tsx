@@ -17,6 +17,21 @@ const locations = [
     latitude: 43.474972,
     longitude: -80.548167,
   },
+  {
+    name: "Waterloo Tennis Club",
+    latitude: 43.468919,
+    longitude: -80.530799,
+  },
+  {
+    name: "Waterloo Park",
+    latitude: 43.467538, 
+    longitude: -80.527243,
+  },
+  {
+    name: "Waterloo SkatePark",
+    latitude: 43.465390, 
+    longitude: -80.533686,
+  },
 ];
 
 export function CreateGameForm() {
