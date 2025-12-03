@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import tregoLogo from "@/static/trego1.png";
+import tregoLogo from "@/static/trego1.avif";
 
 export const Route = createFileRoute("/")({
   component: HomePage,

@@ -3,7 +3,7 @@ import { oauthAccountsTable, usersTable } from "@/db/tables";
 import { $handleGoogleCallback, GOOGLE_PROVIDER_ID } from "@/lib/auth/google";
 import { generateId } from "@/lib/id";
 import { dbMiddleware } from "@/lib/middleware/db";
-import { createSession } from "@/lib/session";
+import { $createSession } from "@/lib/session";
 
 export const Route = createFileRoute("/api/callbacks/google")({
   server: {
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/callbacks/google")({
         });
 
         if (existingAccount) {
-          await createSession(existingAccount.userId);
+          await $createSession(existingAccount.userId);
           return redirect({ to: "/dashboard" });
         }
 
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/api/callbacks/google")({
           .insert(oauthAccountsTable)
           .values({ providerId: GOOGLE_PROVIDER_ID, providerAccountId: claims.sub, userId });
 
-        await createSession(userId);
+        await $createSession(userId);
         return redirect({ to: "/dashboard" });
       },
     },
