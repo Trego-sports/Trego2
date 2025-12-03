@@ -38,10 +38,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" className="light">
       <head>
         {/* Google tag (gtag.js) */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-Y1D90MZP2D"
-        />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1D90MZP2D" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
