@@ -4,6 +4,7 @@ import { gameParticipantsTable, gamesTable } from "@/db/tables";
 import { generateId } from "@/lib/id";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { upsertGameEvent } from "@/modules/calendar/sync";
 import { skillLevelSchema, sportsSchema } from "@/modules/sports/sports";
 
 export const createGameSchema = z.object({
@@ -45,4 +46,6 @@ export const $createGame = createServerFn({ method: "POST" })
       // Automatically add the host as a participant
       await tx.insert(gameParticipantsTable).values({ gameId: gameId, userId: context.userId });
     });
+
+    await upsertGameEvent(context.db, context.userId, gameId);
   });

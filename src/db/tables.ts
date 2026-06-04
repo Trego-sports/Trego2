@@ -1,4 +1,4 @@
-import { index, integer, pgTable, primaryKey, text, timestamp, unique } from "drizzle-orm/pg-core";
+import { boolean, index, integer, pgTable, primaryKey, text, timestamp, unique } from "drizzle-orm/pg-core";
 import { geography } from "@/db/utils";
 import type { SkillLevel, Sport } from "@/modules/sports/sports";
 
@@ -86,5 +86,34 @@ export const gameParticipantsTable = pgTable(
     primaryKey({ columns: [table.gameId, table.userId] }),
     index("idx_game_participants_game_id").on(table.gameId),
     index("idx_game_participants_user_id").on(table.userId),
+  ],
+);
+
+export const userCalendarIntegrationsTable = pgTable("user_calendar_integrations", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  refreshTokenEncrypted: text("refresh_token_encrypted").notNull(),
+  calendarId: text("calendar_id").notNull().default("primary"),
+  syncEnabled: boolean("sync_enabled").notNull().default(true),
+  connectedAt: timestamp("connected_at", { withTimezone: true }).notNull().defaultNow(),
+  lastSyncError: text("last_sync_error"),
+});
+
+export const gameCalendarEventsTable = pgTable(
+  "game_calendar_events",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    gameId: text("game_id")
+      .notNull()
+      .references(() => gamesTable.id, { onDelete: "cascade" }),
+    googleEventId: text("google_event_id").notNull(),
+    syncedAt: timestamp("synced_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.gameId] }),
+    index("idx_game_calendar_events_game_id").on(table.gameId),
   ],
 );

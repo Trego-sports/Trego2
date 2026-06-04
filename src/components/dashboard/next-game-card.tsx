@@ -13,6 +13,8 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { buildGoogleCalendarTemplateUrl } from "@/modules/calendar/build-google-template-url";
+import { calendarQueries } from "@/modules/calendar/queries";
 import { useLeaveGame } from "@/modules/games/mutations";
 import { gameQueries } from "@/modules/games/queries";
 import { ViewPlayersDialog } from "./view-players-dialog";
@@ -21,6 +23,7 @@ export function NextGameCard() {
   const leaveMutation = useLeaveGame();
   const [showPlayersDialog, setShowPlayersDialog] = useState(false);
   const { data: upcomingGames } = useSuspenseQuery(gameQueries.getUpcomingGames());
+  const { data: calendarStatus } = useSuspenseQuery(calendarQueries.getStatus());
 
   const nextGame = upcomingGames?.[0];
 
@@ -60,25 +63,19 @@ export function NextGameCard() {
   }
 
   const handleAddToCalendar = () => {
-    const endTime = new Date(nextGame.scheduledAt.getTime() + nextGame.durationMinutes * 60 * 1000);
-
-    // Format dates for calendar URL (YYYYMMDDTHHmmss)
-    const formatDate = (date: Date) => {
-      return `${date.toISOString().replace(/[-:]/g, "").split(".")[0]}Z`;
-    };
-
-    const startDate = formatDate(nextGame.scheduledAt);
-    const endDate = formatDate(endTime);
-
-    // Create Google Calendar URL
-    const calendarUrl = new URL("https://calendar.google.com/calendar/render");
-    calendarUrl.searchParams.set("action", "TEMPLATE");
-    calendarUrl.searchParams.set("text", nextGame.title);
-    calendarUrl.searchParams.set("dates", `${startDate}/${endDate}`);
-    calendarUrl.searchParams.set("details", `${nextGame.sport} game at ${nextGame.locationName}`);
-    calendarUrl.searchParams.set("location", nextGame.locationName);
-
-    window.open(calendarUrl.toString(), "_blank");
+    window.open(
+      buildGoogleCalendarTemplateUrl({
+        id: nextGame.id,
+        sport: nextGame.sport,
+        title: nextGame.title,
+        locationName: nextGame.locationName,
+        location: nextGame.location,
+        scheduledAt: nextGame.scheduledAt,
+        durationMinutes: nextGame.durationMinutes,
+        allowedSkillLevels: nextGame.skillLevels,
+      }),
+      "_blank",
+    );
   };
 
   const handleGetDirections = () => {
@@ -184,9 +181,14 @@ export function NextGameCard() {
                   <NavigationIcon className="h-4 w-4 mr-2" />
                   Get Directions
                 </Button>
+                {calendarStatus.connected && calendarStatus.syncEnabled ? (
+                  <p className="text-xs text-muted-foreground px-1">Synced to Google Calendar (1h reminder)</p>
+                ) : null}
                 <Button variant="outline" className="w-full justify-start" size="sm" onClick={handleAddToCalendar}>
                   <CalendarIcon className="h-4 w-4 mr-2" />
-                  Add to Calendar
+                  {calendarStatus.connected && calendarStatus.syncEnabled
+                    ? "Add to Calendar manually"
+                    : "Add to Calendar"}
                 </Button>
                 {nextGame.isHost ? (
                   <Link to="/games/$gameId/manage" params={{ gameId: nextGame.id }}>

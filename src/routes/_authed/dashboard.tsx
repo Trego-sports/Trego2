@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent, Link } from "@tanstack/react-router";
 import { PlusCircleIcon, UserIcon } from "lucide-react";
+import { CalendarConnectPromptDialog } from "@/components/calendar/calendar-connect-prompt-dialog";
 import { CompleteSetupAlert } from "@/components/complete-setup-alert";
 import { MyFriendsCard } from "@/components/dashboard/my-friends-card";
 import { NextGameCard } from "@/components/dashboard/next-game-card";
@@ -8,6 +9,7 @@ import { RecommendedGamesCard } from "@/components/dashboard/recommended-games-c
 import { UpcomingGamesCard } from "@/components/dashboard/upcoming-games-card";
 import { YourPastGamesCard } from "@/components/dashboard/your-sports-card";
 import { Button } from "@/components/ui/button";
+import { calendarQueries } from "@/modules/calendar/queries";
 import { gameQueries } from "@/modules/games/queries";
 import { userQueries } from "@/modules/profile/queries";
 
@@ -21,6 +23,7 @@ export const Route = createFileRoute("/_authed/dashboard")({
     context.queryClient.ensureQueryData(gameQueries.getUpcomingGames());
     context.queryClient.ensureQueryData(gameQueries.getRecommendedGames());
     context.queryClient.ensureQueryData(gameQueries.getPastGamesBySport());
+    context.queryClient.ensureQueryData(calendarQueries.getStatus());
   },
 });
 
@@ -51,6 +54,8 @@ function DashboardPage() {
       </div>
 
       {!isSetupCompleted && <CompleteSetupAlert />}
+
+      <CalendarConnectPromptDialog />
 
       {/* Next Game Overview */}
       <NextGameCard />

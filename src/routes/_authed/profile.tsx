@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
+import { CalendarSettingsCard } from "@/components/calendar/calendar-settings-card";
 import { ProfileForm as ProfileFormComponent } from "@/components/forms/profile-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { userQueries } from "@/modules/profile/queries";
@@ -71,6 +72,8 @@ function ProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      <CalendarSettingsCard />
 
       <Card>
         <CardHeader>

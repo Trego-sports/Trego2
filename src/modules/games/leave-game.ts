@@ -4,6 +4,7 @@ import { z } from "zod";
 import { gameParticipantsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { deleteGameEvent } from "@/modules/calendar/sync";
 
 export const $leaveGame = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
@@ -12,4 +13,6 @@ export const $leaveGame = createServerFn({ method: "POST" })
     await context.db
       .delete(gameParticipantsTable)
       .where(and(eq(gameParticipantsTable.gameId, data.gameId), eq(gameParticipantsTable.userId, context.userId)));
+
+    await deleteGameEvent(context.db, context.userId, data.gameId);
   });
