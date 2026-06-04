@@ -24,12 +24,12 @@ const locations = [
   },
   {
     name: "Waterloo Park",
-    latitude: 43.467538, 
+    latitude: 43.467538,
     longitude: -80.527243,
   },
   {
     name: "Waterloo SkatePark",
-    latitude: 43.465390, 
+    latitude: 43.46539,
     longitude: -80.533686,
   },
 ];
