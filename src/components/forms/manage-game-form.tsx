@@ -27,6 +27,9 @@ export function ManageGameForm({ gameId }: ManageGameFormProps) {
       spotsTotal: existingGame.spotsTotal,
       scheduledAt: existingGame.scheduledAt,
       allowedSkillLevels: existingGame.allowedSkillLevels,
+      requiresAttendanceScore: existingGame.requiresAttendanceScore,
+      minimumAttendanceScore: existingGame.minimumAttendanceScore ?? 80,
+      allowPlayersWithoutAttendanceHistory: existingGame.allowPlayersWithoutAttendanceHistory,
     } as UpdateGameInput,
     validators: { onChange: updateGameSchema },
     onSubmit: async ({ value }) => {
@@ -101,6 +104,45 @@ export function ManageGameForm({ gameId }: ManageGameFormProps) {
       <form.AppField name="spotsTotal">
         {(field) => <field.NumberField label="Total Spots" description="How many players can join this game?" />}
       </form.AppField>
+
+      <div className="space-y-4 border-t pt-6">
+        <form.AppField name="requiresAttendanceScore">
+          {(field) => (
+            <field.CheckboxField
+              label="Require minimum attendance score"
+              description="Restrict public joins to players who meet an attendance standard."
+            />
+          )}
+        </form.AppField>
+
+        <form.Subscribe selector={(state) => state.values.requiresAttendanceScore}>
+          {(requiresAttendanceScore) =>
+            requiresAttendanceScore ? (
+              <div className="space-y-4 pl-7">
+                <form.AppField name="minimumAttendanceScore">
+                  {(field) => (
+                    <field.NumberField
+                      label="Minimum Attendance Score"
+                      description="Enter a percentage from 0 to 100."
+                      min={0}
+                      max={100}
+                    />
+                  )}
+                </form.AppField>
+
+                <form.AppField name="allowPlayersWithoutAttendanceHistory">
+                  {(field) => (
+                    <field.CheckboxField
+                      label="Allow players without attendance history"
+                      description="Let new players join even if they do not have a score yet."
+                    />
+                  )}
+                </form.AppField>
+              </div>
+            ) : null
+          }
+        </form.Subscribe>
+      </div>
 
       <div className="flex gap-4">
         <form.Subscribe selector={(state) => state.canSubmit}>

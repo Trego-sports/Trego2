@@ -1,5 +1,12 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
-import { DateTimeField, MultiSelectField, NumberField, SelectField, TextField } from "@/components/forms/form-fields";
+import {
+  CheckboxField,
+  DateTimeField,
+  MultiSelectField,
+  NumberField,
+  SelectField,
+  TextField,
+} from "@/components/forms/form-fields";
 
 // Create and export the form contexts to be used across the app
 export const { fieldContext, useFieldContext, formContext, useFormContext } = createFormHookContexts();
@@ -12,6 +19,7 @@ export const { useAppForm } = createFormHook({
     TextField,
     SelectField,
     NumberField,
+    CheckboxField,
     DateTimeField,
     MultiSelectField,
   },
