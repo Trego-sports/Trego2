@@ -5,7 +5,8 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   oauthAccounts: many(oauthAccountsTable),
   playerSports: many(playerSportsTable),
   hostedGames: many(gamesTable),
-  gameParticipants: many(gameParticipantsTable),
+  gameParticipants: many(gameParticipantsTable, { relationName: "gameParticipantUser" }),
+  markedAttendanceRecords: many(gameParticipantsTable, { relationName: "attendanceMarkedBy" }),
 }));
 
 export const oauthAccountsRelations = relations(oauthAccountsTable, ({ one }) => ({
@@ -38,5 +39,11 @@ export const gameParticipantsRelations = relations(gameParticipantsTable, ({ one
   user: one(usersTable, {
     fields: [gameParticipantsTable.userId],
     references: [usersTable.id],
+    relationName: "gameParticipantUser",
+  }),
+  attendanceMarkedBy: one(usersTable, {
+    fields: [gameParticipantsTable.attendanceMarkedBy],
+    references: [usersTable.id],
+    relationName: "attendanceMarkedBy",
   }),
 }));
