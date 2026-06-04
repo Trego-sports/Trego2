@@ -3,7 +3,9 @@ import { gameParticipantsTable } from "@/db/tables";
 import type { DBContext } from "@/lib/middleware/db";
 import type { UserAttendanceStats } from "./types";
 
-export async function getUserAttendanceStats(db: DBContext, userId: string): Promise<UserAttendanceStats> {
+type AttendanceStatsDb = Pick<DBContext, "select">;
+
+export async function getUserAttendanceStats(db: AttendanceStatsDb, userId: string): Promise<UserAttendanceStats> {
   const [stats] = await db
     .select({
       presentCount: sql<number>`COUNT(*) FILTER (WHERE ${gameParticipantsTable.attendanceStatus} = 'present')::int`,
