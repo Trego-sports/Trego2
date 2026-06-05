@@ -15,6 +15,9 @@ export const $getGameParticipants = createServerFn({ method: "GET" })
         name: usersTable.name,
         profilePictureUrl: usersTable.profilePictureUrl,
         isHost: sql<boolean>`${gamesTable.hostId} = ${usersTable.id}`,
+        attendanceStatus: gameParticipantsTable.attendanceStatus,
+        attendanceMarkedAt: gameParticipantsTable.attendanceMarkedAt,
+        attendanceMarkedBy: gameParticipantsTable.attendanceMarkedBy,
       })
       .from(gameParticipantsTable)
       .innerJoin(usersTable, eq(gameParticipantsTable.userId, usersTable.id))
