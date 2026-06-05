@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
+import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
 import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
 import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
@@ -91,6 +92,40 @@ export function useJoinGame() {
         type: "error",
         title: "Failed to join game",
         description: error instanceof Error ? error.message : "An error occurred while joining the game.",
+      });
+    },
+  });
+}
+
+export function useInvitePlayer() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const invitePlayerFn = useServerFn($invitePlayer);
+
+  return useMutation({
+    mutationFn: async (data: InvitePlayerInput) => await invitePlayerFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Player invited",
+        description: "The player has been added to this game.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getRecommendedGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getInviteCandidates(data.gameId).queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      if (error instanceof Error && error.message === INVITE_USER_NOT_FOUND_ERROR) {
+        return;
+      }
+
+      toast.add({
+        type: "error",
+        title: "Failed to invite player",
+        description: error instanceof Error ? error.message : "An error occurred while inviting the player.",
       });
     },
   });

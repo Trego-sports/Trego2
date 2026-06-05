@@ -18,6 +18,9 @@ export const $getGameParticipants = createServerFn({ method: "GET" })
         attendanceStatus: gameParticipantsTable.attendanceStatus,
         attendanceMarkedAt: gameParticipantsTable.attendanceMarkedAt,
         attendanceMarkedBy: gameParticipantsTable.attendanceMarkedBy,
+        joinedViaInvite: gameParticipantsTable.joinedViaInvite,
+        invitedBy: gameParticipantsTable.invitedBy,
+        invitedAt: gameParticipantsTable.invitedAt,
       })
       .from(gameParticipantsTable)
       .innerJoin(usersTable, eq(gameParticipantsTable.userId, usersTable.id))

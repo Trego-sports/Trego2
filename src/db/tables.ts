@@ -96,6 +96,9 @@ export const gameParticipantsTable = pgTable(
     attendanceStatus: text("attendance_status").$type<AttendanceStatus>(),
     attendanceMarkedAt: timestamp("attendance_marked_at", { withTimezone: true }),
     attendanceMarkedBy: text("attendance_marked_by").references(() => usersTable.id, { onDelete: "set null" }),
+    joinedViaInvite: boolean("joined_via_invite").notNull().default(false),
+    invitedBy: text("invited_by").references(() => usersTable.id, { onDelete: "set null" }),
+    invitedAt: timestamp("invited_at", { withTimezone: true }),
   },
   (table) => [
     primaryKey({ columns: [table.gameId, table.userId] }),
