@@ -36,6 +36,7 @@ export const $markAttendance = createServerFn({ method: "POST" })
           hostId: gamesTable.hostId,
           scheduledAt: gamesTable.scheduledAt,
           durationMinutes: gamesTable.durationMinutes,
+          attendanceFinalizedAt: gamesTable.attendanceFinalizedAt,
         })
         .from(gamesTable)
         .where(eq(gamesTable.id, data.gameId))
@@ -47,6 +48,10 @@ export const $markAttendance = createServerFn({ method: "POST" })
 
       if (game.hostId !== context.userId) {
         throw new Error("Only the game host can mark attendance.");
+      }
+
+      if (game.attendanceFinalizedAt) {
+        throw new Error("Attendance has already been submitted for this game.");
       }
 
       const gameEndsAt = new Date(game.scheduledAt.getTime() + game.durationMinutes * 60 * 1000);
@@ -85,5 +90,13 @@ export const $markAttendance = createServerFn({ method: "POST" })
           )
           .where(and(eq(gameParticipantsTable.gameId, data.gameId), eq(gameParticipantsTable.userId, record.userId)));
       }
+
+      await tx
+        .update(gamesTable)
+        .set({
+          attendanceFinalizedAt: markedAt,
+          attendanceFinalizedBy: context.userId,
+        })
+        .where(eq(gamesTable.id, data.gameId));
     });
   });

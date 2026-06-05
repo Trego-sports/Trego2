@@ -18,11 +18,14 @@ export const $getGame = createServerFn({ method: "GET" })
         location: gamesTable.location,
         scheduledAt: gamesTable.scheduledAt,
         durationMinutes: gamesTable.durationMinutes,
+        hostId: gamesTable.hostId,
         spotsTotal: gamesTable.spotsTotal,
         allowedSkillLevels: gamesTable.allowedSkillLevels,
         requiresAttendanceScore: gamesTable.requiresAttendanceScore,
         minimumAttendanceScore: gamesTable.minimumAttendanceScore,
         allowPlayersWithoutAttendanceHistory: gamesTable.allowPlayersWithoutAttendanceHistory,
+        attendanceFinalizedAt: gamesTable.attendanceFinalizedAt,
+        attendanceFinalizedBy: gamesTable.attendanceFinalizedBy,
       })
       .from(gamesTable)
       .where(eq(gamesTable.id, data.gameId))

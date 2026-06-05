@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { $getGame } from "./get-game";
 import { $getGameParticipants } from "./get-game-participants";
-import { $getPastGamesBySport } from "./get-past-games-by-sport";
+import { $getPastGames } from "./get-past-games";
 import { $getRecommendedGames } from "./get-recommended-games";
 import { $getUpcomingGames } from "./get-upcoming-games";
 
@@ -30,9 +30,9 @@ export const gameQueries = {
       queryFn: async () => await $getRecommendedGames(),
     }),
 
-  getPastGamesBySport: () =>
+  getPastGames: () =>
     queryOptions({
-      queryKey: ["past-games-by-sport"],
-      queryFn: async () => await $getPastGamesBySport(),
+      queryKey: ["past-games"],
+      queryFn: async () => await $getPastGames(),
     }),
 };

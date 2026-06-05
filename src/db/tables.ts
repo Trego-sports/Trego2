@@ -64,6 +64,8 @@ export const gamesTable = pgTable(
     requiresAttendanceScore: boolean("requires_attendance_score").notNull().default(false),
     minimumAttendanceScore: integer("minimum_attendance_score"),
     allowPlayersWithoutAttendanceHistory: boolean("allow_players_without_attendance_history").notNull().default(true),
+    attendanceFinalizedAt: timestamp("attendance_finalized_at", { withTimezone: true }),
+    attendanceFinalizedBy: text("attendance_finalized_by").references(() => usersTable.id, { onDelete: "set null" }),
 
     // Host
     hostId: text("host_id")

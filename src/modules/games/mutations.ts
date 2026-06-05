@@ -138,7 +138,11 @@ export function useMarkAttendance() {
         title: "Attendance saved",
         description: "Game attendance has been updated successfully.",
       });
-      await queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getPastGames().queryKey }),
+      ]);
     },
     onError: (error) => {
       toast.add({
