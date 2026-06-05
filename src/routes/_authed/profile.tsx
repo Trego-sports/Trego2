@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
 import { ProfileForm as ProfileFormComponent } from "@/components/forms/profile-form";
+import { AttendanceStatsCard } from "@/components/profile/attendance-stats-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { userQueries } from "@/modules/profile/queries";
 
@@ -47,6 +48,8 @@ function ProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      <AttendanceStatsCard stats={myProfile.attendanceStats} />
 
       <Card>
         <CardHeader>

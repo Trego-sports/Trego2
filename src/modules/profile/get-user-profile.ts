@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { getUserAttendanceStats } from "@/modules/attendance";
 
 export const $getUserProfile = createServerFn({ method: "GET" })
   .middleware([authMiddleware, dbMiddleware])
@@ -53,10 +54,13 @@ export const $getUserProfile = createServerFn({ method: "GET" })
       throw new Error("User not found");
     }
 
+    const attendanceStats = await getUserAttendanceStats(context.db, data.userId);
+
     return {
       id: user.id,
       name: user.name,
       profilePictureUrl: user.profilePictureUrl,
+      attendanceStats,
       sports: user.playerSports.map((ps) => ({
         sport: ps.sport,
         skillLevel: ps.skillLevel,
