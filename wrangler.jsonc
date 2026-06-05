@@ -24,5 +24,11 @@
       "binding": "HYPERDRIVE",
       "id": "d931bec0e0ed4db8952095e33d993a5d"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "AVATARS",
+      "bucket_name": "trego-avatars"
+    }
   ]
 }
