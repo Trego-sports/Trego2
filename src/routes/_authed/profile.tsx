@@ -1,6 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
 import { ProfileForm as ProfileFormComponent } from "@/components/forms/profile-form";
+import { AttendanceStatsCard } from "@/components/profile/attendance-stats-card";
+import { ProfileAvatarUpload } from "@/components/profile/profile-avatar-upload";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { userQueries } from "@/modules/profile/queries";
 
@@ -28,7 +30,7 @@ function ProfilePage() {
           <CardDescription>Your basic account details (name can be edited below)</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-start gap-6">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
             <div className="flex-1 space-y-4">
               <div>
                 <p className="text-sm font-medium">Name</p>
@@ -39,14 +41,12 @@ function ProfilePage() {
                 <p className="text-muted-foreground">{myProfile.email}</p>
               </div>
             </div>
-            {myProfile.profilePictureUrl && (
-              <div className="shrink-0">
-                <img src={myProfile.profilePictureUrl} alt={myProfile.name} className="size-24 object-cover" />
-              </div>
-            )}
+            <ProfileAvatarUpload name={myProfile.name} profilePictureUrl={myProfile.profilePictureUrl} />
           </div>
         </CardContent>
       </Card>
+
+      <AttendanceStatsCard stats={myProfile.attendanceStats} />
 
       <Card>
         <CardHeader>

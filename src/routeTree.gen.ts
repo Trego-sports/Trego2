@@ -17,7 +17,9 @@ import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as ApiCallbacksGoogleRouteImport } from './routes/api/callbacks/google'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedGamesCreateRouteImport } from './routes/_authed/games.create'
+import { Route as ApiAvatarsUserIdFilenameRouteImport } from './routes/api/avatars/$userId/$filename'
 import { Route as AuthedGamesGameIdManageRouteImport } from './routes/_authed/games.$gameId.manage'
+import { Route as AuthedGamesGameIdAttendanceRouteImport } from './routes/_authed/games.$gameId.attendance'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -58,11 +60,23 @@ const AuthedGamesCreateRoute = AuthedGamesCreateRouteImport.update({
   path: '/games/create',
   getParentRoute: () => AuthedRoute,
 } as any)
+const ApiAvatarsUserIdFilenameRoute =
+  ApiAvatarsUserIdFilenameRouteImport.update({
+    id: '/api/avatars/$userId/$filename',
+    path: '/api/avatars/$userId/$filename',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthedGamesGameIdManageRoute = AuthedGamesGameIdManageRouteImport.update({
   id: '/games/$gameId/manage',
   path: '/games/$gameId/manage',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedGamesGameIdAttendanceRoute =
+  AuthedGamesGameIdAttendanceRouteImport.update({
+    id: '/games/$gameId/attendance',
+    path: '/games/$gameId/attendance',
+    getParentRoute: () => AuthedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -72,7 +86,9 @@ export interface FileRoutesByFullPath {
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
+  '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -82,7 +98,9 @@ export interface FileRoutesByTo {
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
+  '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,7 +112,9 @@ export interface FileRoutesById {
   '/_authed/games/create': typeof AuthedGamesCreateRoute
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/_authed/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/_authed/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
+  '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,7 +126,9 @@ export interface FileRouteTypes {
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
+    | '/games/$gameId/attendance'
     | '/games/$gameId/manage'
+    | '/api/avatars/$userId/$filename'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -116,7 +138,9 @@ export interface FileRouteTypes {
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
+    | '/games/$gameId/attendance'
     | '/games/$gameId/manage'
+    | '/api/avatars/$userId/$filename'
   id:
     | '__root__'
     | '/'
@@ -127,7 +151,9 @@ export interface FileRouteTypes {
     | '/_authed/games/create'
     | '/_authed/users/$userId'
     | '/api/callbacks/google'
+    | '/_authed/games/$gameId/attendance'
     | '/_authed/games/$gameId/manage'
+    | '/api/avatars/$userId/$filename'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +161,7 @@ export interface RootRouteChildren {
   AuthedRoute: typeof AuthedRouteWithChildren
   LoginRoute: typeof LoginRoute
   ApiCallbacksGoogleRoute: typeof ApiCallbacksGoogleRoute
+  ApiAvatarsUserIdFilenameRoute: typeof ApiAvatarsUserIdFilenameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -195,11 +222,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedGamesCreateRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/api/avatars/$userId/$filename': {
+      id: '/api/avatars/$userId/$filename'
+      path: '/api/avatars/$userId/$filename'
+      fullPath: '/api/avatars/$userId/$filename'
+      preLoaderRoute: typeof ApiAvatarsUserIdFilenameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed/games/$gameId/manage': {
       id: '/_authed/games/$gameId/manage'
       path: '/games/$gameId/manage'
       fullPath: '/games/$gameId/manage'
       preLoaderRoute: typeof AuthedGamesGameIdManageRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/games/$gameId/attendance': {
+      id: '/_authed/games/$gameId/attendance'
+      path: '/games/$gameId/attendance'
+      fullPath: '/games/$gameId/attendance'
+      preLoaderRoute: typeof AuthedGamesGameIdAttendanceRouteImport
       parentRoute: typeof AuthedRoute
     }
   }
@@ -210,6 +251,7 @@ interface AuthedRouteChildren {
   AuthedProfileRoute: typeof AuthedProfileRoute
   AuthedGamesCreateRoute: typeof AuthedGamesCreateRoute
   AuthedUsersUserIdRoute: typeof AuthedUsersUserIdRoute
+  AuthedGamesGameIdAttendanceRoute: typeof AuthedGamesGameIdAttendanceRoute
   AuthedGamesGameIdManageRoute: typeof AuthedGamesGameIdManageRoute
 }
 
@@ -218,6 +260,7 @@ const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedProfileRoute: AuthedProfileRoute,
   AuthedGamesCreateRoute: AuthedGamesCreateRoute,
   AuthedUsersUserIdRoute: AuthedUsersUserIdRoute,
+  AuthedGamesGameIdAttendanceRoute: AuthedGamesGameIdAttendanceRoute,
   AuthedGamesGameIdManageRoute: AuthedGamesGameIdManageRoute,
 }
 
@@ -229,6 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthedRoute: AuthedRouteWithChildren,
   LoginRoute: LoginRoute,
   ApiCallbacksGoogleRoute: ApiCallbacksGoogleRoute,
+  ApiAvatarsUserIdFilenameRoute: ApiAvatarsUserIdFilenameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

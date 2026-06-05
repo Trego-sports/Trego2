@@ -23,6 +23,9 @@ export const $updateGame = createServerFn({ method: "POST" })
         durationMinutes: data.durationMinutes,
         allowedSkillLevels: data.allowedSkillLevels,
         spotsTotal: data.spotsTotal,
+        requiresAttendanceScore: data.requiresAttendanceScore,
+        minimumAttendanceScore: data.requiresAttendanceScore ? data.minimumAttendanceScore : null,
+        allowPlayersWithoutAttendanceHistory: data.allowPlayersWithoutAttendanceHistory,
       })
       .where(and(eq(gamesTable.id, data.gameId), eq(gamesTable.hostId, context.userId)))
       .returning({ id: gamesTable.id });
