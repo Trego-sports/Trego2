@@ -62,6 +62,9 @@ export function ViewPlayersDialog({ gameId, gameTitle, open, onOpenChange }: Vie
                       {participant.isHost && (
                         <span className="text-xs px-2 py-0.5 bg-primary text-primary-foreground font-medium">Host</span>
                       )}
+                      {participant.joinedViaInvite && (
+                        <span className="text-xs px-2 py-0.5 bg-muted text-muted-foreground font-medium">Invited</span>
+                      )}
                     </div>
                   </div>
                 </div>

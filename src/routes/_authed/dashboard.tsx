@@ -22,7 +22,7 @@ export const Route = createFileRoute("/_authed/dashboard")({
     context.queryClient.ensureQueryData(userQueries.getMyFriends());
     context.queryClient.ensureQueryData(gameQueries.getUpcomingGames());
     context.queryClient.ensureQueryData(gameQueries.getRecommendedGames());
-    context.queryClient.ensureQueryData(gameQueries.getPastGamesBySport());
+    context.queryClient.ensureQueryData(gameQueries.getPastGames());
     context.queryClient.ensureQueryData(calendarQueries.getStatus());
   },
 });

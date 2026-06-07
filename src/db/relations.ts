@@ -13,7 +13,9 @@ export const usersRelations = relations(usersTable, ({ one, many }) => ({
   oauthAccounts: many(oauthAccountsTable),
   playerSports: many(playerSportsTable),
   hostedGames: many(gamesTable),
-  gameParticipants: many(gameParticipantsTable),
+  gameParticipants: many(gameParticipantsTable, { relationName: "gameParticipantUser" }),
+  markedAttendanceRecords: many(gameParticipantsTable, { relationName: "attendanceMarkedBy" }),
+  invitedParticipantRecords: many(gameParticipantsTable, { relationName: "participantInvitedBy" }),
   calendarIntegration: one(userCalendarIntegrationsTable),
   calendarEvents: many(gameCalendarEventsTable),
 }));
@@ -48,6 +50,17 @@ export const gameParticipantsRelations = relations(gameParticipantsTable, ({ one
   user: one(usersTable, {
     fields: [gameParticipantsTable.userId],
     references: [usersTable.id],
+    relationName: "gameParticipantUser",
+  }),
+  attendanceMarkedBy: one(usersTable, {
+    fields: [gameParticipantsTable.attendanceMarkedBy],
+    references: [usersTable.id],
+    relationName: "attendanceMarkedBy",
+  }),
+  invitedBy: one(usersTable, {
+    fields: [gameParticipantsTable.invitedBy],
+    references: [usersTable.id],
+    relationName: "participantInvitedBy",
   }),
 }));
 

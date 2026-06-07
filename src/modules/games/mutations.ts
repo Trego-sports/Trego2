@@ -5,8 +5,10 @@ import { useToast } from "@/hooks/use-toast";
 import { CALENDAR_PROMPT_SESSION_KEY } from "@/modules/calendar/constants";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
+import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
 import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
+import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
 import { gameQueries } from "./queries";
 import { $updateGame, type UpdateGameInput } from "./update-game";
 
@@ -98,6 +100,40 @@ export function useJoinGame() {
   });
 }
 
+export function useInvitePlayer() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const invitePlayerFn = useServerFn($invitePlayer);
+
+  return useMutation({
+    mutationFn: async (data: InvitePlayerInput) => await invitePlayerFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Player invited",
+        description: "The player has been added to this game.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getRecommendedGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getInviteCandidates(data.gameId).queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      if (error instanceof Error && error.message === INVITE_USER_NOT_FOUND_ERROR) {
+        return;
+      }
+
+      toast.add({
+        type: "error",
+        title: "Failed to invite player",
+        description: error instanceof Error ? error.message : "An error occurred while inviting the player.",
+      });
+    },
+  });
+}
+
 export function useLeaveGame() {
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -122,6 +158,35 @@ export function useLeaveGame() {
         type: "error",
         title: "Failed to leave game",
         description: error instanceof Error ? error.message : "An error occurred while leaving the game.",
+      });
+    },
+  });
+}
+
+export function useMarkAttendance() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const markAttendanceFn = useServerFn($markAttendance);
+
+  return useMutation({
+    mutationFn: async (data: MarkAttendanceInput) => await markAttendanceFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Attendance saved",
+        description: "Game attendance has been updated successfully.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getPastGames().queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to save attendance",
+        description: error instanceof Error ? error.message : "An error occurred while saving attendance.",
       });
     },
   });

@@ -1,9 +1,87 @@
 {
-  "id": "8ff2c2a1-c855-4b12-8cb1-039aea2973a6",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "239f2051-0c96-4680-871e-8b5308ff40be",
+  "prevId": "7307d8a3-3896-4055-871b-386d5361fea1",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.game_calendar_events": {
+      "name": "game_calendar_events",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "google_event_id": {
+          "name": "google_event_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "synced_at": {
+          "name": "synced_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_game_calendar_events_game_id": {
+          "name": "idx_game_calendar_events_game_id",
+          "columns": [
+            {
+              "expression": "game_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "game_calendar_events_user_id_users_id_fk": {
+          "name": "game_calendar_events_user_id_users_id_fk",
+          "tableFrom": "game_calendar_events",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "game_calendar_events_game_id_games_id_fk": {
+          "name": "game_calendar_events_game_id_games_id_fk",
+          "tableFrom": "game_calendar_events",
+          "tableTo": "games",
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "game_calendar_events_user_id_game_id_pk": {
+          "name": "game_calendar_events_user_id_game_id_pk",
+          "columns": ["user_id", "game_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.game_participants": {
       "name": "game_participants",
       "schema": "",
@@ -19,6 +97,43 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "attendance_status": {
+          "name": "attendance_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attendance_marked_at": {
+          "name": "attendance_marked_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attendance_marked_by": {
+          "name": "attendance_marked_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joined_via_invite": {
+          "name": "joined_via_invite",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "invited_by": {
+          "name": "invited_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invited_at": {
+          "name": "invited_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -71,6 +186,24 @@
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        },
+        "game_participants_attendance_marked_by_users_id_fk": {
+          "name": "game_participants_attendance_marked_by_users_id_fk",
+          "tableFrom": "game_participants",
+          "tableTo": "users",
+          "columnsFrom": ["attendance_marked_by"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "game_participants_invited_by_users_id_fk": {
+          "name": "game_participants_invited_by_users_id_fk",
+          "tableFrom": "game_participants",
+          "tableTo": "users",
+          "columnsFrom": ["invited_by"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -81,7 +214,12 @@
       },
       "uniqueConstraints": {},
       "policies": {},
-      "checkConstraints": {},
+      "checkConstraints": {
+        "game_participants_attendance_status_check": {
+          "name": "game_participants_attendance_status_check",
+          "value": "\"game_participants\".\"attendance_status\" IS NULL OR \"game_participants\".\"attendance_status\" IN ('present', 'absent')"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.games": {
@@ -142,6 +280,38 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "requires_attendance_score": {
+          "name": "requires_attendance_score",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "minimum_attendance_score": {
+          "name": "minimum_attendance_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "allow_players_without_attendance_history": {
+          "name": "allow_players_without_attendance_history",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "attendance_finalized_at": {
+          "name": "attendance_finalized_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attendance_finalized_by": {
+          "name": "attendance_finalized_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "host_id": {
           "name": "host_id",
@@ -213,6 +383,15 @@
         }
       },
       "foreignKeys": {
+        "games_attendance_finalized_by_users_id_fk": {
+          "name": "games_attendance_finalized_by_users_id_fk",
+          "tableFrom": "games",
+          "tableTo": "users",
+          "columnsFrom": ["attendance_finalized_by"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
         "games_host_id_users_id_fk": {
           "name": "games_host_id_users_id_fk",
           "tableFrom": "games",
@@ -226,7 +405,12 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "checkConstraints": {},
+      "checkConstraints": {
+        "games_minimum_attendance_score_check": {
+          "name": "games_minimum_attendance_score_check",
+          "value": "\"games\".\"minimum_attendance_score\" IS NULL OR (\"games\".\"minimum_attendance_score\" >= 0 AND \"games\".\"minimum_attendance_score\" <= 100)"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.oauth_accounts": {
@@ -324,6 +508,68 @@
           "columns": ["user_id", "sport"]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_calendar_integrations": {
+      "name": "user_calendar_integrations",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "refresh_token_encrypted": {
+          "name": "refresh_token_encrypted",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'primary'"
+        },
+        "sync_enabled": {
+          "name": "sync_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "connected_at": {
+          "name": "connected_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_sync_error": {
+          "name": "last_sync_error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_calendar_integrations_user_id_users_id_fk": {
+          "name": "user_calendar_integrations_user_id_users_id_fk",
+          "tableFrom": "user_calendar_integrations",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
