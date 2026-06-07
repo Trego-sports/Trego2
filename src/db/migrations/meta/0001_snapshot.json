@@ -76,12 +76,8 @@
           "name": "game_participants_game_id_games_id_fk",
           "tableFrom": "game_participants",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -89,12 +85,8 @@
           "name": "game_participants_user_id_users_id_fk",
           "tableFrom": "game_participants",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -102,12 +94,8 @@
           "name": "game_participants_attendance_marked_by_users_id_fk",
           "tableFrom": "game_participants",
           "tableTo": "users",
-          "columnsFrom": [
-            "attendance_marked_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["attendance_marked_by"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -115,10 +103,7 @@
       "compositePrimaryKeys": {
         "game_participants_game_id_user_id_pk": {
           "name": "game_participants_game_id_user_id_pk",
-          "columns": [
-            "game_id",
-            "user_id"
-          ]
+          "columns": ["game_id", "user_id"]
         }
       },
       "uniqueConstraints": {},
@@ -284,12 +269,8 @@
           "name": "games_host_id_users_id_fk",
           "tableFrom": "games",
           "tableTo": "users",
-          "columnsFrom": [
-            "host_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["host_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -334,12 +315,8 @@
           "name": "oauth_accounts_user_id_users_id_fk",
           "tableFrom": "oauth_accounts",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -347,10 +324,7 @@
       "compositePrimaryKeys": {
         "oauth_accounts_provider_id_provider_account_id_pk": {
           "name": "oauth_accounts_provider_id_provider_account_id_pk",
-          "columns": [
-            "provider_id",
-            "provider_account_id"
-          ]
+          "columns": ["provider_id", "provider_account_id"]
         }
       },
       "uniqueConstraints": {},
@@ -393,12 +367,8 @@
           "name": "player_sports_user_id_users_id_fk",
           "tableFrom": "player_sports",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -408,10 +378,7 @@
         "player_sports_user_id_sport_unique": {
           "name": "player_sports_user_id_sport_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id",
-            "sport"
-          ]
+          "columns": ["user_id", "sport"]
         }
       },
       "policies": {},

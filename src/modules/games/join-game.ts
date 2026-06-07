@@ -5,6 +5,7 @@ import { gameParticipantsTable, gamesTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
 import { getUserAttendanceStats } from "@/modules/attendance";
+import { upsertGameEvent } from "@/modules/calendar/sync";
 
 export const $joinGame = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
@@ -57,4 +58,6 @@ export const $joinGame = createServerFn({ method: "POST" })
       // Add user as participant (unique constraint will prevent duplicates)
       await tx.insert(gameParticipantsTable).values({ gameId: data.gameId, userId: context.userId });
     });
+
+    await upsertGameEvent(context.db, context.userId, data.gameId);
   });

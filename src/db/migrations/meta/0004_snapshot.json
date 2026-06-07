@@ -1,9 +1,87 @@
 {
-  "id": "d34a4acf-3cc2-4f30-b5a8-3eb07f9e7fd6",
-  "prevId": "520dc9cb-6bbc-4f34-8fcb-8fefb777f95c",
+  "id": "239f2051-0c96-4680-871e-8b5308ff40be",
+  "prevId": "7307d8a3-3896-4055-871b-386d5361fea1",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.game_calendar_events": {
+      "name": "game_calendar_events",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "google_event_id": {
+          "name": "google_event_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "synced_at": {
+          "name": "synced_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_game_calendar_events_game_id": {
+          "name": "idx_game_calendar_events_game_id",
+          "columns": [
+            {
+              "expression": "game_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "game_calendar_events_user_id_users_id_fk": {
+          "name": "game_calendar_events_user_id_users_id_fk",
+          "tableFrom": "game_calendar_events",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "game_calendar_events_game_id_games_id_fk": {
+          "name": "game_calendar_events_game_id_games_id_fk",
+          "tableFrom": "game_calendar_events",
+          "tableTo": "games",
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "game_calendar_events_user_id_game_id_pk": {
+          "name": "game_calendar_events_user_id_game_id_pk",
+          "columns": ["user_id", "game_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.game_participants": {
       "name": "game_participants",
       "schema": "",
@@ -35,6 +113,25 @@
         "attendance_marked_by": {
           "name": "attendance_marked_by",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "joined_via_invite": {
+          "name": "joined_via_invite",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "invited_by": {
+          "name": "invited_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "invited_at": {
+          "name": "invited_at",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
         }
@@ -95,6 +192,15 @@
           "tableFrom": "game_participants",
           "tableTo": "users",
           "columnsFrom": ["attendance_marked_by"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "game_participants_invited_by_users_id_fk": {
+          "name": "game_participants_invited_by_users_id_fk",
+          "tableFrom": "game_participants",
+          "tableTo": "users",
+          "columnsFrom": ["invited_by"],
           "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
@@ -402,6 +508,68 @@
           "columns": ["user_id", "sport"]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_calendar_integrations": {
+      "name": "user_calendar_integrations",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "refresh_token_encrypted": {
+          "name": "refresh_token_encrypted",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calendar_id": {
+          "name": "calendar_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'primary'"
+        },
+        "sync_enabled": {
+          "name": "sync_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "connected_at": {
+          "name": "connected_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_sync_error": {
+          "name": "last_sync_error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_calendar_integrations_user_id_users_id_fk": {
+          "name": "user_calendar_integrations_user_id_users_id_fk",
+          "tableFrom": "user_calendar_integrations",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

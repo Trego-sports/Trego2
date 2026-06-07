@@ -28,6 +28,13 @@ export const $getMyProfile = createServerFn({ method: "GET" })
             providerId: true,
           },
         },
+        calendarIntegration: {
+          columns: {
+            syncEnabled: true,
+            lastSyncError: true,
+            connectedAt: true,
+          },
+        },
       },
     });
 

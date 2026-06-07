@@ -14,6 +14,7 @@ import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedProfileRouteImport } from './routes/_authed/profile'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
+import { Route as ApiCallbacksGoogleCalendarRouteImport } from './routes/api/callbacks/google-calendar'
 import { Route as ApiCallbacksGoogleRouteImport } from './routes/api/callbacks/google'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedGamesCreateRouteImport } from './routes/_authed/games.create'
@@ -45,6 +46,12 @@ const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthedRoute,
 } as any)
+const ApiCallbacksGoogleCalendarRoute =
+  ApiCallbacksGoogleCalendarRouteImport.update({
+    id: '/api/callbacks/google-calendar',
+    path: '/api/callbacks/google-calendar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiCallbacksGoogleRoute = ApiCallbacksGoogleRouteImport.update({
   id: '/api/callbacks/google',
   path: '/api/callbacks/google',
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/api/callbacks/google-calendar': typeof ApiCallbacksGoogleCalendarRoute
   '/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
   '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/api/callbacks/google-calendar': typeof ApiCallbacksGoogleCalendarRoute
   '/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
   '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
@@ -112,6 +121,7 @@ export interface FileRoutesById {
   '/_authed/games/create': typeof AuthedGamesCreateRoute
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
+  '/api/callbacks/google-calendar': typeof ApiCallbacksGoogleCalendarRoute
   '/_authed/games/$gameId/attendance': typeof AuthedGamesGameIdAttendanceRoute
   '/_authed/games/$gameId/manage': typeof AuthedGamesGameIdManageRoute
   '/api/avatars/$userId/$filename': typeof ApiAvatarsUserIdFilenameRoute
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
+    | '/api/callbacks/google-calendar'
     | '/games/$gameId/attendance'
     | '/games/$gameId/manage'
     | '/api/avatars/$userId/$filename'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
+    | '/api/callbacks/google-calendar'
     | '/games/$gameId/attendance'
     | '/games/$gameId/manage'
     | '/api/avatars/$userId/$filename'
@@ -151,6 +163,7 @@ export interface FileRouteTypes {
     | '/_authed/games/create'
     | '/_authed/users/$userId'
     | '/api/callbacks/google'
+    | '/api/callbacks/google-calendar'
     | '/_authed/games/$gameId/attendance'
     | '/_authed/games/$gameId/manage'
     | '/api/avatars/$userId/$filename'
@@ -161,6 +174,7 @@ export interface RootRouteChildren {
   AuthedRoute: typeof AuthedRouteWithChildren
   LoginRoute: typeof LoginRoute
   ApiCallbacksGoogleRoute: typeof ApiCallbacksGoogleRoute
+  ApiCallbacksGoogleCalendarRoute: typeof ApiCallbacksGoogleCalendarRoute
   ApiAvatarsUserIdFilenameRoute: typeof ApiAvatarsUserIdFilenameRoute
 }
 
@@ -200,6 +214,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthedDashboardRouteImport
       parentRoute: typeof AuthedRoute
+    }
+    '/api/callbacks/google-calendar': {
+      id: '/api/callbacks/google-calendar'
+      path: '/api/callbacks/google-calendar'
+      fullPath: '/api/callbacks/google-calendar'
+      preLoaderRoute: typeof ApiCallbacksGoogleCalendarRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/callbacks/google': {
       id: '/api/callbacks/google'
@@ -272,6 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthedRoute: AuthedRouteWithChildren,
   LoginRoute: LoginRoute,
   ApiCallbacksGoogleRoute: ApiCallbacksGoogleRoute,
+  ApiCallbacksGoogleCalendarRoute: ApiCallbacksGoogleCalendarRoute,
   ApiAvatarsUserIdFilenameRoute: ApiAvatarsUserIdFilenameRoute,
 }
 export const routeTree = rootRouteImport

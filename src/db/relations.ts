@@ -1,13 +1,23 @@
 import { relations } from "drizzle-orm";
-import { gameParticipantsTable, gamesTable, oauthAccountsTable, playerSportsTable, usersTable } from "./tables";
+import {
+  gameCalendarEventsTable,
+  gameParticipantsTable,
+  gamesTable,
+  oauthAccountsTable,
+  playerSportsTable,
+  userCalendarIntegrationsTable,
+  usersTable,
+} from "./tables";
 
-export const usersRelations = relations(usersTable, ({ many }) => ({
+export const usersRelations = relations(usersTable, ({ one, many }) => ({
   oauthAccounts: many(oauthAccountsTable),
   playerSports: many(playerSportsTable),
   hostedGames: many(gamesTable),
   gameParticipants: many(gameParticipantsTable, { relationName: "gameParticipantUser" }),
   markedAttendanceRecords: many(gameParticipantsTable, { relationName: "attendanceMarkedBy" }),
   invitedParticipantRecords: many(gameParticipantsTable, { relationName: "participantInvitedBy" }),
+  calendarIntegration: one(userCalendarIntegrationsTable),
+  calendarEvents: many(gameCalendarEventsTable),
 }));
 
 export const oauthAccountsRelations = relations(oauthAccountsTable, ({ one }) => ({
@@ -51,5 +61,23 @@ export const gameParticipantsRelations = relations(gameParticipantsTable, ({ one
     fields: [gameParticipantsTable.invitedBy],
     references: [usersTable.id],
     relationName: "participantInvitedBy",
+  }),
+}));
+
+export const userCalendarIntegrationsRelations = relations(userCalendarIntegrationsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [userCalendarIntegrationsTable.userId],
+    references: [usersTable.id],
+  }),
+}));
+
+export const gameCalendarEventsRelations = relations(gameCalendarEventsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [gameCalendarEventsTable.userId],
+    references: [usersTable.id],
+  }),
+  game: one(gamesTable, {
+    fields: [gameCalendarEventsTable.gameId],
+    references: [gamesTable.id],
   }),
 }));

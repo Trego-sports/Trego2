@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
+import { CALENDAR_PROMPT_SESSION_KEY } from "@/modules/calendar/constants";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
 import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
@@ -20,6 +21,7 @@ export function useCreateGame() {
   return useMutation({
     mutationFn: async (data: CreateGameInput) => await createGameFn({ data }),
     onSuccess: async () => {
+      sessionStorage.setItem(CALENDAR_PROMPT_SESSION_KEY, "1");
       toast.add({
         type: "success",
         title: "Game created",
@@ -76,6 +78,7 @@ export function useJoinGame() {
   return useMutation({
     mutationFn: async (gameId: string) => await joinGameFn({ data: { gameId } }),
     onSuccess: async (_, gameId) => {
+      sessionStorage.setItem(CALENDAR_PROMPT_SESSION_KEY, "1");
       toast.add({
         type: "success",
         title: "Joined game",
