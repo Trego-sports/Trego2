@@ -10,12 +10,15 @@ export const $cancelGame = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
   .inputValidator(z.object({ gameId: z.string() }))
   .handler(async ({ context, data }) => {
+    const game = await context.db
+      .select({ id: gamesTable.id })
+      .from(gamesTable)
+      .where(and(eq(gamesTable.id, data.gameId), eq(gamesTable.hostId, context.userId)))
+      .limit(1);
+
+    if (game.length === 0) throw new Error("Game not found");
+
     await deleteAllGameCalendarEvents(context.db, data.gameId);
 
-    const deleted = await context.db
-      .delete(gamesTable)
-      .where(and(eq(gamesTable.id, data.gameId), eq(gamesTable.hostId, context.userId)))
-      .returning({ id: gamesTable.id });
-
-    if (deleted.length === 0) throw new Error("Game not found");
+    await context.db.delete(gamesTable).where(eq(gamesTable.id, data.gameId));
   });

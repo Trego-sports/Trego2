@@ -4,6 +4,7 @@ import { z } from "zod";
 import { userCalendarIntegrationsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { backfillUpcomingGames } from "./sync";
 
 export const $setCalendarSyncEnabled = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
@@ -17,5 +18,9 @@ export const $setCalendarSyncEnabled = createServerFn({ method: "POST" })
 
     if (updated.length === 0) {
       throw new Error("Google Calendar is not connected");
+    }
+
+    if (data.syncEnabled) {
+      await backfillUpcomingGames(context.db, context.userId);
     }
   });
