@@ -18,6 +18,7 @@ export type AttendanceStatus = "present" | "absent";
 export type NotificationType =
   | "game_joined"
   | "game_created"
+  | "game_cancelled"
   | "game_announcement"
   | "attendance_mark_reminder"
   | "attendance_result_submitted"

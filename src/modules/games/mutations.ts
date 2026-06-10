@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
 import { CALENDAR_PROMPT_SESSION_KEY } from "@/modules/calendar/constants";
+import { notificationQueries } from "@/modules/notifications";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
 import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
@@ -28,6 +29,8 @@ export function useCreateGame() {
         description: "Your game has been created successfully.",
       });
       await queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey });
+      await queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      await queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey });
       await router.navigate({ to: "/dashboard" });
     },
     onError: (error) => {
@@ -88,6 +91,8 @@ export function useJoinGame() {
         queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getRecommendedGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
     },
     onError: (error) => {
@@ -209,6 +214,8 @@ export function useCancelGame() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
       await router.navigate({ to: "/dashboard" });
     },

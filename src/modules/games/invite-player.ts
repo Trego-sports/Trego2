@@ -4,6 +4,7 @@ import { z } from "zod";
 import { gameParticipantsTable, gamesTable, usersTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { createNotification } from "@/modules/notifications";
 
 export const INVITE_USER_NOT_FOUND_ERROR = "USER_NOT_FOUND";
 
@@ -30,6 +31,10 @@ export const $invitePlayer = createServerFn({ method: "POST" })
         .select({
           id: gamesTable.id,
           hostId: gamesTable.hostId,
+          sport: gamesTable.sport,
+          title: gamesTable.title,
+          locationName: gamesTable.locationName,
+          scheduledAt: gamesTable.scheduledAt,
           spotsTotal: gamesTable.spotsTotal,
           participantCount: sql<number>`COUNT(${gameParticipantsTable.userId})::int`,
         })
@@ -66,10 +71,14 @@ export const $invitePlayer = createServerFn({ method: "POST" })
 
         targetUserId = userByEmail.id;
       } else {
+        if (!data.userId) {
+          throw new Error("Player not found");
+        }
+
         const [user] = await tx
           .select({ id: usersTable.id })
           .from(usersTable)
-          .where(eq(usersTable.id, data.userId!))
+          .where(eq(usersTable.id, data.userId))
           .limit(1);
 
         if (!user) {
@@ -77,14 +86,20 @@ export const $invitePlayer = createServerFn({ method: "POST" })
         }
       }
 
-      if (targetUserId === context.userId) {
+      if (!targetUserId) {
+        throw new Error("Player not found");
+      }
+
+      const invitedUserId = targetUserId;
+
+      if (invitedUserId === context.userId) {
         throw new Error("You cannot invite yourself to your own game.");
       }
 
       const [existingParticipant] = await tx
         .select({ userId: gameParticipantsTable.userId })
         .from(gameParticipantsTable)
-        .where(and(eq(gameParticipantsTable.gameId, data.gameId), eq(gameParticipantsTable.userId, targetUserId!)))
+        .where(and(eq(gameParticipantsTable.gameId, data.gameId), eq(gameParticipantsTable.userId, invitedUserId)))
         .limit(1);
 
       if (existingParticipant) {
@@ -93,10 +108,26 @@ export const $invitePlayer = createServerFn({ method: "POST" })
 
       await tx.insert(gameParticipantsTable).values({
         gameId: data.gameId,
-        userId: targetUserId!,
+        userId: invitedUserId,
         joinedViaInvite: true,
         invitedBy: context.userId,
         invitedAt: new Date(),
+      });
+
+      await createNotification(tx, {
+        recipientUserId: invitedUserId,
+        actorUserId: context.userId,
+        gameId: data.gameId,
+        type: "game_joined",
+        title: "You were added to a game",
+        body: `The host added you to "${game.title}".`,
+        metadata: {
+          gameTitle: game.title,
+          sport: game.sport,
+          locationName: game.locationName,
+          scheduledAt: game.scheduledAt.toISOString(),
+          joinedViaInvite: true,
+        },
       });
     });
   });

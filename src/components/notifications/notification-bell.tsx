@@ -23,6 +23,7 @@ import { notificationQueries } from "@/modules/notifications/queries";
 const notificationTypeLabels: Record<string, string> = {
   game_joined: "Game joined",
   game_created: "Game created",
+  game_cancelled: "Game cancelled",
   game_announcement: "Game announcement",
   attendance_mark_reminder: "Attendance reminder",
   attendance_result_submitted: "Attendance result",
