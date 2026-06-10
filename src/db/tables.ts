@@ -23,6 +23,7 @@ export type NotificationType =
   | "attendance_result_submitted"
   | "friend_request_received"
   | "friend_request_accepted";
+export type NotificationMetadata = Record<string, string | number | boolean | null>;
 
 export const usersTable = pgTable(
   "users",
@@ -171,7 +172,7 @@ export const notificationsTable = pgTable(
     type: text("type").notNull().$type<NotificationType>(),
     title: text("title").notNull(),
     body: text("body").notNull(),
-    metadata: jsonb("metadata").$type<Record<string, unknown>>(),
+    metadata: jsonb("metadata").$type<NotificationMetadata>(),
     readAt: timestamp("read_at", { withTimezone: true }),
     acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
     deletedAt: timestamp("deleted_at", { withTimezone: true }),
