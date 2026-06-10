@@ -168,9 +168,12 @@ export const gameAnnouncementsTable = pgTable(
   "game_announcements",
   {
     id: text("id").primaryKey(),
-    gameId: text("game_id")
+    gameId: text("game_id").references(() => gamesTable.id, { onDelete: "set null" }),
+    // Denormalised at creation so announcements survive game deletion
+    hostUserId: text("host_user_id")
       .notNull()
-      .references(() => gamesTable.id, { onDelete: "cascade" }),
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    gameTitle: text("game_title").notNull(),
     senderUserId: text("sender_user_id")
       .notNull()
       .references(() => usersTable.id, { onDelete: "cascade" }),

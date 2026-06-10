@@ -12,7 +12,9 @@ type AnnouncementDb = Pick<DBContext, "select">;
 export interface AnnouncementContext {
   announcement: {
     id: string;
-    gameId: string;
+    gameId: string | null;
+    gameTitle: string;
+    hostUserId: string;
     senderUserId: string;
     title: string;
     body: string;
@@ -20,12 +22,9 @@ export interface AnnouncementContext {
     createdAt: Date;
   };
   game: {
-    id: string;
+    id: string | null;
     hostId: string;
     title: string;
-    sport: string;
-    locationName: string;
-    scheduledAt: Date;
   };
   isHost: boolean;
   isRecipient: boolean;
@@ -44,25 +43,27 @@ export async function getAnnouncementContext(
     .select({
       announcementId: gameAnnouncementsTable.id,
       gameId: gameAnnouncementsTable.gameId,
+      gameTitle: gameAnnouncementsTable.gameTitle,
+      hostUserId: gameAnnouncementsTable.hostUserId,
       senderUserId: gameAnnouncementsTable.senderUserId,
-      title: gameAnnouncementsTable.title,
+      announcementTitle: gameAnnouncementsTable.title,
       body: gameAnnouncementsTable.body,
       requiresAck: gameAnnouncementsTable.requiresAck,
       createdAt: gameAnnouncementsTable.createdAt,
-      hostId: gamesTable.hostId,
-      gameTitle: gamesTable.title,
-      sport: gamesTable.sport,
-      locationName: gamesTable.locationName,
-      scheduledAt: gamesTable.scheduledAt,
+      // Game row may be null if game was deleted
+      liveHostId: gamesTable.hostId,
     })
     .from(gameAnnouncementsTable)
-    .innerJoin(gamesTable, eq(gameAnnouncementsTable.gameId, gamesTable.id))
+    .leftJoin(gamesTable, eq(gameAnnouncementsTable.gameId, gamesTable.id))
     .where(eq(gameAnnouncementsTable.id, announcementId))
     .limit(1);
 
   if (!row) {
     return null;
   }
+
+  // Fall back to the denormalised host stored at creation time
+  const effectiveHostId = row.liveHostId ?? row.hostUserId;
 
   const [recipientRecord] = await db
     .select({
@@ -78,26 +79,25 @@ export async function getAnnouncementContext(
     )
     .limit(1);
 
-  const isHost = row.hostId === userId;
+  const isHost = effectiveHostId === userId;
   const isRecipient = recipientRecord !== undefined && row.senderUserId !== userId;
 
   return {
     announcement: {
       id: row.announcementId,
       gameId: row.gameId,
+      gameTitle: row.gameTitle,
+      hostUserId: row.hostUserId,
       senderUserId: row.senderUserId,
-      title: row.title,
+      title: row.announcementTitle,
       body: row.body,
       requiresAck: row.requiresAck,
       createdAt: row.createdAt,
     },
     game: {
       id: row.gameId,
-      hostId: row.hostId,
+      hostId: effectiveHostId,
       title: row.gameTitle,
-      sport: row.sport,
-      locationName: row.locationName,
-      scheduledAt: row.scheduledAt,
     },
     isHost,
     isRecipient,
@@ -116,15 +116,12 @@ export async function getUserName(db: AnnouncementDb, userId: string) {
 }
 
 export function buildAnnouncementMetadata(
-  announcement: Pick<AnnouncementContext["announcement"], "id" | "title">,
+  announcement: Pick<AnnouncementContext["announcement"], "id" | "title" | "gameId" | "gameTitle">,
   game: AnnouncementContext["game"],
   extra?: Record<string, string | number | boolean | null>,
 ) {
   return {
     gameTitle: game.title,
-    sport: game.sport,
-    locationName: game.locationName,
-    scheduledAt: game.scheduledAt.toISOString(),
     announcementId: announcement.id,
     announcementTitle: announcement.title,
     ...extra,

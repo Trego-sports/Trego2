@@ -52,7 +52,7 @@ export const $ackGameAnnouncement = createServerFn({ method: "POST" })
       await createNotification(tx, {
         recipientUserId: announcementContext.game.hostId,
         actorUserId: context.userId,
-        gameId: announcementContext.game.id,
+        gameId: announcementContext.game.id ?? undefined,
         type: "game_announcement_ack",
         title: `Acknowledged: ${announcementContext.announcement.title}`,
         body: `${participantName} acknowledged "${announcementContext.announcement.title}".`,

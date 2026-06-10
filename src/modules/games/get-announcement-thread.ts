@@ -17,7 +17,7 @@ export interface AnnouncementThreadMessage {
 
 export interface AnnouncementThread {
   announcementId: string;
-  gameId: string;
+  gameId: string | null;
   gameTitle: string;
   announcementTitle: string;
   originalBody: string;

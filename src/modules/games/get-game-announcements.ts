@@ -20,10 +20,11 @@ export interface GameAnnouncementRecipient {
 
 export interface GameAnnouncement {
   id: string;
-  gameId: string;
+  gameId: string | null;
   senderUserId: string;
   senderName: string;
   title: string;
+  gameTitle: string;
   body: string;
   audienceType: GameAnnouncementAudienceType;
   requiresAck: boolean;
@@ -57,6 +58,7 @@ export const $getGameAnnouncements = createServerFn({ method: "GET" })
         senderUserId: gameAnnouncementsTable.senderUserId,
         senderName: usersTable.name,
         title: gameAnnouncementsTable.title,
+        gameTitle: gameAnnouncementsTable.gameTitle,
         body: gameAnnouncementsTable.body,
         audienceType: gameAnnouncementsTable.audienceType,
         requiresAck: gameAnnouncementsTable.requiresAck,

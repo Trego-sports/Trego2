@@ -64,6 +64,13 @@
       "when": 1781114193529,
       "tag": "0008_announcement_title",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1781116069284,
+      "tag": "0009_announcement_survive_game_deletion",
+      "breakpoints": true
     }
   ]
 }

@@ -61,7 +61,7 @@ export const $replyGameAnnouncement = createServerFn({ method: "POST" })
       await createNotification(tx, {
         recipientUserId,
         actorUserId: context.userId,
-        gameId: announcementContext.game.id,
+        gameId: announcementContext.game.id ?? undefined,
         type: "game_announcement_reply",
         title: announcementContext.isHost
           ? `Reply: ${announcementContext.announcement.title}`

@@ -88,6 +88,8 @@ export const $sendGameAnnouncement = createServerFn({ method: "POST" })
       await tx.insert(gameAnnouncementsTable).values({
         id: announcementId,
         gameId: data.gameId,
+        hostUserId: game.hostId,
+        gameTitle: game.title,
         senderUserId: context.userId,
         title: data.title,
         body: data.body,
@@ -112,12 +114,9 @@ export const $sendGameAnnouncement = createServerFn({ method: "POST" })
           title: data.title,
           body: data.body,
           metadata: {
-            gameTitle: game.title,
-            sport: game.sport,
-            locationName: game.locationName,
-            scheduledAt: game.scheduledAt.toISOString(),
             announcementId,
             announcementTitle: data.title,
+            gameTitle: game.title,
             audienceType: data.audienceType,
             requiresAck: data.requiresAck,
             threadParticipantUserId: recipientUserId,
