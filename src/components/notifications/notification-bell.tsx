@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { BellIcon, CheckIcon, InboxIcon, Loader2Icon, SearchIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useState } from "react";
+import {
+  AnnouncementNotificationActions,
+  isAnnouncementNotification,
+} from "@/components/notifications/announcement-notification-actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,10 +16,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import {
-  AnnouncementNotificationActions,
-  isAnnouncementNotification,
-} from "@/components/notifications/announcement-notification-actions";
 import type { MyNotification } from "@/modules/notifications/get-my-notifications";
 import {
   useDeleteMultipleNotifications,
@@ -29,6 +29,8 @@ const notificationTypeLabels: Record<string, string> = {
   game_joined: "Game joined",
   game_created: "Game created",
   game_cancelled: "Game cancelled",
+  game_host_transferred: "Host transferred",
+  game_removed: "Removed from game",
   game_announcement: "Game announcement",
   game_announcement_ack: "Announcement ack",
   game_announcement_reply: "Announcement reply",
@@ -196,9 +198,7 @@ export function NotificationBell() {
   const trimmedSearch = searchQuery.trim().toLowerCase();
   const filteredNotifications = trimmedSearch
     ? notifications.filter(
-        (n) =>
-          n.title.toLowerCase().includes(trimmedSearch) ||
-          n.body.toLowerCase().includes(trimmedSearch),
+        (n) => n.title.toLowerCase().includes(trimmedSearch) || n.body.toLowerCase().includes(trimmedSearch),
       )
     : notifications;
   const hasNotifications = notifications.length > 0;
@@ -301,12 +301,7 @@ export function NotificationBell() {
                 ) : (
                   <>
                     {hasNotifications && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setSelectMode(true)}
-                      >
+                      <Button type="button" variant="outline" size="sm" onClick={() => setSelectMode(true)}>
                         Select
                       </Button>
                     )}
@@ -354,9 +349,7 @@ export function NotificationBell() {
                 onChange={handleToggleAll}
                 className="size-4 border"
               />
-              <span className="text-muted-foreground">
-                {allVisibleSelected ? "Deselect all" : "Select all"}
-              </span>
+              <span className="text-muted-foreground">{allVisibleSelected ? "Deselect all" : "Select all"}</span>
               {selectedIds.size > 0 && (
                 <span className="ml-auto text-xs text-muted-foreground">{selectedIds.size} selected</span>
               )}
@@ -398,7 +391,9 @@ export function NotificationBell() {
                 <SearchIcon className="h-8 w-8 text-muted-foreground" />
                 <div>
                   <p className="font-medium">No results</p>
-                  <p className="text-sm text-muted-foreground">No notifications match &ldquo;{searchQuery.trim()}&rdquo;.</p>
+                  <p className="text-sm text-muted-foreground">
+                    No notifications match &ldquo;{searchQuery.trim()}&rdquo;.
+                  </p>
                 </div>
               </div>
             )}
@@ -435,8 +430,12 @@ export function NotificationBell() {
       <Dialog open={confirmBulkDelete} onOpenChange={(open) => !open && setConfirmBulkDelete(false)}>
         <DialogContent showCloseButton={false}>
           <DialogHeader>
-            <DialogTitle>Delete {selectedIds.size} notification{selectedIds.size === 1 ? "" : "s"}?</DialogTitle>
-            <DialogDescription>This removes the selected notifications from your notification center.</DialogDescription>
+            <DialogTitle>
+              Delete {selectedIds.size} notification{selectedIds.size === 1 ? "" : "s"}?
+            </DialogTitle>
+            <DialogDescription>
+              This removes the selected notifications from your notification center.
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
