@@ -113,7 +113,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 </div>
                 <Button
                   type="button"
-                  className="w-full sm:translate-y-1 sm:w-auto"
+                  className="w-full sm:translate-y-2 sm:w-auto"
                   onClick={() => setIsTransferDialogOpen(true)}
                   disabled={!selectedNewHostUserId || transferGameHost.isPending}
                 >
