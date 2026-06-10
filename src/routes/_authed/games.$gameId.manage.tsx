@@ -1,5 +1,6 @@
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
 import { ManageGameForm } from "@/components/forms/manage-game-form";
+import { GameAnnouncementPanel } from "@/components/games/game-announcement-panel";
 import { InvitePlayerPanel } from "@/components/games/invite-player-panel";
 import { gameQueries } from "@/modules/games/queries";
 
@@ -21,6 +22,7 @@ function ManageGamePage() {
         <p className="text-muted-foreground text-sm mt-1.5">Update your game details</p>
       </div>
       <ManageGameForm gameId={gameId} />
+      <GameAnnouncementPanel gameId={gameId} />
       <InvitePlayerPanel gameId={gameId} />
     </div>
   );

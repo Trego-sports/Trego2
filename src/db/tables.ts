@@ -1,9 +1,33 @@
 import { sql } from "drizzle-orm";
-import { boolean, check, index, integer, pgTable, primaryKey, text, timestamp, unique } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  check,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  unique,
+} from "drizzle-orm/pg-core";
 import { geography } from "@/db/utils";
 import type { SkillLevel, Sport } from "@/modules/sports/sports";
 
 export type AttendanceStatus = "present" | "absent";
+export type GameAnnouncementAudienceType = "all" | "selected";
+export type NotificationType =
+  | "game_joined"
+  | "game_created"
+  | "game_cancelled"
+  | "game_announcement"
+  | "game_announcement_ack"
+  | "game_announcement_reply"
+  | "attendance_mark_reminder"
+  | "attendance_result_submitted"
+  | "friend_request_received"
+  | "friend_request_accepted";
+export type NotificationMetadata = Record<string, string | number | boolean | null>;
 
 export const usersTable = pgTable(
   "users",
@@ -137,5 +161,97 @@ export const gameCalendarEventsTable = pgTable(
   (table) => [
     primaryKey({ columns: [table.userId, table.gameId] }),
     index("idx_game_calendar_events_game_id").on(table.gameId),
+  ],
+);
+
+export const gameAnnouncementsTable = pgTable(
+  "game_announcements",
+  {
+    id: text("id").primaryKey(),
+    gameId: text("game_id").references(() => gamesTable.id, { onDelete: "set null" }),
+    // Denormalised at creation so announcements survive game deletion
+    hostUserId: text("host_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    gameTitle: text("game_title").notNull(),
+    senderUserId: text("sender_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    audienceType: text("audience_type").notNull().$type<GameAnnouncementAudienceType>(),
+    requiresAck: boolean("requires_ack").notNull().default(false),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_game_announcements_game_id").on(table.gameId),
+    check("game_announcements_audience_type_check", sql`${table.audienceType} IN ('all', 'selected')`),
+  ],
+);
+
+export const gameAnnouncementRecipientsTable = pgTable(
+  "game_announcement_recipients",
+  {
+    announcementId: text("announcement_id")
+      .notNull()
+      .references(() => gameAnnouncementsTable.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
+  },
+  (table) => [
+    primaryKey({ columns: [table.announcementId, table.userId] }),
+    index("idx_game_announcement_recipients_user_id").on(table.userId),
+  ],
+);
+
+export const gameAnnouncementMessagesTable = pgTable(
+  "game_announcement_messages",
+  {
+    id: text("id").primaryKey(),
+    announcementId: text("announcement_id")
+      .notNull()
+      .references(() => gameAnnouncementsTable.id, { onDelete: "cascade" }),
+    senderUserId: text("sender_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    threadParticipantUserId: text("thread_participant_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_game_announcement_messages_announcement_thread").on(
+      table.announcementId,
+      table.threadParticipantUserId,
+      table.createdAt,
+    ),
+  ],
+);
+
+export const notificationsTable = pgTable(
+  "notifications",
+  {
+    id: text("id").primaryKey(),
+    recipientUserId: text("recipient_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    actorUserId: text("actor_user_id").references(() => usersTable.id, { onDelete: "set null" }),
+    gameId: text("game_id").references(() => gamesTable.id, { onDelete: "set null" }),
+    type: text("type").notNull().$type<NotificationType>(),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    metadata: jsonb("metadata").$type<NotificationMetadata>(),
+    readAt: timestamp("read_at", { withTimezone: true }),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_notifications_recipient_unread").on(table.recipientUserId, table.readAt, table.deletedAt),
+    index("idx_notifications_recipient_recent").on(table.recipientUserId, table.deletedAt, table.createdAt),
+    index("idx_notifications_game_id").on(table.gameId),
   ],
 );

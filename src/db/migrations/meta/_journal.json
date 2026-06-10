@@ -36,6 +36,41 @@
       "when": 1780799774892,
       "tag": "0004_jazzy_miek",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1781109312205,
+      "tag": "0005_lucky_fat_cobra",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1781112939602,
+      "tag": "0006_game_announcements",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1781113738093,
+      "tag": "0007_announcement_interactions",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1781114193529,
+      "tag": "0008_announcement_title",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1781116069284,
+      "tag": "0009_announcement_survive_game_deletion",
+      "breakpoints": true
     }
   ]
 }

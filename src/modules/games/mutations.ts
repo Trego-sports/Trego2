@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
 import { CALENDAR_PROMPT_SESSION_KEY } from "@/modules/calendar/constants";
+import { notificationQueries } from "@/modules/notifications";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
 import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
@@ -10,6 +11,9 @@ import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
 import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
 import { gameQueries } from "./queries";
+import { $ackGameAnnouncement } from "./ack-game-announcement";
+import { $replyGameAnnouncement, type ReplyGameAnnouncementInput } from "./reply-game-announcement";
+import { $sendGameAnnouncement, type SendGameAnnouncementInput } from "./send-game-announcement";
 import { $updateGame, type UpdateGameInput } from "./update-game";
 
 export function useCreateGame() {
@@ -28,6 +32,8 @@ export function useCreateGame() {
         description: "Your game has been created successfully.",
       });
       await queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey });
+      await queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      await queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey });
       await router.navigate({ to: "/dashboard" });
     },
     onError: (error) => {
@@ -88,6 +94,8 @@ export function useJoinGame() {
         queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getRecommendedGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
     },
     onError: (error) => {
@@ -95,6 +103,101 @@ export function useJoinGame() {
         type: "error",
         title: "Failed to join game",
         description: error instanceof Error ? error.message : "An error occurred while joining the game.",
+      });
+    },
+  });
+}
+
+function useInvalidateAnnouncementQueries() {
+  const queryClient = useQueryClient();
+
+  return async (announcementId?: string, gameId?: string) => {
+    const invalidations = [
+      queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+      queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
+      queryClient.invalidateQueries({ queryKey: ["announcement-thread"] }),
+    ];
+
+    if (gameId) {
+      invalidations.push(
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameAnnouncements(gameId).queryKey }),
+      );
+    }
+
+    if (announcementId) {
+      invalidations.push(
+        queryClient.invalidateQueries({ queryKey: ["announcement-thread", announcementId] }),
+      );
+    }
+
+    await Promise.all(invalidations);
+  };
+}
+
+export function useAckGameAnnouncement() {
+  const toast = useToast();
+  const invalidateAnnouncementQueries = useInvalidateAnnouncementQueries();
+  const ackGameAnnouncementFn = useServerFn($ackGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: { announcementId: string }) => await ackGameAnnouncementFn({ data }),
+    onSuccess: async (_, data) => {
+      await invalidateAnnouncementQueries(data.announcementId);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to acknowledge announcement",
+        description: error instanceof Error ? error.message : "An error occurred while acknowledging the announcement.",
+      });
+    },
+  });
+}
+
+export function useReplyGameAnnouncement() {
+  const toast = useToast();
+  const invalidateAnnouncementQueries = useInvalidateAnnouncementQueries();
+  const replyGameAnnouncementFn = useServerFn($replyGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: ReplyGameAnnouncementInput) => await replyGameAnnouncementFn({ data }),
+    onSuccess: async () => {
+      await invalidateAnnouncementQueries();
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to send reply",
+        description: error instanceof Error ? error.message : "An error occurred while sending your reply.",
+      });
+    },
+  });
+}
+
+export function useSendGameAnnouncement() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const sendGameAnnouncementFn = useServerFn($sendGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: SendGameAnnouncementInput) => await sendGameAnnouncementFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Announcement sent",
+        description: "Participants have been notified.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameAnnouncements(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to send announcement",
+        description: error instanceof Error ? error.message : "An error occurred while sending the announcement.",
       });
     },
   });
@@ -180,6 +283,8 @@ export function useMarkAttendance() {
         queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getPastGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
     },
     onError: (error) => {
@@ -209,6 +314,8 @@ export function useCancelGame() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
       await router.navigate({ to: "/dashboard" });
     },
