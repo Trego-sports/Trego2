@@ -23,6 +23,7 @@ export interface AnnouncementThread {
   originalBody: string;
   requiresAck: boolean;
   isHost: boolean;
+  isExpired: boolean;
   canAck: boolean;
   hasAcked: boolean;
   threadParticipantUserId: string;
@@ -109,6 +110,7 @@ export const $getAnnouncementThread = createServerFn({ method: "GET" })
       originalBody: announcementContext.announcement.body,
       requiresAck: announcementContext.announcement.requiresAck,
       isHost: announcementContext.isHost,
+      isExpired: announcementContext.isExpired,
       canAck:
         announcementContext.isRecipient &&
         announcementContext.announcement.requiresAck &&

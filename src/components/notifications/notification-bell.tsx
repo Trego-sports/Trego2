@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BellIcon, CheckIcon, InboxIcon, Loader2Icon, Trash2Icon } from "lucide-react";
+import { BellIcon, CheckIcon, InboxIcon, Loader2Icon, SearchIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -151,6 +151,7 @@ function NotificationListItem({
 
 export function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [notificationToDelete, setNotificationToDelete] = useState<MyNotification | null>(null);
   const { data: unreadCount = 0 } = useQuery(notificationQueries.getUnreadCount());
   const {
@@ -164,8 +165,23 @@ export function NotificationBell() {
   const markRead = useMarkNotificationRead();
   const markAllRead = useMarkAllNotificationsRead();
   const deleteNotification = useDeleteNotification();
+  const trimmedSearch = searchQuery.trim().toLowerCase();
+  const filteredNotifications = trimmedSearch
+    ? notifications.filter(
+        (n) =>
+          n.title.toLowerCase().includes(trimmedSearch) ||
+          n.body.toLowerCase().includes(trimmedSearch),
+      )
+    : notifications;
   const hasNotifications = notifications.length > 0;
   const visibleUnreadCount = unreadCount > 99 ? "99+" : String(unreadCount);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      setSearchQuery("");
+    }
+  };
 
   const handleDeleteConfirm = async () => {
     if (!notificationToDelete) {
@@ -195,7 +211,7 @@ export function NotificationBell() {
         )}
       </Button>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
             <div className="flex items-start justify-between gap-4 pr-8">
@@ -215,15 +231,44 @@ export function NotificationBell() {
             </div>
           </DialogHeader>
 
+          <div className="relative">
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search notifications..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="placeholder:text-muted-foreground bg-input w-full border py-2 pr-8 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label="Clear search"
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
           <div className="max-h-[60vh] overflow-y-auto border">
             {isLoadingNotifications ? (
               <div className="flex min-h-48 items-center justify-center gap-2 text-sm text-muted-foreground">
                 <Loader2Icon className="h-4 w-4 animate-spin" />
                 Loading notifications...
               </div>
-            ) : hasNotifications ? (
+            ) : !hasNotifications ? (
+              <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-6 text-center">
+                <InboxIcon className="h-8 w-8 text-muted-foreground" />
+                <div>
+                  <p className="font-medium">No notifications yet</p>
+                  <p className="text-sm text-muted-foreground">New game and friend updates will appear here.</p>
+                </div>
+              </div>
+            ) : filteredNotifications.length > 0 ? (
               <ul>
-                {notifications.map((notification) => (
+                {filteredNotifications.map((notification) => (
                   <NotificationListItem
                     key={notification.id}
                     notification={notification}
@@ -236,10 +281,10 @@ export function NotificationBell() {
               </ul>
             ) : (
               <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-6 text-center">
-                <InboxIcon className="h-8 w-8 text-muted-foreground" />
+                <SearchIcon className="h-8 w-8 text-muted-foreground" />
                 <div>
-                  <p className="font-medium">No notifications yet</p>
-                  <p className="text-sm text-muted-foreground">New game and friend updates will appear here.</p>
+                  <p className="font-medium">No results</p>
+                  <p className="text-sm text-muted-foreground">No notifications match &ldquo;{searchQuery.trim()}&rdquo;.</p>
                 </div>
               </div>
             )}

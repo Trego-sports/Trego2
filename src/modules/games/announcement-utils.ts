@@ -1,13 +1,17 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull, sql } from "drizzle-orm";
 import {
   gameAnnouncementRecipientsTable,
   gameAnnouncementsTable,
   gamesTable,
+  notificationsTable,
   usersTable,
 } from "@/db/tables";
+import { generateId } from "@/lib/id";
 import type { DBContext } from "@/lib/middleware/db";
+import type { CreateNotificationInput } from "@/modules/notifications/types";
 
 type AnnouncementDb = Pick<DBContext, "select">;
+type AnnouncementWriteDb = Pick<DBContext, "select" | "insert" | "update">;
 
 export interface AnnouncementContext {
   announcement: {
@@ -28,6 +32,7 @@ export interface AnnouncementContext {
   };
   isHost: boolean;
   isRecipient: boolean;
+  isExpired: boolean;
   recipientRecord: {
     userId: string;
     acknowledgedAt: Date | null;
@@ -52,6 +57,8 @@ export async function getAnnouncementContext(
       createdAt: gameAnnouncementsTable.createdAt,
       // Game row may be null if game was deleted
       liveHostId: gamesTable.hostId,
+      scheduledAt: gamesTable.scheduledAt,
+      durationMinutes: gamesTable.durationMinutes,
     })
     .from(gameAnnouncementsTable)
     .leftJoin(gamesTable, eq(gameAnnouncementsTable.gameId, gamesTable.id))
@@ -62,7 +69,6 @@ export async function getAnnouncementContext(
     return null;
   }
 
-  // Fall back to the denormalised host stored at creation time
   const effectiveHostId = row.liveHostId ?? row.hostUserId;
 
   const [recipientRecord] = await db
@@ -81,6 +87,13 @@ export async function getAnnouncementContext(
 
   const isHost = effectiveHostId === userId;
   const isRecipient = recipientRecord !== undefined && row.senderUserId !== userId;
+
+  // Expired if: game was deleted (gameId null) OR game has ended
+  let isExpired = row.gameId === null;
+  if (!isExpired && row.scheduledAt && row.durationMinutes !== null) {
+    const gameEndsAt = new Date(row.scheduledAt.getTime() + row.durationMinutes * 60 * 1000);
+    isExpired = gameEndsAt < new Date();
+  }
 
   return {
     announcement: {
@@ -101,6 +114,7 @@ export async function getAnnouncementContext(
     },
     isHost,
     isRecipient,
+    isExpired,
     recipientRecord: recipientRecord ?? null,
   };
 }
@@ -126,4 +140,59 @@ export function buildAnnouncementMetadata(
     announcementTitle: announcement.title,
     ...extra,
   };
+}
+
+/**
+ * Upserts a notification for an announcement thread.
+ * If a live (non-deleted) notification already exists for this
+ * (recipient, announcementId, threadParticipantUserId) triple, it is
+ * updated in place (and marked unread) so the inbox stays as one entry
+ * per thread rather than accumulating a new row per reply.
+ */
+export async function upsertAnnouncementThreadNotification(
+  db: AnnouncementWriteDb,
+  input: CreateNotificationInput & {
+    announcementId: string;
+    threadParticipantUserId: string;
+  },
+) {
+  const [existing] = await db
+    .select({ id: notificationsTable.id })
+    .from(notificationsTable)
+    .where(
+      and(
+        eq(notificationsTable.recipientUserId, input.recipientUserId),
+        isNull(notificationsTable.deletedAt),
+        sql`${notificationsTable.metadata}->>'announcementId' = ${input.announcementId}`,
+        sql`${notificationsTable.metadata}->>'threadParticipantUserId' = ${input.threadParticipantUserId}`,
+      ),
+    )
+    .limit(1);
+
+  if (existing) {
+    await db
+      .update(notificationsTable)
+      .set({
+        type: input.type,
+        title: input.title,
+        body: input.body,
+        metadata: input.metadata ?? null,
+        actorUserId: input.actorUserId ?? null,
+        gameId: input.gameId ?? null,
+        readAt: null,
+        acknowledgedAt: null,
+      })
+      .where(eq(notificationsTable.id, existing.id));
+  } else {
+    await db.insert(notificationsTable).values({
+      id: generateId("notif"),
+      recipientUserId: input.recipientUserId,
+      actorUserId: input.actorUserId ?? null,
+      gameId: input.gameId ?? null,
+      type: input.type,
+      title: input.title,
+      body: input.body,
+      metadata: input.metadata ?? null,
+    });
+  }
 }

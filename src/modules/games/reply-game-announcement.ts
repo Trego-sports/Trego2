@@ -4,8 +4,7 @@ import { gameAnnouncementMessagesTable } from "@/db/tables";
 import { generateId } from "@/lib/id";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
-import { createNotification } from "@/modules/notifications";
-import { buildAnnouncementMetadata, getAnnouncementContext, getUserName } from "./announcement-utils";
+import { buildAnnouncementMetadata, getAnnouncementContext, getUserName, upsertAnnouncementThreadNotification } from "./announcement-utils";
 
 export const replyGameAnnouncementSchema = z.object({
   announcementId: z.string(),
@@ -24,6 +23,10 @@ export const $replyGameAnnouncement = createServerFn({ method: "POST" })
 
       if (!announcementContext) {
         throw new Error("Announcement not found");
+      }
+
+      if (announcementContext.isExpired) {
+        throw new Error("This announcement session has expired. No new replies can be sent.");
       }
 
       let threadParticipantUserId: string;
@@ -58,22 +61,24 @@ export const $replyGameAnnouncement = createServerFn({ method: "POST" })
 
       const senderName = await getUserName(tx, context.userId);
 
-      await createNotification(tx, {
+      const metadata = buildAnnouncementMetadata(announcementContext.announcement, announcementContext.game, {
+        threadParticipantUserId,
+        senderName,
+        requiresAck: announcementContext.announcement.requiresAck,
+      });
+
+      await upsertAnnouncementThreadNotification(tx, {
         recipientUserId,
         actorUserId: context.userId,
         gameId: announcementContext.game.id ?? undefined,
         type: "game_announcement_reply",
-        title: announcementContext.isHost
-          ? `Reply: ${announcementContext.announcement.title}`
-          : `Reply: ${announcementContext.announcement.title}`,
+        title: `Reply: ${announcementContext.announcement.title}`,
         body: announcementContext.isHost
-          ? `The host replied in "${announcementContext.announcement.title}": ${data.body}`
-          : `${senderName} replied to "${announcementContext.announcement.title}": ${data.body}`,
-        metadata: buildAnnouncementMetadata(announcementContext.announcement, announcementContext.game, {
-          threadParticipantUserId,
-          senderName,
-          requiresAck: announcementContext.announcement.requiresAck,
-        }),
+          ? `The host replied: "${data.body}"`
+          : `${senderName} replied: "${data.body}"`,
+        metadata,
+        announcementId: announcementContext.announcement.id,
+        threadParticipantUserId,
       });
     });
   });

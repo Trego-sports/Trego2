@@ -23,11 +23,10 @@ function getThreadParticipantUserId(notification: MyNotification) {
     return metadataParticipantId;
   }
 
-  if (notification.type === "game_announcement_ack" && notification.actorUserId) {
-    return notification.actorUserId;
-  }
-
-  if (notification.type === "game_announcement_reply" && notification.actorUserId) {
+  if (
+    (notification.type === "game_announcement_ack" || notification.type === "game_announcement_reply") &&
+    notification.actorUserId
+  ) {
     return notification.actorUserId;
   }
 
@@ -45,13 +44,12 @@ export function AnnouncementNotificationActions({ notification }: { notification
 
   const threadParticipantUserId = getThreadParticipantUserId(notification);
 
-  const mayNeedAckActions =
-    notification.type === "game_announcement" || notification.type === "game_announcement_reply";
-
   const { data: threadState } = useQuery({
     ...gameQueries.getAnnouncementThread(announcementId, threadParticipantUserId),
-    enabled: mayNeedAckActions,
+    enabled: true,
   });
+
+  const isExpired = threadState?.isExpired ?? false;
 
   const handleAck = async () => {
     await ackAnnouncement.mutateAsync({ announcementId });
@@ -60,12 +58,12 @@ export function AnnouncementNotificationActions({ notification }: { notification
   return (
     <>
       <div className="flex flex-wrap gap-2">
-        {threadState?.requiresAck && !threadState.isHost && !threadState.hasAcked && (
+        {!isExpired && threadState?.requiresAck && !threadState.isHost && !threadState.hasAcked && (
           <span className="inline-flex items-center border border-amber-700/30 bg-amber-700/10 px-2.5 py-1 text-xs font-medium text-amber-900">
             Acknowledgment required
           </span>
         )}
-        {threadState?.canAck && (
+        {!isExpired && threadState?.canAck && (
           <Button
             type="button"
             variant="outline"
@@ -77,7 +75,7 @@ export function AnnouncementNotificationActions({ notification }: { notification
           </Button>
         )}
         <Button type="button" variant="outline" size="sm" onClick={() => setThreadOpen(true)}>
-          {notification.type === "game_announcement_ack" ? "View thread" : "Reply"}
+          {isExpired ? "View session" : "Reply"}
         </Button>
       </div>
 

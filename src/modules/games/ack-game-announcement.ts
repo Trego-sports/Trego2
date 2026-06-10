@@ -4,8 +4,7 @@ import { z } from "zod";
 import { gameAnnouncementRecipientsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
-import { createNotification } from "@/modules/notifications";
-import { buildAnnouncementMetadata, getAnnouncementContext, getUserName } from "./announcement-utils";
+import { buildAnnouncementMetadata, getAnnouncementContext, getUserName, upsertAnnouncementThreadNotification } from "./announcement-utils";
 
 export const $ackGameAnnouncement = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
@@ -49,18 +48,22 @@ export const $ackGameAnnouncement = createServerFn({ method: "POST" })
 
       const participantName = await getUserName(tx, context.userId);
 
-      await createNotification(tx, {
+      const metadata = buildAnnouncementMetadata(announcementContext.announcement, announcementContext.game, {
+        threadParticipantUserId: context.userId,
+        participantName,
+        requiresAck: announcementContext.announcement.requiresAck,
+      });
+
+      await upsertAnnouncementThreadNotification(tx, {
         recipientUserId: announcementContext.game.hostId,
         actorUserId: context.userId,
         gameId: announcementContext.game.id ?? undefined,
         type: "game_announcement_ack",
         title: `Acknowledged: ${announcementContext.announcement.title}`,
         body: `${participantName} acknowledged "${announcementContext.announcement.title}".`,
-        metadata: buildAnnouncementMetadata(announcementContext.announcement, announcementContext.game, {
-          threadParticipantUserId: context.userId,
-          participantName,
-          requiresAck: announcementContext.announcement.requiresAck,
-        }),
+        metadata,
+        announcementId: announcementContext.announcement.id,
+        threadParticipantUserId: context.userId,
       });
     });
   });
