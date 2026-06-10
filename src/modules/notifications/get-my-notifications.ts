@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
-import { notificationsTable } from "@/db/tables";
+import { type NotificationMetadata, type NotificationType, notificationsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
 
@@ -9,10 +9,24 @@ export const getMyNotificationsSchema = z.object({
   limit: z.number().int().min(1).max(100).default(50),
 });
 
+export interface MyNotification {
+  id: string;
+  recipientUserId: string;
+  actorUserId: string | null;
+  gameId: string | null;
+  type: NotificationType;
+  title: string;
+  body: string;
+  metadata: NotificationMetadata | null;
+  readAt: Date | null;
+  acknowledgedAt: Date | null;
+  createdAt: Date;
+}
+
 export const $getMyNotifications = createServerFn({ method: "GET" })
   .middleware([authMiddleware, dbMiddleware])
   .inputValidator(getMyNotificationsSchema)
-  .handler(async ({ context, data }) => {
+  .handler(async ({ context, data }): Promise<MyNotification[]> => {
     return await context.db
       .select({
         id: notificationsTable.id,
