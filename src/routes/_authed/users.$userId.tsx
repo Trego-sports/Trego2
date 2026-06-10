@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
 import { CalendarIcon, MapPinIcon, UserIcon } from "lucide-react";
+import { AttendanceStatsCard } from "@/components/profile/attendance-stats-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { userQueries } from "@/modules/profile/queries";
 
@@ -71,6 +72,8 @@ function UserViewPage() {
           </div>
         </CardContent>
       </Card>
+
+      <AttendanceStatsCard stats={profile.attendanceStats} />
 
       {profile.games && profile.games.length > 0 && (
         <Card>

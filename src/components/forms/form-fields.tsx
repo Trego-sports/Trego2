@@ -91,6 +91,38 @@ export function NumberField({ label, description, ...inputProps }: NumberFieldPr
   );
 }
 
+interface CheckboxFieldProps
+  extends Omit<React.ComponentProps<typeof Input>, "value" | "onChange" | "onBlur" | "type"> {
+  label: string;
+  description?: string;
+}
+
+export function CheckboxField({ label, description, ...inputProps }: CheckboxFieldProps) {
+  const field = useFieldContext<boolean>();
+  const errors = field.state.meta.errors.map((error) => error?.message ?? String(error)).join(", ");
+
+  return (
+    <div className="grid gap-2">
+      <Label className="items-start gap-3">
+        <Input
+          {...inputProps}
+          type="checkbox"
+          checked={field.state.value ?? false}
+          onBlur={field.handleBlur}
+          onChange={(e) => field.handleChange(e.target.checked)}
+          inputContainerClassName="w-auto pt-0.5"
+          className="h-4 w-4"
+        />
+        <span className="grid gap-1">
+          <span>{label}</span>
+          {description && <span className="text-sm font-normal text-muted-foreground">{description}</span>}
+        </span>
+      </Label>
+      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+    </div>
+  );
+}
+
 interface DateTimeFieldProps
   extends Omit<React.ComponentProps<typeof Input>, "value" | "onChange" | "onBlur" | "type"> {
   label: string;

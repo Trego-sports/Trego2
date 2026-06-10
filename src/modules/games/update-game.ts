@@ -4,6 +4,7 @@ import { z } from "zod";
 import { gamesTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { syncGameForAllParticipants } from "@/modules/calendar/sync";
 import { createGameSchema } from "./create-game";
 
 export const updateGameSchema = createGameSchema.omit({ sport: true }).extend({ gameId: z.string() });
@@ -23,9 +24,14 @@ export const $updateGame = createServerFn({ method: "POST" })
         durationMinutes: data.durationMinutes,
         allowedSkillLevels: data.allowedSkillLevels,
         spotsTotal: data.spotsTotal,
+        requiresAttendanceScore: data.requiresAttendanceScore,
+        minimumAttendanceScore: data.requiresAttendanceScore ? data.minimumAttendanceScore : null,
+        allowPlayersWithoutAttendanceHistory: data.allowPlayersWithoutAttendanceHistory,
       })
       .where(and(eq(gamesTable.id, data.gameId), eq(gamesTable.hostId, context.userId)))
       .returning({ id: gamesTable.id });
 
     if (updated.length === 0) throw new Error("Game not found");
+
+    await syncGameForAllParticipants(context.db, data.gameId);
   });

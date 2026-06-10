@@ -1,5 +1,6 @@
 import { Link, useMatchRoute, useRouter } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "lucide-react";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { Button } from "@/components/ui/button";
 import { $clearSession } from "@/lib/session";
 import tregoLogo from "@/static/trego1.avif";
@@ -39,9 +40,12 @@ export function TopBar() {
             <h1 className="text-xl font-bold">Trego</h1>
           </Link>
         )}
-        <Button variant="ghost" onClick={handleLogout}>
-          Logout
-        </Button>
+        <div className="flex items-center gap-2">
+          <NotificationBell />
+          <Button variant="ghost" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );

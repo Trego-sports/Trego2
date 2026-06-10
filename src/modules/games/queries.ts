@@ -1,7 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
 import { $getGame } from "./get-game";
+import { $getAnnouncementThread } from "./get-announcement-thread";
+import { $getGameAnnouncements } from "./get-game-announcements";
 import { $getGameParticipants } from "./get-game-participants";
-import { $getPastGamesBySport } from "./get-past-games-by-sport";
+import { $getInviteCandidates } from "./get-invite-candidates";
+import { $getPastGames } from "./get-past-games";
 import { $getRecommendedGames } from "./get-recommended-games";
 import { $getUpcomingGames } from "./get-upcoming-games";
 
@@ -24,15 +27,36 @@ export const gameQueries = {
       queryFn: async () => await $getGameParticipants({ data: { gameId } }),
     }),
 
+  getGameAnnouncements: (gameId: string) =>
+    queryOptions({
+      queryKey: ["game-announcements", gameId],
+      queryFn: async () => await $getGameAnnouncements({ data: { gameId } }),
+    }),
+
+  getAnnouncementThread: (announcementId: string, threadParticipantUserId?: string) =>
+    queryOptions({
+      queryKey: ["announcement-thread", announcementId, threadParticipantUserId ?? "self"],
+      queryFn: async () =>
+        await $getAnnouncementThread({
+          data: { announcementId, threadParticipantUserId },
+        }),
+    }),
+
+  getInviteCandidates: (gameId: string) =>
+    queryOptions({
+      queryKey: ["game-invite-candidates", gameId],
+      queryFn: async () => await $getInviteCandidates({ data: { gameId } }),
+    }),
+
   getRecommendedGames: () =>
     queryOptions({
       queryKey: ["recommended-games"],
       queryFn: async () => await $getRecommendedGames(),
     }),
 
-  getPastGamesBySport: () =>
+  getPastGames: () =>
     queryOptions({
-      queryKey: ["past-games-by-sport"],
-      queryFn: async () => await $getPastGamesBySport(),
+      queryKey: ["past-games"],
+      queryFn: async () => await $getPastGames(),
     }),
 };

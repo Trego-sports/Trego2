@@ -4,21 +4,40 @@ import { gameParticipantsTable, gamesTable } from "@/db/tables";
 import { generateId } from "@/lib/id";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { upsertGameEvent } from "@/modules/calendar/sync";
+import { createNotification } from "@/modules/notifications";
 import { skillLevelSchema, sportsSchema } from "@/modules/sports/sports";
 
-export const createGameSchema = z.object({
-  sport: sportsSchema,
-  title: z.string().min(1, "Title is required").max(100, "Title too long"),
-  locationName: z.string().min(1, "Location name is required").max(200, "Location name too long"),
-  location: z.object({
-    lat: z.coerce.number<string>().min(-90).max(90),
-    lon: z.coerce.number<string>().min(-180).max(180),
-  }),
-  scheduledAt: z.date().min(new Date(Date.now() + 60000), "Scheduled at must be in the future"),
-  durationMinutes: z.int().positive("Duration must be positive"),
-  allowedSkillLevels: z.array(skillLevelSchema).min(1, "Select at least one skill level"),
-  spotsTotal: z.int().min(2, "Need at least 2 spots"),
-});
+export const createGameSchema = z
+  .object({
+    sport: sportsSchema,
+    title: z.string().min(1, "Title is required").max(100, "Title too long"),
+    locationName: z.string().min(1, "Location name is required").max(200, "Location name too long"),
+    location: z.object({
+      lat: z.coerce.number<string>().min(-90).max(90),
+      lon: z.coerce.number<string>().min(-180).max(180),
+    }),
+    scheduledAt: z.date().min(new Date(Date.now() + 60000), "Scheduled at must be in the future"),
+    durationMinutes: z.int().positive("Duration must be positive"),
+    allowedSkillLevels: z.array(skillLevelSchema).min(1, "Select at least one skill level"),
+    spotsTotal: z.int().min(2, "Need at least 2 spots"),
+    requiresAttendanceScore: z.boolean().default(false),
+    minimumAttendanceScore: z
+      .int()
+      .min(0, "Minimum attendance score must be at least 0")
+      .max(100, "Minimum attendance score cannot exceed 100")
+      .nullable(),
+    allowPlayersWithoutAttendanceHistory: z.boolean().default(true),
+  })
+  .superRefine((data, ctx) => {
+    if (data.requiresAttendanceScore && data.minimumAttendanceScore === null) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["minimumAttendanceScore"],
+        message: "Minimum attendance score is required when attendance restriction is enabled",
+      });
+    }
+  });
 export type CreateGameInput = z.input<typeof createGameSchema>;
 
 export const $createGame = createServerFn({ method: "POST" })
@@ -39,10 +58,30 @@ export const $createGame = createServerFn({ method: "POST" })
         durationMinutes: data.durationMinutes,
         allowedSkillLevels: data.allowedSkillLevels,
         spotsTotal: data.spotsTotal,
+        requiresAttendanceScore: data.requiresAttendanceScore,
+        minimumAttendanceScore: data.requiresAttendanceScore ? data.minimumAttendanceScore : null,
+        allowPlayersWithoutAttendanceHistory: data.allowPlayersWithoutAttendanceHistory,
         hostId: context.userId,
       });
 
       // Automatically add the host as a participant
       await tx.insert(gameParticipantsTable).values({ gameId: gameId, userId: context.userId });
+
+      await createNotification(tx, {
+        recipientUserId: context.userId,
+        actorUserId: context.userId,
+        gameId,
+        type: "game_created",
+        title: "Game created",
+        body: `Your ${data.sport} game "${data.title}" has been created.`,
+        metadata: {
+          gameTitle: data.title,
+          sport: data.sport,
+          locationName: data.locationName,
+          scheduledAt: data.scheduledAt.toISOString(),
+        },
+      });
     });
+
+    await upsertGameEvent(context.db, context.userId, gameId);
   });

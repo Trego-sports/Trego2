@@ -65,7 +65,23 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
 SESSION_SECRET=any-random-string
+
+# Optional: separate secret for encrypting Google Calendar refresh tokens (defaults to SESSION_SECRET)
+# CALENDAR_TOKEN_SECRET=another-random-string
 ```
+
+### Google Calendar integration (optional)
+
+To enable automatic game reminders in Google Calendar:
+
+1. In [Google Cloud Console](https://console.cloud.google.com/), enable the **Google Calendar API** for your project.
+2. On the OAuth consent screen, add the scope `https://www.googleapis.com/auth/calendar.events`.
+3. Under **Credentials** → your OAuth client → **Authorized redirect URIs**, add:
+   - `http://localhost:5173/api/callbacks/google-calendar` (local dev)
+   - Your production URL with the same path (e.g. `https://your-domain.com/api/callbacks/google-calendar`)
+4. Login OAuth (`/api/callbacks/google`) stays on `email` + `profile` only. Calendar access uses a **separate** connect flow from Profile or after creating/joining a game.
+
+**Production note:** Sensitive scopes such as `calendar.events` require [Google OAuth verification](https://support.google.com/cloud/answer/9110914) before public use. Until verified, only test users added in the consent screen can connect Calendar.
 
 ### 5. Run Database Migrations
 
