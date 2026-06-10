@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { $getGame } from "./get-game";
+import { $getGameAnnouncements } from "./get-game-announcements";
 import { $getGameParticipants } from "./get-game-participants";
 import { $getInviteCandidates } from "./get-invite-candidates";
 import { $getPastGames } from "./get-past-games";
@@ -23,6 +24,12 @@ export const gameQueries = {
     queryOptions({
       queryKey: ["game-participants", gameId],
       queryFn: async () => await $getGameParticipants({ data: { gameId } }),
+    }),
+
+  getGameAnnouncements: (gameId: string) =>
+    queryOptions({
+      queryKey: ["game-announcements", gameId],
+      queryFn: async () => await $getGameAnnouncements({ data: { gameId } }),
     }),
 
   getInviteCandidates: (gameId: string) =>

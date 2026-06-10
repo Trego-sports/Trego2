@@ -15,6 +15,7 @@ import { geography } from "@/db/utils";
 import type { SkillLevel, Sport } from "@/modules/sports/sports";
 
 export type AttendanceStatus = "present" | "absent";
+export type GameAnnouncementAudienceType = "all" | "selected";
 export type NotificationType =
   | "game_joined"
   | "game_created"
@@ -158,6 +159,42 @@ export const gameCalendarEventsTable = pgTable(
   (table) => [
     primaryKey({ columns: [table.userId, table.gameId] }),
     index("idx_game_calendar_events_game_id").on(table.gameId),
+  ],
+);
+
+export const gameAnnouncementsTable = pgTable(
+  "game_announcements",
+  {
+    id: text("id").primaryKey(),
+    gameId: text("game_id")
+      .notNull()
+      .references(() => gamesTable.id, { onDelete: "cascade" }),
+    senderUserId: text("sender_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    audienceType: text("audience_type").notNull().$type<GameAnnouncementAudienceType>(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_game_announcements_game_id").on(table.gameId),
+    check("game_announcements_audience_type_check", sql`${table.audienceType} IN ('all', 'selected')`),
+  ],
+);
+
+export const gameAnnouncementRecipientsTable = pgTable(
+  "game_announcement_recipients",
+  {
+    announcementId: text("announcement_id")
+      .notNull()
+      .references(() => gameAnnouncementsTable.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    primaryKey({ columns: [table.announcementId, table.userId] }),
+    index("idx_game_announcement_recipients_user_id").on(table.userId),
   ],
 );
 

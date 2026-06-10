@@ -11,6 +11,7 @@ import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
 import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
 import { gameQueries } from "./queries";
+import { $sendGameAnnouncement, type SendGameAnnouncementInput } from "./send-game-announcement";
 import { $updateGame, type UpdateGameInput } from "./update-game";
 
 export function useCreateGame() {
@@ -100,6 +101,35 @@ export function useJoinGame() {
         type: "error",
         title: "Failed to join game",
         description: error instanceof Error ? error.message : "An error occurred while joining the game.",
+      });
+    },
+  });
+}
+
+export function useSendGameAnnouncement() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const sendGameAnnouncementFn = useServerFn($sendGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: SendGameAnnouncementInput) => await sendGameAnnouncementFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Announcement sent",
+        description: "Participants have been notified.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameAnnouncements(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to send announcement",
+        description: error instanceof Error ? error.message : "An error occurred while sending the announcement.",
       });
     },
   });
