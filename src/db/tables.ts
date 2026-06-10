@@ -1,9 +1,28 @@
 import { sql } from "drizzle-orm";
-import { boolean, check, index, integer, pgTable, primaryKey, text, timestamp, unique } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  check,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  unique,
+} from "drizzle-orm/pg-core";
 import { geography } from "@/db/utils";
 import type { SkillLevel, Sport } from "@/modules/sports/sports";
 
 export type AttendanceStatus = "present" | "absent";
+export type NotificationType =
+  | "game_joined"
+  | "game_created"
+  | "game_announcement"
+  | "attendance_mark_reminder"
+  | "attendance_result_submitted"
+  | "friend_request_received"
+  | "friend_request_accepted";
 
 export const usersTable = pgTable(
   "users",
@@ -137,5 +156,30 @@ export const gameCalendarEventsTable = pgTable(
   (table) => [
     primaryKey({ columns: [table.userId, table.gameId] }),
     index("idx_game_calendar_events_game_id").on(table.gameId),
+  ],
+);
+
+export const notificationsTable = pgTable(
+  "notifications",
+  {
+    id: text("id").primaryKey(),
+    recipientUserId: text("recipient_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    actorUserId: text("actor_user_id").references(() => usersTable.id, { onDelete: "set null" }),
+    gameId: text("game_id").references(() => gamesTable.id, { onDelete: "set null" }),
+    type: text("type").notNull().$type<NotificationType>(),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>(),
+    readAt: timestamp("read_at", { withTimezone: true }),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_notifications_recipient_unread").on(table.recipientUserId, table.readAt, table.deletedAt),
+    index("idx_notifications_recipient_recent").on(table.recipientUserId, table.deletedAt, table.createdAt),
+    index("idx_notifications_game_id").on(table.gameId),
   ],
 );

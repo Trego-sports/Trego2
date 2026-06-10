@@ -3,6 +3,7 @@ import {
   gameCalendarEventsTable,
   gameParticipantsTable,
   gamesTable,
+  notificationsTable,
   oauthAccountsTable,
   playerSportsTable,
   userCalendarIntegrationsTable,
@@ -18,6 +19,8 @@ export const usersRelations = relations(usersTable, ({ one, many }) => ({
   invitedParticipantRecords: many(gameParticipantsTable, { relationName: "participantInvitedBy" }),
   calendarIntegration: one(userCalendarIntegrationsTable),
   calendarEvents: many(gameCalendarEventsTable),
+  receivedNotifications: many(notificationsTable, { relationName: "notificationRecipient" }),
+  actedNotifications: many(notificationsTable, { relationName: "notificationActor" }),
 }));
 
 export const oauthAccountsRelations = relations(oauthAccountsTable, ({ one }) => ({
@@ -40,6 +43,7 @@ export const gamesRelations = relations(gamesTable, ({ one, many }) => ({
     references: [usersTable.id],
   }),
   participants: many(gameParticipantsTable),
+  notifications: many(notificationsTable),
 }));
 
 export const gameParticipantsRelations = relations(gameParticipantsTable, ({ one }) => ({
@@ -78,6 +82,23 @@ export const gameCalendarEventsRelations = relations(gameCalendarEventsTable, ({
   }),
   game: one(gamesTable, {
     fields: [gameCalendarEventsTable.gameId],
+    references: [gamesTable.id],
+  }),
+}));
+
+export const notificationsRelations = relations(notificationsTable, ({ one }) => ({
+  recipient: one(usersTable, {
+    fields: [notificationsTable.recipientUserId],
+    references: [usersTable.id],
+    relationName: "notificationRecipient",
+  }),
+  actor: one(usersTable, {
+    fields: [notificationsTable.actorUserId],
+    references: [usersTable.id],
+    relationName: "notificationActor",
+  }),
+  game: one(gamesTable, {
+    fields: [notificationsTable.gameId],
     references: [gamesTable.id],
   }),
 }));
