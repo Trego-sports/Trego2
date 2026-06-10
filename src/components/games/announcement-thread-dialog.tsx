@@ -12,11 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useAckGameAnnouncement, useReplyGameAnnouncement } from "@/modules/games/mutations";
+import { useMarkNotificationRead } from "@/modules/notifications/mutations";
 import { gameQueries } from "@/modules/games/queries";
 
 interface AnnouncementThreadDialogProps {
   announcementId: string;
   threadParticipantUserId?: string;
+  notificationId?: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -39,12 +41,14 @@ function formatMessageTime(value: Date | string) {
 export function AnnouncementThreadDialog({
   announcementId,
   threadParticipantUserId,
+  notificationId,
   open,
   onOpenChange,
 }: AnnouncementThreadDialogProps) {
   const [replyBody, setReplyBody] = useState("");
   const ackAnnouncement = useAckGameAnnouncement();
   const replyAnnouncement = useReplyGameAnnouncement();
+  const markRead = useMarkNotificationRead();
 
   const {
     data: thread,
@@ -82,6 +86,10 @@ export function AnnouncementThreadDialog({
     });
 
     setReplyBody("");
+    // Mark the notification as read now that the user has replied
+    if (notificationId) {
+      markRead.mutate({ notificationId });
+    }
     await refetch();
   };
 

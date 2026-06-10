@@ -18,6 +18,7 @@ import {
 } from "@/components/notifications/announcement-notification-actions";
 import type { MyNotification } from "@/modules/notifications/get-my-notifications";
 import {
+  useDeleteMultipleNotifications,
   useDeleteNotification,
   useMarkAllNotificationsRead,
   useMarkNotificationRead,
@@ -85,26 +86,42 @@ function NotificationListItem({
   onDelete,
   isMarkingRead,
   isDeleting,
+  selectMode,
+  isSelected,
+  onToggleSelect,
 }: {
   notification: MyNotification;
   onMarkRead: (notificationId: string) => void;
   onDelete: (notification: MyNotification) => void;
   isMarkingRead: boolean;
   isDeleting: boolean;
+  selectMode: boolean;
+  isSelected: boolean;
+  onToggleSelect: (id: string) => void;
 }) {
   const isUnread = !notification.readAt;
   const attendanceStatus = getAttendanceStatus(notification);
 
   return (
-    <li className={cn("border-b px-1 py-4 last:border-b-0", isUnread && "bg-accent/30")}>
+    <li className={cn("border-b px-1 py-4 last:border-b-0", isUnread && "bg-accent/30", isSelected && "bg-primary/5")}>
       <div className="flex items-start gap-3">
-        <span
-          className={cn(
-            "mt-2 size-2 shrink-0 border",
-            isUnread ? "border-primary bg-primary" : "border-muted-foreground bg-transparent",
-          )}
-          aria-hidden="true"
-        />
+        {selectMode ? (
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => onToggleSelect(notification.id)}
+            className="mt-2 size-4 shrink-0 cursor-pointer border"
+            aria-label={`Select notification: ${notification.title}`}
+          />
+        ) : (
+          <span
+            className={cn(
+              "mt-2 size-2 shrink-0 border",
+              isUnread ? "border-primary bg-primary" : "border-muted-foreground bg-transparent",
+            )}
+            aria-hidden="true"
+          />
+        )}
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <p className="font-medium leading-snug">{notification.title}</p>
@@ -115,35 +132,39 @@ function NotificationListItem({
           </div>
           <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{notification.body}</p>
           {attendanceStatus && <AttendanceNotificationStatus status={attendanceStatus} />}
-          {isAnnouncementNotification(notification) && <AnnouncementNotificationActions notification={notification} />}
+          {!selectMode && isAnnouncementNotification(notification) && (
+            <AnnouncementNotificationActions notification={notification} />
+          )}
           <p className="text-xs text-muted-foreground">{formatNotificationTime(notification.createdAt)}</p>
         </div>
-        <div className="flex shrink-0 items-center gap-1">
-          {isUnread && (
+        {!selectMode && (
+          <div className="flex shrink-0 items-center gap-1">
+            {isUnread && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Mark notification as read"
+                title="Mark as read"
+                onClick={() => onMarkRead(notification.id)}
+                disabled={isMarkingRead}
+              >
+                {isMarkingRead ? <Loader2Icon className="animate-spin" /> : <CheckIcon />}
+              </Button>
+            )}
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Mark notification as read"
-              title="Mark as read"
-              onClick={() => onMarkRead(notification.id)}
-              disabled={isMarkingRead}
+              aria-label="Delete notification"
+              title="Delete"
+              onClick={() => onDelete(notification)}
+              disabled={isDeleting}
             >
-              {isMarkingRead ? <Loader2Icon className="animate-spin" /> : <CheckIcon />}
+              <Trash2Icon />
             </Button>
-          )}
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Delete notification"
-            title="Delete"
-            onClick={() => onDelete(notification)}
-            disabled={isDeleting}
-          >
-            <Trash2Icon />
-          </Button>
-        </div>
+          </div>
+        )}
       </div>
     </li>
   );
@@ -152,7 +173,11 @@ function NotificationListItem({
 export function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [notificationToDelete, setNotificationToDelete] = useState<MyNotification | null>(null);
+  const [confirmBulkDelete, setConfirmBulkDelete] = useState(false);
+
   const { data: unreadCount = 0 } = useQuery(notificationQueries.getUnreadCount());
   const {
     data: notifications = [],
@@ -162,9 +187,12 @@ export function NotificationBell() {
     ...notificationQueries.getMyNotifications(),
     enabled: isOpen,
   });
+
   const markRead = useMarkNotificationRead();
   const markAllRead = useMarkAllNotificationsRead();
   const deleteNotification = useDeleteNotification();
+  const deleteMultiple = useDeleteMultipleNotifications();
+
   const trimmedSearch = searchQuery.trim().toLowerCase();
   const filteredNotifications = trimmedSearch
     ? notifications.filter(
@@ -176,18 +204,52 @@ export function NotificationBell() {
   const hasNotifications = notifications.length > 0;
   const visibleUnreadCount = unreadCount > 99 ? "99+" : String(unreadCount);
 
+  const allVisibleSelected =
+    filteredNotifications.length > 0 && filteredNotifications.every((n) => selectedIds.has(n.id));
+
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
       setSearchQuery("");
+      setSelectMode(false);
+      setSelectedIds(new Set());
     }
   };
 
-  const handleDeleteConfirm = async () => {
-    if (!notificationToDelete) {
-      return;
-    }
+  const exitSelectMode = () => {
+    setSelectMode(false);
+    setSelectedIds(new Set());
+  };
 
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const handleToggleAll = () => {
+    if (allVisibleSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredNotifications.map((n) => n.id)));
+    }
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    await deleteMultiple.mutateAsync([...selectedIds]);
+    setSelectedIds(new Set());
+    setSelectMode(false);
+    setConfirmBulkDelete(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!notificationToDelete) return;
     await deleteNotification.mutateAsync({ notificationId: notificationToDelete.id });
     setNotificationToDelete(null);
   };
@@ -219,15 +281,47 @@ export function NotificationBell() {
                 <DialogTitle>Notifications</DialogTitle>
                 <DialogDescription>Read recent updates from games, attendance, and friend activity.</DialogDescription>
               </div>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => markAllRead.mutate()}
-                disabled={unreadCount === 0 || markAllRead.isPending}
-              >
-                {markAllRead.isPending ? "Marking..." : "Mark all read"}
-              </Button>
+              <div className="flex shrink-0 items-center gap-2">
+                {selectMode ? (
+                  <>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => setConfirmBulkDelete(true)}
+                      disabled={selectedIds.size === 0 || deleteMultiple.isPending}
+                    >
+                      <Trash2Icon className="mr-1.5 h-3.5 w-3.5" />
+                      Delete ({selectedIds.size})
+                    </Button>
+                    <Button type="button" variant="outline" size="sm" onClick={exitSelectMode}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {hasNotifications && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSelectMode(true)}
+                      >
+                        Select
+                      </Button>
+                    )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => markAllRead.mutate()}
+                      disabled={unreadCount === 0 || markAllRead.isPending}
+                    >
+                      {markAllRead.isPending ? "Marking..." : "Mark all read"}
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </DialogHeader>
 
@@ -252,7 +346,24 @@ export function NotificationBell() {
             )}
           </div>
 
-          <div className="max-h-[60vh] overflow-y-auto border">
+          {selectMode && filteredNotifications.length > 0 && (
+            <label className="flex cursor-pointer items-center gap-2 px-1 text-sm">
+              <input
+                type="checkbox"
+                checked={allVisibleSelected}
+                onChange={handleToggleAll}
+                className="size-4 border"
+              />
+              <span className="text-muted-foreground">
+                {allVisibleSelected ? "Deselect all" : "Select all"}
+              </span>
+              {selectedIds.size > 0 && (
+                <span className="ml-auto text-xs text-muted-foreground">{selectedIds.size} selected</span>
+              )}
+            </label>
+          )}
+
+          <div className="max-h-[55vh] overflow-y-auto border">
             {isLoadingNotifications ? (
               <div className="flex min-h-48 items-center justify-center gap-2 text-sm text-muted-foreground">
                 <Loader2Icon className="h-4 w-4 animate-spin" />
@@ -276,6 +387,9 @@ export function NotificationBell() {
                     onDelete={setNotificationToDelete}
                     isMarkingRead={markRead.isPending}
                     isDeleting={deleteNotification.isPending}
+                    selectMode={selectMode}
+                    isSelected={selectedIds.has(notification.id)}
+                    onToggleSelect={handleToggleSelect}
                   />
                 ))}
               </ul>
@@ -296,6 +410,7 @@ export function NotificationBell() {
         </DialogContent>
       </Dialog>
 
+      {/* Single delete confirm */}
       <Dialog open={!!notificationToDelete} onOpenChange={(open) => !open && setNotificationToDelete(null)}>
         <DialogContent showCloseButton={false}>
           <DialogHeader>
@@ -311,6 +426,27 @@ export function NotificationBell() {
               disabled={deleteNotification.isPending}
             >
               {deleteNotification.isPending ? "Deleting..." : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Bulk delete confirm */}
+      <Dialog open={confirmBulkDelete} onOpenChange={(open) => !open && setConfirmBulkDelete(false)}>
+        <DialogContent showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Delete {selectedIds.size} notification{selectedIds.size === 1 ? "" : "s"}?</DialogTitle>
+            <DialogDescription>This removes the selected notifications from your notification center.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleBulkDeleteConfirm}
+              disabled={deleteMultiple.isPending}
+            >
+              {deleteMultiple.isPending ? "Deleting..." : `Delete ${selectedIds.size}`}
             </Button>
           </DialogFooter>
         </DialogContent>

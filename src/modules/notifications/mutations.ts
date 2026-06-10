@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
 import { $acknowledgeNotification } from "./acknowledge-notification";
+import { $deleteMultipleNotifications } from "./delete-multiple-notifications";
 import { $deleteNotification } from "./delete-notification";
 import { $markAllNotificationsRead } from "./mark-all-notifications-read";
 import { $markNotificationRead, type NotificationIdInput } from "./mark-notification-read";
@@ -45,6 +46,31 @@ export function useAcknowledgeNotification() {
   return useMutation({
     mutationFn: async (data: NotificationIdInput) => await acknowledgeNotificationFn({ data }),
     onSuccess: invalidateNotificationQueries,
+  });
+}
+
+export function useDeleteMultipleNotifications() {
+  const toast = useToast();
+  const invalidateNotificationQueries = useInvalidateNotificationQueries();
+  const deleteMultipleFn = useServerFn($deleteMultipleNotifications);
+
+  return useMutation({
+    mutationFn: async (notificationIds: string[]) => await deleteMultipleFn({ data: { notificationIds } }),
+    onSuccess: async (_, ids) => {
+      toast.add({
+        type: "success",
+        title: `${ids.length} notification${ids.length === 1 ? "" : "s"} deleted`,
+        description: "Selected notifications have been removed.",
+      });
+      await invalidateNotificationQueries();
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to delete notifications",
+        description: error instanceof Error ? error.message : "An error occurred.",
+      });
+    },
   });
 }
 

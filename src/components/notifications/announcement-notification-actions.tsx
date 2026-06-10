@@ -33,7 +33,11 @@ function getThreadParticipantUserId(notification: MyNotification) {
   return undefined;
 }
 
-export function AnnouncementNotificationActions({ notification }: { notification: MyNotification }) {
+export function AnnouncementNotificationActions({
+  notification,
+}: {
+  notification: MyNotification;
+}) {
   const [threadOpen, setThreadOpen] = useState(false);
   const ackAnnouncement = useAckGameAnnouncement();
   const announcementId = notification.metadata?.announcementId;
@@ -82,6 +86,7 @@ export function AnnouncementNotificationActions({ notification }: { notification
       <AnnouncementThreadDialog
         announcementId={announcementId}
         threadParticipantUserId={threadParticipantUserId}
+        notificationId={notification.id}
         open={threadOpen}
         onOpenChange={setThreadOpen}
       />
