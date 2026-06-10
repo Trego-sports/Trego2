@@ -46,6 +46,33 @@ function formatNotificationTime(value: Date | string) {
   }).format(date);
 }
 
+function AttendanceNotificationStatus({ status }: { status: "present" | "absent" }) {
+  const isPresent = status === "present";
+
+  return (
+    <span
+      className={cn(
+        "inline-flex w-fit items-center border px-2.5 py-1 text-xs font-semibold",
+        isPresent
+          ? "border-green-700/30 bg-green-700/10 text-green-800"
+          : "border-red-700/30 bg-red-700/10 text-red-800",
+      )}
+    >
+      {isPresent ? "Present" : "Absent"}
+    </span>
+  );
+}
+
+function getAttendanceStatus(notification: MyNotification) {
+  const status = notification.metadata?.attendanceStatus;
+
+  if (status === "present" || status === "absent") {
+    return status;
+  }
+
+  return null;
+}
+
 function NotificationListItem({
   notification,
   onMarkRead,
@@ -60,6 +87,7 @@ function NotificationListItem({
   isDeleting: boolean;
 }) {
   const isUnread = !notification.readAt;
+  const attendanceStatus = getAttendanceStatus(notification);
 
   return (
     <li className={cn("border-b px-1 py-4 last:border-b-0", isUnread && "bg-accent/30")}>
@@ -80,6 +108,7 @@ function NotificationListItem({
             </span>
           </div>
           <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{notification.body}</p>
+          {attendanceStatus && <AttendanceNotificationStatus status={attendanceStatus} />}
           <p className="text-xs text-muted-foreground">{formatNotificationTime(notification.createdAt)}</p>
         </div>
         <div className="flex shrink-0 items-center gap-1">

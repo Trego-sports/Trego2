@@ -185,6 +185,8 @@ export function useMarkAttendance() {
         queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
         queryClient.invalidateQueries({ queryKey: gameQueries.getPastGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
       ]);
     },
     onError: (error) => {

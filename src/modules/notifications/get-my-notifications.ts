@@ -4,6 +4,7 @@ import { z } from "zod";
 import { type NotificationMetadata, type NotificationType, notificationsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { ensureAttendanceReminders } from "./ensure-attendance-reminders";
 
 export const getMyNotificationsSchema = z.object({
   limit: z.number().int().min(1).max(100).default(50),
@@ -27,6 +28,8 @@ export const $getMyNotifications = createServerFn({ method: "GET" })
   .middleware([authMiddleware, dbMiddleware])
   .inputValidator(getMyNotificationsSchema)
   .handler(async ({ context, data }): Promise<MyNotification[]> => {
+    await ensureAttendanceReminders(context.db, context.userId);
+
     return await context.db
       .select({
         id: notificationsTable.id,

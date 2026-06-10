@@ -4,6 +4,7 @@ import { z } from "zod";
 import { gameParticipantsTable, gamesTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
+import { createNotifications } from "@/modules/notifications";
 
 const attendanceStatusSchema = z.enum(["present", "absent"]).nullable();
 
@@ -34,6 +35,9 @@ export const $markAttendance = createServerFn({ method: "POST" })
         .select({
           id: gamesTable.id,
           hostId: gamesTable.hostId,
+          sport: gamesTable.sport,
+          title: gamesTable.title,
+          locationName: gamesTable.locationName,
           scheduledAt: gamesTable.scheduledAt,
           durationMinutes: gamesTable.durationMinutes,
           attendanceFinalizedAt: gamesTable.attendanceFinalizedAt,
@@ -98,5 +102,27 @@ export const $markAttendance = createServerFn({ method: "POST" })
           attendanceFinalizedBy: context.userId,
         })
         .where(eq(gamesTable.id, data.gameId));
+
+      await createNotifications(
+        tx,
+        data.attendance.map((record) => ({
+          recipientUserId: record.userId,
+          actorUserId: context.userId,
+          gameId: data.gameId,
+          type: "attendance_result_submitted",
+          title: "Attendance submitted",
+          body:
+            record.status === null
+              ? `The host submitted attendance for "${game.title}". No attendance status was recorded for you.`
+              : `The host submitted attendance for "${game.title}".`,
+          metadata: {
+            gameTitle: game.title,
+            sport: game.sport,
+            locationName: game.locationName,
+            scheduledAt: game.scheduledAt.toISOString(),
+            attendanceStatus: record.status,
+          },
+        })),
+      );
     });
   });
