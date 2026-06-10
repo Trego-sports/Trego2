@@ -15,8 +15,10 @@ import { createNotifications } from "@/modules/notifications";
 export const sendGameAnnouncementSchema = z
   .object({
     gameId: z.string(),
+    title: z.string().trim().min(1, "Title is required").max(120),
     body: z.string().trim().min(1, "Announcement cannot be empty").max(2000),
     audienceType: z.enum(["all", "selected"]),
+    requiresAck: z.boolean().default(false),
     recipientUserIds: z.array(z.string()).optional(),
   })
   .superRefine((data, ctx) => {
@@ -87,8 +89,10 @@ export const $sendGameAnnouncement = createServerFn({ method: "POST" })
         id: announcementId,
         gameId: data.gameId,
         senderUserId: context.userId,
+        title: data.title,
         body: data.body,
         audienceType: data.audienceType,
+        requiresAck: data.requiresAck,
       });
 
       await tx.insert(gameAnnouncementRecipientsTable).values(
@@ -105,7 +109,7 @@ export const $sendGameAnnouncement = createServerFn({ method: "POST" })
           actorUserId: context.userId,
           gameId: data.gameId,
           type: "game_announcement",
-          title: `Announcement: ${game.title}`,
+          title: data.title,
           body: data.body,
           metadata: {
             gameTitle: game.title,
@@ -113,7 +117,10 @@ export const $sendGameAnnouncement = createServerFn({ method: "POST" })
             locationName: game.locationName,
             scheduledAt: game.scheduledAt.toISOString(),
             announcementId,
+            announcementTitle: data.title,
             audienceType: data.audienceType,
+            requiresAck: data.requiresAck,
+            threadParticipantUserId: recipientUserId,
           },
         })),
       );

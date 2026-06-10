@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  gameAnnouncementMessagesTable,
   gameAnnouncementRecipientsTable,
   gameAnnouncementsTable,
   gameCalendarEventsTable,
@@ -99,6 +100,7 @@ export const gameAnnouncementsRelations = relations(gameAnnouncementsTable, ({ o
     references: [usersTable.id],
   }),
   recipients: many(gameAnnouncementRecipientsTable),
+  messages: many(gameAnnouncementMessagesTable),
 }));
 
 export const gameAnnouncementRecipientsRelations = relations(gameAnnouncementRecipientsTable, ({ one }) => ({
@@ -108,6 +110,21 @@ export const gameAnnouncementRecipientsRelations = relations(gameAnnouncementRec
   }),
   user: one(usersTable, {
     fields: [gameAnnouncementRecipientsTable.userId],
+    references: [usersTable.id],
+  }),
+}));
+
+export const gameAnnouncementMessagesRelations = relations(gameAnnouncementMessagesTable, ({ one }) => ({
+  announcement: one(gameAnnouncementsTable, {
+    fields: [gameAnnouncementMessagesTable.announcementId],
+    references: [gameAnnouncementsTable.id],
+  }),
+  sender: one(usersTable, {
+    fields: [gameAnnouncementMessagesTable.senderUserId],
+    references: [usersTable.id],
+  }),
+  threadParticipant: one(usersTable, {
+    fields: [gameAnnouncementMessagesTable.threadParticipantUserId],
     references: [usersTable.id],
   }),
 }));

@@ -21,6 +21,8 @@ export type NotificationType =
   | "game_created"
   | "game_cancelled"
   | "game_announcement"
+  | "game_announcement_ack"
+  | "game_announcement_reply"
   | "attendance_mark_reminder"
   | "attendance_result_submitted"
   | "friend_request_received"
@@ -172,8 +174,10 @@ export const gameAnnouncementsTable = pgTable(
     senderUserId: text("sender_user_id")
       .notNull()
       .references(() => usersTable.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
     body: text("body").notNull(),
     audienceType: text("audience_type").notNull().$type<GameAnnouncementAudienceType>(),
+    requiresAck: boolean("requires_ack").notNull().default(false),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
@@ -191,10 +195,36 @@ export const gameAnnouncementRecipientsTable = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => usersTable.id, { onDelete: "cascade" }),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
   },
   (table) => [
     primaryKey({ columns: [table.announcementId, table.userId] }),
     index("idx_game_announcement_recipients_user_id").on(table.userId),
+  ],
+);
+
+export const gameAnnouncementMessagesTable = pgTable(
+  "game_announcement_messages",
+  {
+    id: text("id").primaryKey(),
+    announcementId: text("announcement_id")
+      .notNull()
+      .references(() => gameAnnouncementsTable.id, { onDelete: "cascade" }),
+    senderUserId: text("sender_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    threadParticipantUserId: text("thread_participant_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_game_announcement_messages_announcement_thread").on(
+      table.announcementId,
+      table.threadParticipantUserId,
+      table.createdAt,
+    ),
   ],
 );
 

@@ -50,6 +50,20 @@
       "when": 1781112939602,
       "tag": "0006_game_announcements",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1781113738093,
+      "tag": "0007_announcement_interactions",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1781114193529,
+      "tag": "0008_announcement_title",
+      "breakpoints": true
     }
   ]
 }

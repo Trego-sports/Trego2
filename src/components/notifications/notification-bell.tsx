@@ -12,6 +12,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import {
+  AnnouncementNotificationActions,
+  isAnnouncementNotification,
+} from "@/components/notifications/announcement-notification-actions";
 import type { MyNotification } from "@/modules/notifications/get-my-notifications";
 import {
   useDeleteNotification,
@@ -25,6 +29,8 @@ const notificationTypeLabels: Record<string, string> = {
   game_created: "Game created",
   game_cancelled: "Game cancelled",
   game_announcement: "Game announcement",
+  game_announcement_ack: "Announcement ack",
+  game_announcement_reply: "Announcement reply",
   attendance_mark_reminder: "Attendance reminder",
   attendance_result_submitted: "Attendance result",
   friend_request_received: "Friend request",
@@ -109,6 +115,7 @@ function NotificationListItem({
           </div>
           <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{notification.body}</p>
           {attendanceStatus && <AttendanceNotificationStatus status={attendanceStatus} />}
+          {isAnnouncementNotification(notification) && <AnnouncementNotificationActions notification={notification} />}
           <p className="text-xs text-muted-foreground">{formatNotificationTime(notification.createdAt)}</p>
         </div>
         <div className="flex shrink-0 items-center gap-1">

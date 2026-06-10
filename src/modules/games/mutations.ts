@@ -11,6 +11,8 @@ import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
 import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
 import { gameQueries } from "./queries";
+import { $ackGameAnnouncement } from "./ack-game-announcement";
+import { $replyGameAnnouncement, type ReplyGameAnnouncementInput } from "./reply-game-announcement";
 import { $sendGameAnnouncement, type SendGameAnnouncementInput } from "./send-game-announcement";
 import { $updateGame, type UpdateGameInput } from "./update-game";
 
@@ -101,6 +103,72 @@ export function useJoinGame() {
         type: "error",
         title: "Failed to join game",
         description: error instanceof Error ? error.message : "An error occurred while joining the game.",
+      });
+    },
+  });
+}
+
+function useInvalidateAnnouncementQueries() {
+  const queryClient = useQueryClient();
+
+  return async (announcementId?: string, gameId?: string) => {
+    const invalidations = [
+      queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+      queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
+      queryClient.invalidateQueries({ queryKey: ["announcement-thread"] }),
+    ];
+
+    if (gameId) {
+      invalidations.push(
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameAnnouncements(gameId).queryKey }),
+      );
+    }
+
+    if (announcementId) {
+      invalidations.push(
+        queryClient.invalidateQueries({ queryKey: ["announcement-thread", announcementId] }),
+      );
+    }
+
+    await Promise.all(invalidations);
+  };
+}
+
+export function useAckGameAnnouncement() {
+  const toast = useToast();
+  const invalidateAnnouncementQueries = useInvalidateAnnouncementQueries();
+  const ackGameAnnouncementFn = useServerFn($ackGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: { announcementId: string }) => await ackGameAnnouncementFn({ data }),
+    onSuccess: async (_, data) => {
+      await invalidateAnnouncementQueries(data.announcementId);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to acknowledge announcement",
+        description: error instanceof Error ? error.message : "An error occurred while acknowledging the announcement.",
+      });
+    },
+  });
+}
+
+export function useReplyGameAnnouncement() {
+  const toast = useToast();
+  const invalidateAnnouncementQueries = useInvalidateAnnouncementQueries();
+  const replyGameAnnouncementFn = useServerFn($replyGameAnnouncement);
+
+  return useMutation({
+    mutationFn: async (data: ReplyGameAnnouncementInput) => await replyGameAnnouncementFn({ data }),
+    onSuccess: async () => {
+      await invalidateAnnouncementQueries();
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to send reply",
+        description: error instanceof Error ? error.message : "An error occurred while sending your reply.",
       });
     },
   });

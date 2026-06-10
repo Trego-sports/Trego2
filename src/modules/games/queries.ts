@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { $getGame } from "./get-game";
+import { $getAnnouncementThread } from "./get-announcement-thread";
 import { $getGameAnnouncements } from "./get-game-announcements";
 import { $getGameParticipants } from "./get-game-participants";
 import { $getInviteCandidates } from "./get-invite-candidates";
@@ -30,6 +31,15 @@ export const gameQueries = {
     queryOptions({
       queryKey: ["game-announcements", gameId],
       queryFn: async () => await $getGameAnnouncements({ data: { gameId } }),
+    }),
+
+  getAnnouncementThread: (announcementId: string, threadParticipantUserId?: string) =>
+    queryOptions({
+      queryKey: ["announcement-thread", announcementId, threadParticipantUserId ?? "self"],
+      queryFn: async () =>
+        await $getAnnouncementThread({
+          data: { announcementId, threadParticipantUserId },
+        }),
     }),
 
   getInviteCandidates: (gameId: string) =>
