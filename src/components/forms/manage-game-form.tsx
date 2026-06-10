@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,9 +14,11 @@ interface ManageGameFormProps {
 }
 
 export function ManageGameForm({ gameId }: ManageGameFormProps) {
+  const { userId } = useRouteContext({ from: "/_authed" });
   const updateGame = useUpdateGame();
   const cancelGame = useCancelGame();
   const { data: existingGame } = useSuspenseQuery(gameQueries.getGame(gameId));
+  const isHost = existingGame.hostId === userId;
 
   const form = useAppForm({
     defaultValues: {
@@ -36,6 +39,10 @@ export function ManageGameForm({ gameId }: ManageGameFormProps) {
       await updateGame.mutateAsync(value);
     },
   });
+
+  if (!isHost) {
+    return null;
+  }
 
   const handleCancel = async () => {
     if (!confirm("Are you sure you want to cancel this game? This action cannot be undone.")) {

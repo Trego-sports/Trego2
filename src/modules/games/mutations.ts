@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useToast } from "@/hooks/use-toast";
 import { CALENDAR_PROMPT_SESSION_KEY } from "@/modules/calendar/constants";
 import { notificationQueries } from "@/modules/notifications";
+import { $ackGameAnnouncement } from "./ack-game-announcement";
 import { $cancelGame } from "./cancel-game";
 import { $createGame, type CreateGameInput } from "./create-game";
 import { $invitePlayer, INVITE_USER_NOT_FOUND_ERROR, type InvitePlayerInput } from "./invite-player";
@@ -11,9 +12,10 @@ import { $joinGame } from "./join-game";
 import { $leaveGame } from "./leave-game";
 import { $markAttendance, type MarkAttendanceInput } from "./mark-attendance";
 import { gameQueries } from "./queries";
-import { $ackGameAnnouncement } from "./ack-game-announcement";
+import { $removeGameParticipant, type RemoveGameParticipantInput } from "./remove-game-participant";
 import { $replyGameAnnouncement, type ReplyGameAnnouncementInput } from "./reply-game-announcement";
 import { $sendGameAnnouncement, type SendGameAnnouncementInput } from "./send-game-announcement";
+import { $transferGameHost, type TransferGameHostInput } from "./transfer-game-host";
 import { $updateGame, type UpdateGameInput } from "./update-game";
 
 export function useCreateGame() {
@@ -125,9 +127,7 @@ function useInvalidateAnnouncementQueries() {
     }
 
     if (announcementId) {
-      invalidations.push(
-        queryClient.invalidateQueries({ queryKey: ["announcement-thread", announcementId] }),
-      );
+      invalidations.push(queryClient.invalidateQueries({ queryKey: ["announcement-thread", announcementId] }));
     }
 
     await Promise.all(invalidations);
@@ -261,6 +261,67 @@ export function useLeaveGame() {
         type: "error",
         title: "Failed to leave game",
         description: error instanceof Error ? error.message : "An error occurred while leaving the game.",
+      });
+    },
+  });
+}
+
+export function useTransferGameHost() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const transferGameHostFn = useServerFn($transferGameHost);
+
+  return useMutation({
+    mutationFn: async (data: TransferGameHostInput) => await transferGameHostFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Host transferred",
+        description: "Game ownership has been transferred.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+        queryClient.invalidateQueries({ queryKey: notificationQueries.getUnreadCount().queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to transfer host",
+        description: error instanceof Error ? error.message : "An error occurred while transferring host ownership.",
+      });
+    },
+  });
+}
+
+export function useRemoveGameParticipant() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const removeGameParticipantFn = useServerFn($removeGameParticipant);
+
+  return useMutation({
+    mutationFn: async (data: RemoveGameParticipantInput) => await removeGameParticipantFn({ data }),
+    onSuccess: async (_, data) => {
+      toast.add({
+        type: "success",
+        title: "Player removed",
+        description: "The player has been removed from this game.",
+      });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGame(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getGameParticipants(data.gameId).queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getUpcomingGames().queryKey }),
+        queryClient.invalidateQueries({ queryKey: gameQueries.getRecommendedGames().queryKey }),
+      ]);
+    },
+    onError: (error) => {
+      toast.add({
+        type: "error",
+        title: "Failed to remove player",
+        description: error instanceof Error ? error.message : "An error occurred while removing the player.",
       });
     },
   });
