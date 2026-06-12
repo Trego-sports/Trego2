@@ -39,16 +39,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         {/* Google tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y1D90MZP2D" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-Y1D90MZP2D');
-            `,
-          }}
-        />
+        <script src="/google-analytics.js" />
         <HeadContent />
       </head>
       <body>

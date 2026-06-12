@@ -1,6 +1,6 @@
 export { $acknowledgeNotification } from "./acknowledge-notification";
-export { $deleteNotification } from "./delete-notification";
 export { $deleteMultipleNotifications } from "./delete-multiple-notifications";
+export { $deleteNotification } from "./delete-notification";
 export { $getMyNotifications } from "./get-my-notifications";
 export { $getUnreadNotificationCount } from "./get-unread-notification-count";
 export { $markAllNotificationsRead } from "./mark-all-notifications-read";
