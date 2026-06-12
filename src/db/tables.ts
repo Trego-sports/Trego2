@@ -20,6 +20,8 @@ export type NotificationType =
   | "game_joined"
   | "game_created"
   | "game_cancelled"
+  | "game_host_transferred"
+  | "game_removed"
   | "game_announcement"
   | "game_announcement_ack"
   | "game_announcement_reply"
