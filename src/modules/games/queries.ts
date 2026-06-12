@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
-import { $getGame } from "./get-game";
 import { $getAnnouncementThread } from "./get-announcement-thread";
+import { $getGame } from "./get-game";
 import { $getGameAnnouncements } from "./get-game-announcements";
 import { $getGameParticipants } from "./get-game-participants";
 import { $getInviteCandidates } from "./get-invite-candidates";

@@ -17,8 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 import type { GameAnnouncementAudienceType } from "@/db/tables";
+import { cn } from "@/lib/utils";
 import { useSendGameAnnouncement } from "@/modules/games/mutations";
 import { gameQueries } from "@/modules/games/queries";
 
@@ -114,7 +114,9 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
             <MegaphoneIcon className="h-4 w-4" />
             Game Announcements
           </CardTitle>
-          <CardDescription>Send a message to all or selected participants. They will receive an in-app notification.</CardDescription>
+          <CardDescription>
+            Send a message to all or selected participants. They will receive an in-app notification.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {recipientCandidates.length === 0 ? (
@@ -189,10 +191,7 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                       const isSelected = selectedRecipientIds.includes(participant.userId);
 
                       return (
-                        <label
-                          key={participant.userId}
-                          className="flex cursor-pointer items-center gap-3 text-sm"
-                        >
+                        <label key={participant.userId} className="flex cursor-pointer items-center gap-3 text-sm">
                           <input
                             type="checkbox"
                             checked={isSelected}
@@ -224,7 +223,9 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
             ) : announcements.length > 0 ? (
               <div className="space-y-3">
                 {announcements.map((announcement) => {
-                  const acknowledgedRecipients = announcement.recipients.filter((recipient) => recipient.acknowledgedAt);
+                  const acknowledgedRecipients = announcement.recipients.filter(
+                    (recipient) => recipient.acknowledgedAt,
+                  );
                   const pendingRecipients = announcement.recipients.filter((recipient) => !recipient.acknowledgedAt);
 
                   return (
@@ -233,16 +234,21 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                         <div className="space-y-1">
                           <p className="font-medium leading-snug">{announcement.title}</p>
                           <div className="flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
-                          <span>
-                            {announcement.audienceType === "all" ? "All participants" : "Selected participants"}
-                          </span>
-                          {announcement.requiresAck && <span>· Ack required</span>}
-                          {announcement.replyThreadCount > 0 && (
-                            <span>· {announcement.replyThreadCount} conversation{announcement.replyThreadCount === 1 ? "" : "s"}</span>
-                          )}
+                            <span>
+                              {announcement.audienceType === "all" ? "All participants" : "Selected participants"}
+                            </span>
+                            {announcement.requiresAck && <span>· Ack required</span>}
+                            {announcement.replyThreadCount > 0 && (
+                              <span>
+                                · {announcement.replyThreadCount} conversation
+                                {announcement.replyThreadCount === 1 ? "" : "s"}
+                              </span>
+                            )}
                           </div>
                         </div>
-                        <p className="text-xs text-muted-foreground">{formatAnnouncementTime(announcement.createdAt)}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {formatAnnouncementTime(announcement.createdAt)}
+                        </p>
                       </div>
                       <p className="whitespace-pre-wrap text-sm leading-6">{announcement.body}</p>
                       {announcement.audienceType === "selected" && (

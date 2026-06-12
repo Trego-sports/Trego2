@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { LockIcon, Loader2Icon } from "lucide-react";
+import { Loader2Icon, LockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useAckGameAnnouncement, useReplyGameAnnouncement } from "@/modules/games/mutations";
-import { useMarkNotificationRead } from "@/modules/notifications/mutations";
 import { gameQueries } from "@/modules/games/queries";
+import { useMarkNotificationRead } from "@/modules/notifications/mutations";
 
 interface AnnouncementThreadDialogProps {
   announcementId: string;
@@ -138,10 +138,7 @@ export function AnnouncementThreadDialog({
             {thread.messages.length > 0 ? (
               <div className="max-h-64 space-y-3 overflow-y-auto border p-4">
                 {thread.messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={cn("space-y-1", message.isMine ? "text-right" : "text-left")}
-                  >
+                  <div key={message.id} className={cn("space-y-1", message.isMine ? "text-right" : "text-left")}>
                     <p className="text-xs font-medium text-muted-foreground">
                       {message.isMine ? "You" : message.senderName} · {formatMessageTime(message.createdAt)}
                     </p>
@@ -157,9 +154,7 @@ export function AnnouncementThreadDialog({
                 ))}
               </div>
             ) : (
-              !isExpired && (
-                <p className="text-sm text-muted-foreground">No replies yet.</p>
-              )
+              !isExpired && <p className="text-sm text-muted-foreground">No replies yet.</p>
             )}
 
             {!isExpired && (
