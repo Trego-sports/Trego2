@@ -206,7 +206,7 @@ function HomePage() {
 
       {/* Footer */}
       <footer className="border-t py-12">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-6 space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-center md:text-left flex items-center gap-3">
               <img src={tregoLogo} alt="Trego Logo" className="h-8" />
@@ -215,9 +215,25 @@ function HomePage() {
                 <p className="text-sm text-muted-foreground">Organize sports games with your friends</p>
               </div>
             </div>
-            <div className="text-center md:text-right">
-              <p className="text-sm text-muted-foreground">© 2025 Trego. All rights reserved.</p>
-            </div>
+            <nav className="flex items-center gap-6">
+              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+                Terms of Service
+              </Link>
+            </nav>
+          </div>
+          <div className="border-t pt-6 text-center md:text-left">
+            <p className="text-sm text-muted-foreground">
+              Trego lets you create and join sports games, manage players, and optionally sync games to your Google
+              Calendar with reminders. See our{" "}
+              <Link to="/privacy" className="text-primary underline">
+                Privacy Policy
+              </Link>{" "}
+              for how we handle your data.
+            </p>
+            <p className="mt-4 text-sm text-muted-foreground">© 2025 Trego. All rights reserved.</p>
           </div>
         </div>
       </footer>
