@@ -1,0 +1,2127 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/ruxqvv",
+    "id": "ruxqvv",
+    "slide": 4,
+    "layoutId": "d182b3a1-b672-4ff6-a719-c8d38fb6b84d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#ECE5DA",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Avenir Next"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "d182b3a1-b672-4ff6-a719-c8d38fb6b84d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sji5snel",
+      "id": "1",
+      "bbox": [
+        62,
+        48,
+        52,
+        4
+      ],
+      "geometry": "rect",
+      "fillColor": "#E8791F",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ylc7u54",
+      "id": "2",
+      "bbox": [
+        122,
+        35,
+        340,
+        32
+      ],
+      "geometry": "rect",
+      "text": "PROGRESS SINCE PITCH",
+      "textPreview": "PROGRESS SINCE PITCH",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4,
+          "right": 0,
+          "bottom": 4,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PROGRESS SINCE PITCH"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PROGRESS SINCE PITCH",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "fontSize": 13,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4,
+              "right": 0,
+              "bottom": 4,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PROGRESS SINCE PITCH",
+              "anchor": 2,
+              "fontSize": 13,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "middle",
+              "insets": {
+                "top": 4,
+                "right": 0,
+                "bottom": 4,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/adsji5sn",
+      "id": "3",
+      "bbox": [
+        56,
+        76,
+        900,
+        110
+      ],
+      "geometry": "rect",
+      "text": "Four shipped features move Trego from discovery into day-of-game coordination.",
+      "textPreview": "Four shipped features move Trego from discovery into day-of-game coordination.",
+      "resolvedFontSize": 38,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 38,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Four shipped features move Trego from"
+          },
+          {
+            "index": 2,
+            "text": "discovery into day-of-game coordination."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Four shipped features move Trego from discovery into day-of-game coordination.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 38,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Four shipped features move Trego from discovery into day-of-game coordination.",
+              "anchor": 1,
+              "fontSize": 38,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lszqtcj6",
+      "id": "4",
+      "bbox": [
+        58,
+        194,
+        760,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Each feature reduces dependence on external group chats after a player joins a game.",
+      "textPreview": "Each feature reduces dependence on external group chats after a player joins a game.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Each feature reduces dependence on external group chats after a player joins a game."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Each feature reduces dependence on external group chats after a player joins a game.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 16,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Each feature reduces dependence on external group chats after a player joins a game.",
+              "anchor": 1,
+              "fontSize": 16,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s72x4nap",
+      "id": "5",
+      "bbox": [
+        72,
+        246,
+        248,
+        292
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3m94fu18",
+      "id": "6",
+      "bbox": [
+        72,
+        246,
+        10,
+        292
+      ],
+      "geometry": "rect",
+      "fillColor": "#E8791F",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a5gbq1or",
+      "id": "7",
+      "bbox": [
+        96,
+        268,
+        70,
+        36
+      ],
+      "geometry": "rect",
+      "text": "01",
+      "textPreview": "01",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "01"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "01",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 18,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "01",
+              "anchor": 1,
+              "fontSize": 18,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hoza1gvy",
+      "id": "8",
+      "bbox": [
+        96,
+        318,
+        190,
+        56
+      ],
+      "geometry": "rect",
+      "text": "Calendar sync",
+      "textPreview": "Calendar sync",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Calendar sync"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Calendar sync",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 24,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Calendar sync",
+              "anchor": 1,
+              "fontSize": 24,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s36hcrmh",
+      "id": "9",
+      "bbox": [
+        96,
+        392,
+        188,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Adds future games to Google Calendar with reminder support.",
+      "textPreview": "Adds future games to Google Calendar with reminder support.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Adds future games to"
+          },
+          {
+            "index": 2,
+            "text": "Google Calendar with"
+          },
+          {
+            "index": 3,
+            "text": "reminder support."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Adds future games to Google Calendar with reminder support.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Adds future games to Google Calendar with reminder support.",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q1orytsv",
+      "id": "10",
+      "bbox": [
+        96,
+        492,
+        190,
+        24
+      ],
+      "geometry": "rect",
+      "text": "calendar/sync.ts",
+      "textPreview": "calendar/sync.ts",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "calendar/sync.ts"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "calendar/sync.ts",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "calendar/sync.ts",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fmlkjm1c",
+      "id": "11",
+      "bbox": [
+        364,
+        246,
+        248,
+        292
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/87ed8bat",
+      "id": "12",
+      "bbox": [
+        364,
+        246,
+        10,
+        292
+      ],
+      "geometry": "rect",
+      "fillColor": "#0B8F68",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xs72x4na",
+      "id": "13",
+      "bbox": [
+        388,
+        268,
+        70,
+        36
+      ],
+      "geometry": "rect",
+      "text": "02",
+      "textPreview": "02",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Avenir Next",
+        "color": "#0B8F68",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "02"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "02",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 18,
+            "typeface": "Avenir Next",
+            "color": "#0B8F68",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "02",
+              "anchor": 1,
+              "fontSize": 18,
+              "typeface": "Avenir Next",
+              "color": "#0B8F68",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qtcj6tov",
+      "id": "14",
+      "bbox": [
+        388,
+        318,
+        190,
+        56
+      ],
+      "geometry": "rect",
+      "text": "Attendance",
+      "textPreview": "Attendance",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Attendance"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Attendance",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 24,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Attendance",
+              "anchor": 1,
+              "fontSize": 24,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/je9cvixc",
+      "id": "15",
+      "bbox": [
+        388,
+        392,
+        188,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Host marks present / absent after a completed game.",
+      "textPreview": "Host marks present / absent after a completed game.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Host marks present /"
+          },
+          {
+            "index": 2,
+            "text": "absent after a completed"
+          },
+          {
+            "index": 3,
+            "text": "game."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Host marks present / absent after a completed game.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Host marks present / absent after a completed game.",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8z25kb6x",
+      "id": "16",
+      "bbox": [
+        388,
+        492,
+        190,
+        24
+      ],
+      "geometry": "rect",
+      "text": "mark-attendance.ts",
+      "textPreview": "mark-attendance.ts",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#0B8F68",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "mark-attendance.ts"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "mark-attendance.ts",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#0B8F68",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "mark-attendance.ts",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#0B8F68",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1gvy90je",
+      "id": "17",
+      "bbox": [
+        656,
+        246,
+        248,
+        292
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qpg3ex0n",
+      "id": "18",
+      "bbox": [
+        656,
+        246,
+        10,
+        292
+      ],
+      "geometry": "rect",
+      "fillColor": "#2D6CDF",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fa9w3m94",
+      "id": "19",
+      "bbox": [
+        680,
+        268,
+        70,
+        36
+      ],
+      "geometry": "rect",
+      "text": "03",
+      "textPreview": "03",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Avenir Next",
+        "color": "#2D6CDF",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "03"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "03",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 18,
+            "typeface": "Avenir Next",
+            "color": "#2D6CDF",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "03",
+              "anchor": 1,
+              "fontSize": 18,
+              "typeface": "Avenir Next",
+              "color": "#2D6CDF",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/re1w7mp0",
+      "id": "20",
+      "bbox": [
+        680,
+        318,
+        190,
+        56
+      ],
+      "geometry": "rect",
+      "text": "Announce",
+      "textPreview": "Announce",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Announce"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Announce",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 24,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Announce",
+              "anchor": 1,
+              "fontSize": 24,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2t83itgf",
+      "id": "21",
+      "bbox": [
+        680,
+        392,
+        188,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Host sends all or selected participants updates, with optional acknowledgement.",
+      "textPreview": "Host sends all or selected participants updates, with optional acknowledgement.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Host sends all or"
+          },
+          {
+            "index": 2,
+            "text": "selected participants"
+          },
+          {
+            "index": 3,
+            "text": "updates, with optional"
+          },
+          {
+            "index": 4,
+            "text": "acknowledgement."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Host sends all or selected participants updates, with optional acknowledgement.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Host sends all or selected participants updates, with optional acknowledgement.",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9knih4by",
+      "id": "22",
+      "bbox": [
+        680,
+        492,
+        190,
+        24
+      ],
+      "geometry": "rect",
+      "text": "send-game-announcement.ts",
+      "textPreview": "send-game-announcement.ts",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#2D6CDF",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "send-game-announcement.ts"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "send-game-announcement.ts",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#2D6CDF",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "send-game-announcement.ts",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#2D6CDF",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kzupwb2h",
+      "id": "23",
+      "bbox": [
+        948,
+        246,
+        248,
+        292
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rqd4vmtw",
+      "id": "24",
+      "bbox": [
+        948,
+        246,
+        10,
+        292
+      ],
+      "geometry": "rect",
+      "fillColor": "#17243B",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/25kb6xkf",
+      "id": "25",
+      "bbox": [
+        972,
+        268,
+        70,
+        36
+      ],
+      "geometry": "rect",
+      "text": "04",
+      "textPreview": "04",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 18,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04",
+              "anchor": 1,
+              "fontSize": 18,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9w3m94fu",
+      "id": "26",
+      "bbox": [
+        972,
+        318,
+        190,
+        56
+      ],
+      "geometry": "rect",
+      "text": "Host transfer",
+      "textPreview": "Host transfer",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 24,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Host transfer"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Host transfer",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 24,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Host transfer",
+              "anchor": 1,
+              "fontSize": 24,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kb6xkf6d",
+      "id": "27",
+      "bbox": [
+        972,
+        392,
+        188,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Current host can transfer ownership to another participant.",
+      "textPreview": "Current host can transfer ownership to another participant.",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Current host can transfer"
+          },
+          {
+            "index": 2,
+            "text": "ownership to another"
+          },
+          {
+            "index": 3,
+            "text": "participant."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Current host can transfer ownership to another participant.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Current host can transfer ownership to another participant.",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r2p8nqxs",
+      "id": "28",
+      "bbox": [
+        972,
+        492,
+        190,
+        24
+      ],
+      "geometry": "rect",
+      "text": "transfer-game-host.ts",
+      "textPreview": "transfer-game-host.ts",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "transfer-game-host.ts"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "transfer-game-host.ts",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "transfer-game-host.ts",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2hwfyxob",
+      "id": "29",
+      "bbox": [
+        190,
+        572,
+        900,
+        56
+      ],
+      "geometry": "roundRect",
+      "text": "Product outcome: more of the coordination loop now lives inside the game page.",
+      "textPreview": "Product outcome: more of the coordination loop now lives inside the game page.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Product outcome: more of the coordination loop now lives inside the game page."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Product outcome: more of the coordination loop now lives inside the game page.",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center",
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Product outcome: more of the coordination loop now lives inside the game page.",
+              "anchor": 2,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#17243B",
+      "lineColor": "#17243B",
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8nqxs72x",
+      "id": "30",
+      "bbox": [
+        56,
+        672,
+        1168,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#CDBFAA",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/18jqh0fe",
+      "id": "31",
+      "bbox": [
+        56,
+        682,
+        800,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Sources: calendar, attendance, announcements, transfer modules",
+      "textPreview": "Sources: calendar, attendance, announcements, transfer modules",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Sources: calendar, attendance, announcements, transfer modules"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Sources: calendar, attendance, announcements, transfer modules",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Sources: calendar, attendance, announcements, transfer modules",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qh0fepkz",
+      "id": "32",
+      "bbox": [
+        1180,
+        680,
+        44,
+        24
+      ],
+      "geometry": "rect",
+      "text": "04",
+      "textPreview": "04",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 11,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 11,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "right",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04",
+              "anchor": 1,
+              "fontSize": 11,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "right",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

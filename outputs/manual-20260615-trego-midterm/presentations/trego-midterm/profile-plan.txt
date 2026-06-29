@@ -1,0 +1,8 @@
+task mode: create
+primary deck-profile: product-platform
+secondary gates: stakeholder/update deck; technical implementation evidence; teamwork/process clarity
+required proof objects: product coordination workflow, shipped feature map, technical architecture, plan-change timeline, risk/next-step roadmap
+source requirements: /Users/raghavbhasin/Downloads/message (2).txt, README.md, src/styles.css, src/routes/index.tsx, src/db/tables.ts, calendar/attendance/announcement/host-transfer modules
+brand constraints: no fabricated Trego logo; use text wordmark, frontend colors, court/ticket motifs, and product language from repo
+profile QA gates: show the product system, tie capabilities to coordination/reliability/adoption, avoid generic feature cards, keep technical labels concrete
+known missing inputs: individual teammate names were not supplied; use workstream-based division instead

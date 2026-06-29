@@ -1,0 +1,1928 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/jm4f4s",
+    "id": "jm4f4s",
+    "slide": 7,
+    "layoutId": "d182b3a1-b672-4ff6-a719-c8d38fb6b84d",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#ECE5DA",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Avenir Next"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "d182b3a1-b672-4ff6-a719-c8d38fb6b84d",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "3d2d3c4a-2a8f-4e18-a1a0-7f8f872b5e00",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cfa9w3m9",
+      "id": "1",
+      "bbox": [
+        62,
+        48,
+        52,
+        4
+      ],
+      "geometry": "rect",
+      "fillColor": "#E8791F",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/judg7ads",
+      "id": "2",
+      "bbox": [
+        122,
+        35,
+        340,
+        32
+      ],
+      "geometry": "rect",
+      "text": "TEAMWORK",
+      "textPreview": "TEAMWORK",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4,
+          "right": 0,
+          "bottom": 4,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "TEAMWORK"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "TEAMWORK",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "fontSize": 13,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4,
+              "right": 0,
+              "bottom": 4,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "TEAMWORK",
+              "anchor": 2,
+              "fontSize": 13,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "middle",
+              "insets": {
+                "top": 4,
+                "right": 0,
+                "bottom": 4,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u9knih4b",
+      "id": "3",
+      "bbox": [
+        56,
+        76,
+        900,
+        110
+      ],
+      "geometry": "rect",
+      "text": "Work divided around product risk, not just around isolated pages.",
+      "textPreview": "Work divided around product risk, not just around isolated pages.",
+      "resolvedFontSize": 38,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 38,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Work divided around product risk, not just"
+          },
+          {
+            "index": 2,
+            "text": "around isolated pages."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Work divided around product risk, not just around isolated pages.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 38,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Work divided around product risk, not just around isolated pages.",
+              "anchor": 1,
+              "fontSize": 38,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1orytsvu",
+      "id": "4",
+      "bbox": [
+        58,
+        194,
+        760,
+        34
+      ],
+      "geometry": "rect",
+      "text": "The process also changed: Linear is now the planning board for clearer ownership and risk tracking.",
+      "textPreview": "The process also changed: Linear is now the planning board for clearer ownership and risk tracking.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 16,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The process also changed: Linear is now the planning board for clearer ownership and risk tracking."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The process also changed: Linear is now the planning board for clearer ownership and risk tracking.",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 16,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The process also changed: Linear is now the planning board for clearer ownership and risk tracking.",
+              "anchor": 1,
+              "fontSize": 16,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7u54zid",
+      "id": "5",
+      "bbox": [
+        80,
+        244,
+        500,
+        128
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jm1cfa9w",
+      "id": "6",
+      "bbox": [
+        80,
+        244,
+        12,
+        128
+      ],
+      "geometry": "rect",
+      "fillColor": "#E8791F",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u18jqh0f",
+      "id": "7",
+      "bbox": [
+        112,
+        262,
+        210,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Frontend flows",
+      "textPreview": "Frontend flows",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Frontend flows"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Frontend flows",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Frontend flows",
+              "anchor": 1,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5gbq1ory",
+      "id": "8",
+      "bbox": [
+        350,
+        262,
+        190,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Game page panels\nProfile/calendar settings\nManage-game UI\nNotification actions",
+      "textPreview": "Game page panels | Profile/calendar settings | Manage-game UI | Notification actions",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Game page panels"
+          },
+          {
+            "index": 2,
+            "text": "Profile/calendar settings"
+          },
+          {
+            "index": 3,
+            "text": "Manage-game UI"
+          },
+          {
+            "index": 4,
+            "text": "Notification actions"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Game page panels",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Game page panels",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Profile/calendar settings",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Profile/calendar settings",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Manage-game UI",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Manage-game UI",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Notification actions",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Notification actions",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cvixczed",
+      "id": "9",
+      "bbox": [
+        640,
+        244,
+        500,
+        128
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m1cfa9w3",
+      "id": "10",
+      "bbox": [
+        640,
+        244,
+        12,
+        128
+      ],
+      "geometry": "rect",
+      "fillColor": "#0B8F68",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bm58z25k",
+      "id": "11",
+      "bbox": [
+        672,
+        262,
+        210,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Backend rules",
+      "textPreview": "Backend rules",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#0B8F68",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Backend rules"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Backend rules",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#0B8F68",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Backend rules",
+              "anchor": 1,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#0B8F68",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/47y1kre1",
+      "id": "12",
+      "bbox": [
+        910,
+        262,
+        190,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Server functions\nTransactions\nValidation guards\nCalendar side effects",
+      "textPreview": "Server functions | Transactions | Validation guards | Calendar side effects",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Server functions"
+          },
+          {
+            "index": 2,
+            "text": "Transactions"
+          },
+          {
+            "index": 3,
+            "text": "Validation guards"
+          },
+          {
+            "index": 4,
+            "text": "Calendar side effects"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Server functions",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Server functions",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Transactions",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Transactions",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Validation guards",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Validation guards",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Calendar side effects",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Calendar side effects",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tsvu9kni",
+      "id": "13",
+      "bbox": [
+        80,
+        412,
+        500,
+        128
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mp0bi9s3",
+      "id": "14",
+      "bbox": [
+        80,
+        412,
+        12,
+        128
+      ],
+      "geometry": "rect",
+      "fillColor": "#2D6CDF",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bat47y1k",
+      "id": "15",
+      "bbox": [
+        112,
+        430,
+        210,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Stakeholders",
+      "textPreview": "Stakeholders",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#2D6CDF",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Stakeholders"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Stakeholders",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#2D6CDF",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Stakeholders",
+              "anchor": 1,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#2D6CDF",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4vmtwra5",
+      "id": "16",
+      "bbox": [
+        350,
+        430,
+        190,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Bryan Emonts meeting\nProfessor outreach\nTarget-user narrowing\nRollout assumptions",
+      "textPreview": "Bryan Emonts meeting | Professor outreach | Target-user narrowing | Rollout assumptions",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Bryan Emonts meeting"
+          },
+          {
+            "index": 2,
+            "text": "Professor outreach"
+          },
+          {
+            "index": 3,
+            "text": "Target-user narrowing"
+          },
+          {
+            "index": 4,
+            "text": "Rollout assumptions"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Bryan Emonts meeting",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Bryan Emonts meeting",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Professor outreach",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Professor outreach",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Target-user narrowing",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Target-user narrowing",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Rollout assumptions",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Rollout assumptions",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tgfmlkjm",
+      "id": "17",
+      "bbox": [
+        640,
+        412,
+        500,
+        128
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "rgba(0, 0, 0, 0.07059)",
+      "lineWidth": 1
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mhk3q5o7",
+      "id": "18",
+      "bbox": [
+        640,
+        412,
+        12,
+        128
+      ],
+      "geometry": "rect",
+      "fillColor": "#17243B",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b2hwfyxo",
+      "id": "19",
+      "bbox": [
+        672,
+        430,
+        210,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Quality/process",
+      "textPreview": "Quality/process",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Quality/process"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Quality/process",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Quality/process",
+              "anchor": 1,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7u54zido",
+      "id": "20",
+      "bbox": [
+        910,
+        430,
+        190,
+        82
+      ],
+      "geometry": "rect",
+      "text": "Linear issues\nRisk-based scope\nManual end-to-end checks\nRepo evidence review",
+      "textPreview": "Linear issues | Risk-based scope | Manual end-to-end checks | Repo evidence review",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Linear issues"
+          },
+          {
+            "index": 2,
+            "text": "Risk-based scope"
+          },
+          {
+            "index": 3,
+            "text": "Manual end-to-end"
+          },
+          {
+            "index": 4,
+            "text": "checks"
+          },
+          {
+            "index": 5,
+            "text": "Repo evidence review"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Linear issues",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Linear issues",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Risk-based scope",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Risk-based scope",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Manual end-to-end checks",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Manual end-to-end checks",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Repo evidence review",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 15,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Repo evidence review",
+              "anchor": 1,
+              "fontSize": 15,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ed8bat47",
+      "id": "21",
+      "bbox": [
+        424,
+        566,
+        432,
+        4
+      ],
+      "geometry": "rect",
+      "fillColor": "#E8791F",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l0rqd4vm",
+      "id": "22",
+      "bbox": [
+        196,
+        588,
+        888,
+        40
+      ],
+      "geometry": "rect",
+      "text": "Operating question now: what risk does this task reduce, and what feedback will prove it worked?",
+      "textPreview": "Operating question now: what risk does this task reduce, and what feedback will prove it worked?",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Avenir Next",
+        "color": "#17243B",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 8,
+          "right": 8,
+          "bottom": 8,
+          "left": 8
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Operating question now: what risk does this task reduce, and what feedback will prove it"
+          },
+          {
+            "index": 2,
+            "text": "worked?"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Operating question now: what risk does this task reduce, and what feedback will prove it worked?",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 20,
+            "typeface": "Avenir Next",
+            "color": "#17243B",
+            "bold": true,
+            "alignment": "center",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Operating question now: what risk does this task reduce, and what feedback will prove it worked?",
+              "anchor": 1,
+              "fontSize": 20,
+              "typeface": "Avenir Next",
+              "color": "#17243B",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 8,
+                "right": 8,
+                "bottom": 8,
+                "left": 8
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wfyxobm5",
+      "id": "23",
+      "bbox": [
+        56,
+        672,
+        1168,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#CDBFAA",
+      "lineColor": "#D8CDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/36hcrmhk",
+      "id": "24",
+      "bbox": [
+        56,
+        682,
+        800,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Sources: midterm script; repo workstreams inferred from implementation",
+      "textPreview": "Sources: midterm script; repo workstreams inferred from implementation",
+      "resolvedFontSize": 10,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 10,
+        "typeface": "Avenir Next",
+        "color": "#596373",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Sources: midterm script; repo workstreams inferred from implementation"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Sources: midterm script; repo workstreams inferred from implementation",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 10,
+            "typeface": "Avenir Next",
+            "color": "#596373",
+            "alignment": "left",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Sources: midterm script; repo workstreams inferred from implementation",
+              "anchor": 1,
+              "fontSize": 10,
+              "typeface": "Avenir Next",
+              "color": "#596373",
+              "alignment": "left",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/eloj2t83",
+      "id": "25",
+      "bbox": [
+        1180,
+        680,
+        44,
+        24
+      ],
+      "geometry": "rect",
+      "text": "07",
+      "textPreview": "07",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 11,
+        "typeface": "Avenir Next",
+        "color": "#E8791F",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "07"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "07",
+          "resolvedTextStyle": {
+            "anchor": 1,
+            "fontSize": 11,
+            "typeface": "Avenir Next",
+            "color": "#E8791F",
+            "bold": true,
+            "alignment": "right",
+            "verticalAlignment": "top",
+            "insets": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "07",
+              "anchor": 1,
+              "fontSize": 11,
+              "typeface": "Avenir Next",
+              "color": "#E8791F",
+              "bold": true,
+              "alignment": "right",
+              "verticalAlignment": "top",
+              "insets": {
+                "top": 0,
+                "right": 0,
+                "bottom": 0,
+                "left": 0
+              }
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#ECE5DA",
+      "lineColor": "#ECE5DA",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

@@ -1,0 +1,14 @@
+Thesis: Trego has moved from a live discovery MVP toward a more reliable coordination product, while narrowing rollout around the users most likely to feel the pain.
+Audience: course midterm presentation graders and classmates.
+One-line arc: reminder of the problem, original plan, what changed, what shipped, how the system works, how the team divided work, and what risk remains.
+
+Slides:
+1. Trego is moving from "find a game" to "coordinate the game." Proof: status rail and court/ticket visual.
+2. The project centralizes scattered pickup-sports coordination. Proof: before/after workflow.
+3. The roadmap shifted from ambitious systems to validation loops. Proof: original plan versus current focus timeline.
+4. Since pitch, four coordination features shipped. Proof: capability strip with repository-backed evidence.
+5. New work is backed by server functions, DB tables, and side effects. Proof: architecture map.
+6. Reputation was intentionally deferred until attendance behavior is validated. Proof: decision matrix.
+7. Work was divided by risk: product, backend, frontend, stakeholder validation, and QA/process. Proof: workstream board.
+8. Adoption and matchmaking are still the hard problems. Proof: risk matrix with current technical baseline.
+9. Next phase tests whether coordination features create repeat usage. Proof: 30/60 day roadmap and feedback loop.
