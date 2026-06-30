@@ -58,18 +58,19 @@ function LoginPage() {
               />
               <span>
                 <span className="block text-xl font-black leading-none text-[#17243B]">Trego</span>
-                <span className="mt-0.5 block text-[11px] font-black uppercase tracking-[0.12em] text-[#E8791F]">
+                <span className="mt-0.5 hidden text-[11px] font-black uppercase tracking-[0.12em] text-[#E8791F] sm:block">
                   Play starts here
                 </span>
               </span>
             </Link>
 
             <Link
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white/86 px-5 text-sm font-black text-[#17243B] shadow-[0_0_0_1px_rgba(0,0,0,0.07),0_14px_28px_rgba(23,36,59,0.12)] backdrop-blur transition-[background-color,box-shadow,transform] duration-200 hover:bg-[#FFF1E3] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_18px_34px_rgba(23,36,59,0.16)] active:scale-[0.96]"
+              aria-label="Back home"
+              className="inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-full bg-white/86 px-0 text-sm font-black text-[#17243B] shadow-[0_0_0_1px_rgba(0,0,0,0.07),0_14px_28px_rgba(23,36,59,0.12)] backdrop-blur transition-[background-color,box-shadow,transform] duration-200 hover:bg-[#FFF1E3] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_18px_34px_rgba(23,36,59,0.16)] active:scale-[0.96] sm:px-5"
               to="/"
             >
               <ChevronLeftIcon className="size-4" />
-              Back home
+              <span className="hidden sm:inline">Back home</span>
             </Link>
           </header>
 

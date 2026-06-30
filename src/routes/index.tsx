@@ -69,15 +69,15 @@ function HomePage() {
         <MarketingHeader />
 
         <div className="relative z-10 mx-auto mt-16 grid max-w-[1500px] gap-10 px-5 sm:px-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(460px,0.92fr)] lg:items-center lg:gap-16 lg:px-14 xl:px-20">
-          <div className="landing-hero-copy max-w-[790px] text-white">
+          <div className="landing-hero-copy max-w-[790px] text-[#17243B] md:text-white">
             <div className="inline-flex rounded-full bg-[#E8791F] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] shadow-[0_14px_34px_rgba(232,121,31,0.32)]">
               Pickup sports, coordinated
             </div>
             <h1 className="mt-6 text-[clamp(4.5rem,7.8vw,7.75rem)] font-black leading-[0.84] text-balance">Trego</h1>
-            <p className="mt-6 max-w-[760px] text-[clamp(2.15rem,3.2vw,3rem)] font-black leading-[1.02] text-white text-balance">
+            <p className="mt-6 max-w-[760px] text-[clamp(2.15rem,3.2vw,3rem)] font-black leading-[1.02] text-balance">
               Find the right game, join the right roster, and keep everyone on the same court.
             </p>
-            <p className="mt-7 max-w-[650px] text-lg font-semibold leading-9 text-white/72 text-pretty">
+            <p className="mt-7 max-w-[650px] text-lg font-semibold leading-9 text-[#596373] text-pretty md:text-white/72">
               Trego turns group-chat pickup games into a clear flow for players and hosts: sports, location, roster,
               capacity, reminders, and attendance in one place.
             </p>
