@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -207,5 +208,154 @@ code {
     border-left: 3px solid var(--border);
     padding-left: 1rem;
     color: var(--muted-foreground);
+  }
+}
+
+.court-wash {
+  background:
+    radial-gradient(circle at 18% 12%, rgb(232 121 31 / 18%), transparent 34%),
+    radial-gradient(circle at 87% 20%, rgb(23 36 59 / 14%), transparent 30%),
+    linear-gradient(180deg, #f8f2e9 0%, #ece5da 100%);
+}
+
+.court-lines {
+  animation: court-drift 18s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 150px, rgb(255 255 255 / 22%) 151px 154px, transparent 155px),
+    linear-gradient(
+      90deg,
+      transparent 0 calc(50% - 1px),
+      rgb(255 255 255 / 20%) calc(50% - 1px) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(rgb(255 255 255 / 12%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 12%) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    58px 58px,
+    58px 58px;
+}
+
+.marketing-header {
+  animation: soft-drop-in 560ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.login-header {
+  animation: soft-drop-in 560ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.landing-hero-copy {
+  animation: rise-in 620ms cubic-bezier(0.2, 0, 0, 1) 120ms both;
+}
+
+.landing-hero-actions {
+  animation: rise-in 560ms cubic-bezier(0.2, 0, 0, 1) 240ms both;
+}
+
+.login-copy {
+  animation: rise-in 620ms cubic-bezier(0.2, 0, 0, 1) 120ms both;
+}
+
+.login-auth-card {
+  animation: rise-in 560ms cubic-bezier(0.2, 0, 0, 1) 220ms both;
+}
+
+.login-preview-card,
+.login-highlight {
+  animation: rise-in 520ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.ticket,
+#how article {
+  animation: rise-in 520ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.ticket {
+  transition:
+    transform 240ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 240ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ticket:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 6%),
+    0 28px 62px rgb(23 36 59 / 20%);
+}
+
+.marketing-footer {
+  animation: footer-fade-in 640ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes footer-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes court-drift {
+  from {
+    background-position:
+      50% 50%,
+      50% 50%,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      50% 50%,
+      50% 50%,
+      10px 8px,
+      8px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .court-lines,
+  .marketing-header,
+  .login-header,
+  .landing-hero-copy,
+  .landing-hero-actions,
+  .login-copy,
+  .login-auth-card,
+  .login-preview-card,
+  .login-highlight,
+  .ticket,
+  #how article,
+  .marketing-footer {
+    animation: none;
+  }
+
+  .ticket,
+  .ticket:hover {
+    transform: none;
   }
 }
