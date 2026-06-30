@@ -4,7 +4,12 @@ import { gameAnnouncementMessagesTable } from "@/db/tables";
 import { generateId } from "@/lib/id";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
-import { buildAnnouncementMetadata, getAnnouncementContext, getUserName, upsertAnnouncementThreadNotification } from "./announcement-utils";
+import {
+  buildAnnouncementMetadata,
+  getAnnouncementContext,
+  getUserName,
+  upsertAnnouncementThreadNotification,
+} from "./announcement-utils";
 
 export const replyGameAnnouncementSchema = z.object({
   announcementId: z.string(),
@@ -73,9 +78,7 @@ export const $replyGameAnnouncement = createServerFn({ method: "POST" })
         gameId: announcementContext.game.id ?? undefined,
         type: "game_announcement_reply",
         title: `Reply: ${announcementContext.announcement.title}`,
-        body: announcementContext.isHost
-          ? `The host replied: "${data.body}"`
-          : `${senderName} replied: "${data.body}"`,
+        body: announcementContext.isHost ? `The host replied: "${data.body}"` : `${senderName} replied: "${data.body}"`,
         metadata,
         announcementId: announcementContext.announcement.id,
         threadParticipantUserId,

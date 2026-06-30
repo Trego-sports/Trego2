@@ -94,11 +94,7 @@ export const $getAnnouncementThread = createServerFn({ method: "GET" })
     if (announcementContext.isRecipient) {
       hasAcked = Boolean(announcementContext.recipientRecord?.acknowledgedAt);
     } else {
-      const participantContext = await getAnnouncementContext(
-        context.db,
-        data.announcementId,
-        threadParticipantUserId,
-      );
+      const participantContext = await getAnnouncementContext(context.db, data.announcementId, threadParticipantUserId);
       hasAcked = Boolean(participantContext?.recipientRecord?.acknowledgedAt);
     }
 

@@ -120,11 +120,7 @@ export async function getAnnouncementContext(
 }
 
 export async function getUserName(db: AnnouncementDb, userId: string) {
-  const [user] = await db
-    .select({ name: usersTable.name })
-    .from(usersTable)
-    .where(eq(usersTable.id, userId))
-    .limit(1);
+  const [user] = await db.select({ name: usersTable.name }).from(usersTable).where(eq(usersTable.id, userId)).limit(1);
 
   return user?.name ?? "A player";
 }

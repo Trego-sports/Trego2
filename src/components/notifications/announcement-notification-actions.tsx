@@ -33,30 +33,27 @@ function getThreadParticipantUserId(notification: MyNotification) {
   return undefined;
 }
 
-export function AnnouncementNotificationActions({
-  notification,
-}: {
-  notification: MyNotification;
-}) {
+export function AnnouncementNotificationActions({ notification }: { notification: MyNotification }) {
   const [threadOpen, setThreadOpen] = useState(false);
   const ackAnnouncement = useAckGameAnnouncement();
   const announcementId = notification.metadata?.announcementId;
-
-  if (typeof announcementId !== "string") {
-    return null;
-  }
-
+  const hasAnnouncementId = typeof announcementId === "string";
+  const safeAnnouncementId = hasAnnouncementId ? announcementId : "";
   const threadParticipantUserId = getThreadParticipantUserId(notification);
 
   const { data: threadState } = useQuery({
-    ...gameQueries.getAnnouncementThread(announcementId, threadParticipantUserId),
-    enabled: true,
+    ...gameQueries.getAnnouncementThread(safeAnnouncementId, threadParticipantUserId),
+    enabled: hasAnnouncementId,
   });
+
+  if (!hasAnnouncementId) {
+    return null;
+  }
 
   const isExpired = threadState?.isExpired ?? false;
 
   const handleAck = async () => {
-    await ackAnnouncement.mutateAsync({ announcementId });
+    await ackAnnouncement.mutateAsync({ announcementId: safeAnnouncementId });
   };
 
   return (
@@ -68,13 +65,7 @@ export function AnnouncementNotificationActions({
           </span>
         )}
         {!isExpired && threadState?.canAck && (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handleAck}
-            disabled={ackAnnouncement.isPending}
-          >
+          <Button type="button" variant="outline" size="sm" onClick={handleAck} disabled={ackAnnouncement.isPending}>
             {ackAnnouncement.isPending ? "Acknowledging..." : "Acknowledge"}
           </Button>
         )}
@@ -84,7 +75,7 @@ export function AnnouncementNotificationActions({
       </div>
 
       <AnnouncementThreadDialog
-        announcementId={announcementId}
+        announcementId={safeAnnouncementId}
         threadParticipantUserId={threadParticipantUserId}
         notificationId={notification.id}
         open={threadOpen}

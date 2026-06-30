@@ -96,9 +96,7 @@ export const $getGameAnnouncements = createServerFn({ method: "GET" })
       .groupBy(gameAnnouncementMessagesTable.announcementId);
 
     const recipientsByAnnouncementId = new Map<string, GameAnnouncementRecipient[]>();
-    const threadCountByAnnouncementId = new Map(
-      threadCounts.map((row) => [row.announcementId, row.count] as const),
-    );
+    const threadCountByAnnouncementId = new Map(threadCounts.map((row) => [row.announcementId, row.count] as const));
 
     for (const recipient of recipientRows) {
       if (recipient.userId === game.hostId) {

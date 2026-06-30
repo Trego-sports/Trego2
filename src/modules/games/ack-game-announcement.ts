@@ -4,7 +4,12 @@ import { z } from "zod";
 import { gameAnnouncementRecipientsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
-import { buildAnnouncementMetadata, getAnnouncementContext, getUserName, upsertAnnouncementThreadNotification } from "./announcement-utils";
+import {
+  buildAnnouncementMetadata,
+  getAnnouncementContext,
+  getUserName,
+  upsertAnnouncementThreadNotification,
+} from "./announcement-utils";
 
 export const $ackGameAnnouncement = createServerFn({ method: "POST" })
   .middleware([authMiddleware, dbMiddleware])
