@@ -12,6 +12,7 @@ count.txt
 .vinxi
 todos.json
 
+outputs/
 skills-lock.json
 .magicpath/*
 .agents/*

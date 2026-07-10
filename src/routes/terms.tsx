@@ -1,4 +1,5 @@
 import { createFileRoute, ErrorComponent, Link } from "@tanstack/react-router";
+import { MarketingFooter } from "@/components/layout/site-footer";
 import tregoLogo from "@/static/trego1.avif";
 
 export const Route = createFileRoute("/terms")({
@@ -119,6 +120,7 @@ function TermsOfServicePage() {
           </Link>
         </div>
       </main>
+      <MarketingFooter />
     </div>
   );
 }
