@@ -1,5 +1,8 @@
 import { relations } from "drizzle-orm";
 import {
+  friendMessagesTable,
+  friendRequestsTable,
+  friendshipsTable,
   gameAnnouncementMessagesTable,
   gameAnnouncementRecipientsTable,
   gameAnnouncementsTable,
@@ -24,6 +27,13 @@ export const usersRelations = relations(usersTable, ({ one, many }) => ({
   calendarEvents: many(gameCalendarEventsTable),
   receivedNotifications: many(notificationsTable, { relationName: "notificationRecipient" }),
   actedNotifications: many(notificationsTable, { relationName: "notificationActor" }),
+  sentFriendMessages: many(friendMessagesTable, { relationName: "friendMessageSender" }),
+  sentFriendRequests: many(friendRequestsTable, { relationName: "friendRequestRequester" }),
+  receivedFriendRequests: many(friendRequestsTable, { relationName: "friendRequestRecipient" }),
+  friendshipsAsUserA: many(friendshipsTable, { relationName: "friendshipUserA" }),
+  friendshipsAsUserB: many(friendshipsTable, { relationName: "friendshipUserB" }),
+  requestedFriendships: many(friendshipsTable, { relationName: "friendshipRequestedBy" }),
+  acceptedFriendships: many(friendshipsTable, { relationName: "friendshipAcceptedBy" }),
 }));
 
 export const oauthAccountsRelations = relations(oauthAccountsTable, ({ one }) => ({
@@ -37,6 +47,55 @@ export const playerSportsRelations = relations(playerSportsTable, ({ one }) => (
   user: one(usersTable, {
     fields: [playerSportsTable.userId],
     references: [usersTable.id],
+  }),
+}));
+
+export const friendRequestsRelations = relations(friendRequestsTable, ({ one }) => ({
+  requester: one(usersTable, {
+    fields: [friendRequestsTable.requesterUserId],
+    references: [usersTable.id],
+    relationName: "friendRequestRequester",
+  }),
+  recipient: one(usersTable, {
+    fields: [friendRequestsTable.recipientUserId],
+    references: [usersTable.id],
+    relationName: "friendRequestRecipient",
+  }),
+}));
+
+export const friendshipsRelations = relations(friendshipsTable, ({ one, many }) => ({
+  userA: one(usersTable, {
+    fields: [friendshipsTable.userAId],
+    references: [usersTable.id],
+    relationName: "friendshipUserA",
+  }),
+  userB: one(usersTable, {
+    fields: [friendshipsTable.userBId],
+    references: [usersTable.id],
+    relationName: "friendshipUserB",
+  }),
+  requestedBy: one(usersTable, {
+    fields: [friendshipsTable.requestedByUserId],
+    references: [usersTable.id],
+    relationName: "friendshipRequestedBy",
+  }),
+  acceptedBy: one(usersTable, {
+    fields: [friendshipsTable.acceptedByUserId],
+    references: [usersTable.id],
+    relationName: "friendshipAcceptedBy",
+  }),
+  messages: many(friendMessagesTable),
+}));
+
+export const friendMessagesRelations = relations(friendMessagesTable, ({ one }) => ({
+  sender: one(usersTable, {
+    fields: [friendMessagesTable.senderUserId],
+    references: [usersTable.id],
+    relationName: "friendMessageSender",
+  }),
+  friendship: one(friendshipsTable, {
+    fields: [friendMessagesTable.userAId, friendMessagesTable.userBId],
+    references: [friendshipsTable.userAId, friendshipsTable.userBId],
   }),
 }));
 

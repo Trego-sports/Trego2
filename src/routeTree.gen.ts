@@ -15,11 +15,13 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedProfileRouteImport } from './routes/_authed/profile'
+import { Route as AuthedFriendsRouteImport } from './routes/_authed/friends'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as ApiCallbacksGoogleCalendarRouteImport } from './routes/api/callbacks/google-calendar'
 import { Route as ApiCallbacksGoogleRouteImport } from './routes/api/callbacks/google'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedGamesCreateRouteImport } from './routes/_authed/games.create'
+import { Route as AuthedFriendsUserIdRouteImport } from './routes/_authed/friends_.$userId'
 import { Route as ApiAvatarsUserIdFilenameRouteImport } from './routes/api/avatars/$userId/$filename'
 import { Route as AuthedGamesGameIdManageRouteImport } from './routes/_authed/games.$gameId.manage'
 import { Route as AuthedGamesGameIdAttendanceRouteImport } from './routes/_authed/games.$gameId.attendance'
@@ -53,6 +55,11 @@ const AuthedProfileRoute = AuthedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedFriendsRoute = AuthedFriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -79,6 +86,11 @@ const AuthedGamesCreateRoute = AuthedGamesCreateRouteImport.update({
   path: '/games/create',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedFriendsUserIdRoute = AuthedFriendsUserIdRouteImport.update({
+  id: '/friends_/$userId',
+  path: '/friends/$userId',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const ApiAvatarsUserIdFilenameRoute =
   ApiAvatarsUserIdFilenameRouteImport.update({
     id: '/api/avatars/$userId/$filename',
@@ -103,7 +115,9 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/friends': typeof AuthedFriendsRoute
   '/profile': typeof AuthedProfileRoute
+  '/friends/$userId': typeof AuthedFriendsUserIdRoute
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
@@ -118,7 +132,9 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/friends': typeof AuthedFriendsRoute
   '/profile': typeof AuthedProfileRoute
+  '/friends/$userId': typeof AuthedFriendsUserIdRoute
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
@@ -135,7 +151,9 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
+  '/_authed/friends': typeof AuthedFriendsRoute
   '/_authed/profile': typeof AuthedProfileRoute
+  '/_authed/friends_/$userId': typeof AuthedFriendsUserIdRoute
   '/_authed/games/create': typeof AuthedGamesCreateRoute
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
   '/api/callbacks/google': typeof ApiCallbacksGoogleRoute
@@ -152,7 +170,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/dashboard'
+    | '/friends'
     | '/profile'
+    | '/friends/$userId'
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
@@ -167,7 +187,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/dashboard'
+    | '/friends'
     | '/profile'
+    | '/friends/$userId'
     | '/games/create'
     | '/users/$userId'
     | '/api/callbacks/google'
@@ -183,7 +205,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/_authed/dashboard'
+    | '/_authed/friends'
     | '/_authed/profile'
+    | '/_authed/friends_/$userId'
     | '/_authed/games/create'
     | '/_authed/users/$userId'
     | '/api/callbacks/google'
@@ -230,7 +254,7 @@ declare module '@tanstack/react-router' {
     '/_authed': {
       id: '/_authed'
       path: ''
-      fullPath: '/'
+      fullPath: ''
       preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -246,6 +270,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthedProfileRouteImport
+      parentRoute: typeof AuthedRoute
+    }
+    '/_authed/friends': {
+      id: '/_authed/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof AuthedFriendsRouteImport
       parentRoute: typeof AuthedRoute
     }
     '/_authed/dashboard': {
@@ -283,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedGamesCreateRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/friends_/$userId': {
+      id: '/_authed/friends_/$userId'
+      path: '/friends/$userId'
+      fullPath: '/friends/$userId'
+      preLoaderRoute: typeof AuthedFriendsUserIdRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/api/avatars/$userId/$filename': {
       id: '/api/avatars/$userId/$filename'
       path: '/api/avatars/$userId/$filename'
@@ -309,7 +347,9 @@ declare module '@tanstack/react-router' {
 
 interface AuthedRouteChildren {
   AuthedDashboardRoute: typeof AuthedDashboardRoute
+  AuthedFriendsRoute: typeof AuthedFriendsRoute
   AuthedProfileRoute: typeof AuthedProfileRoute
+  AuthedFriendsUserIdRoute: typeof AuthedFriendsUserIdRoute
   AuthedGamesCreateRoute: typeof AuthedGamesCreateRoute
   AuthedUsersUserIdRoute: typeof AuthedUsersUserIdRoute
   AuthedGamesGameIdAttendanceRoute: typeof AuthedGamesGameIdAttendanceRoute
@@ -318,7 +358,9 @@ interface AuthedRouteChildren {
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedDashboardRoute: AuthedDashboardRoute,
+  AuthedFriendsRoute: AuthedFriendsRoute,
   AuthedProfileRoute: AuthedProfileRoute,
+  AuthedFriendsUserIdRoute: AuthedFriendsUserIdRoute,
   AuthedGamesCreateRoute: AuthedGamesCreateRoute,
   AuthedUsersUserIdRoute: AuthedUsersUserIdRoute,
   AuthedGamesGameIdAttendanceRoute: AuthedGamesGameIdAttendanceRoute,
