@@ -1,5 +1,4 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { AppFooter } from "@/components/layout/site-footer";
 import { TopBar } from "@/components/layout/topbar";
 import { $getUserId } from "@/lib/session";
 
@@ -17,14 +16,13 @@ export const Route = createFileRoute("/_authed")({
 
 function AuthedLayout() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div>
       <TopBar />
-      <main className="flex-1 py-8 sm:py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="py-10">
+        <div className="px-8 max-w-7xl mx-auto">
           <Outlet />
         </div>
       </main>
-      <AppFooter />
     </div>
   );
 }
