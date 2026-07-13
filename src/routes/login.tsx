@@ -2,10 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CalendarDaysIcon, ShieldCheckIcon, TrophyIcon } from "lucide-react";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { $loginWithGoogle } from "@/lib/auth/google";
 import { $getUserId } from "@/lib/session";
 import googleLogo from "@/static/google-logo.svg";
-import tregoLogo from "@/static/trego1.avif";
+import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -38,10 +39,13 @@ function LoginPage() {
         href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
-      <main className="min-h-screen bg-[#f8f9ff] text-[#0b1c30] [font-family:Inter,ui-sans-serif,system-ui,sans-serif]">
-        <DesktopLoginPage onGoogleLogin={handleGoogleLogin} isSigningIn={googleLoginMutation.isPending} />
-        <MobileLoginPage onGoogleLogin={handleGoogleLogin} isSigningIn={googleLoginMutation.isPending} />
-      </main>
+      <div className="min-h-screen bg-[#f8f9ff] text-[#0b1c30] [font-family:Inter,ui-sans-serif,system-ui,sans-serif]">
+        <main>
+          <DesktopLoginPage onGoogleLogin={handleGoogleLogin} isSigningIn={googleLoginMutation.isPending} />
+          <MobileLoginPage onGoogleLogin={handleGoogleLogin} isSigningIn={googleLoginMutation.isPending} />
+        </main>
+        <SiteFooter />
+      </div>
     </>
   );
 }
@@ -99,7 +103,7 @@ function MobileLoginPage({ onGoogleLogin, isSigningIn }: { onGoogleLogin: () => 
     <div className="flex min-h-screen flex-col md:hidden">
       <section className="flex flex-1 flex-col items-center justify-center gap-8 px-4 py-8">
         <Link to="/" className="transition-opacity hover:opacity-80">
-          <img src={tregoLogo} alt="Trego Logo" className="size-32 object-contain" />
+          <img src={tregoLogo} alt="Trego Logo" className="size-28 object-contain" />
         </Link>
 
         <section className="w-full rounded-xl border border-[#c3c6d7] bg-white p-6 text-center shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
@@ -128,11 +132,6 @@ function MobileLoginPage({ onGoogleLogin, isSigningIn }: { onGoogleLogin: () => 
 
         <MobilePreviewCard />
       </section>
-
-      <footer className="flex justify-center gap-8 border-t border-[#c3c6d7] px-4 py-6">
-        <FooterLegalLink to="/privacy">Privacy Policy</FooterLegalLink>
-        <FooterLegalLink to="/terms">Terms of Service</FooterLegalLink>
-      </footer>
     </div>
   );
 }
@@ -219,14 +218,6 @@ function LegalCopy({ align }: { align: "left" | "center" }) {
 function LegalLink({ to, children }: { to: "/privacy" | "/terms"; children: string }) {
   return (
     <Link to={to} className="font-medium text-[#004ac6] hover:underline">
-      {children}
-    </Link>
-  );
-}
-
-function FooterLegalLink({ to, children }: { to: "/privacy" | "/terms"; children: string }) {
-  return (
-    <Link to={to} className="text-sm font-medium text-[#565e74] transition hover:text-[#004ac6]">
       {children}
     </Link>
   );

@@ -106,24 +106,24 @@ export function AnnouncementThreadDialog({
         </DialogHeader>
 
         {isLoading || !thread ? (
-          <div className="flex min-h-40 items-center justify-center gap-2 text-sm text-muted-foreground">
+          <div className="flex min-h-40 items-center justify-center gap-2 text-sm font-medium text-[#647086]">
             <Loader2Icon className="h-4 w-4 animate-spin" />
             Loading conversation...
           </div>
         ) : (
           <div className="space-y-4">
             {isExpired && (
-              <div className="flex items-center gap-2 border border-muted-foreground/20 bg-muted/40 px-3 py-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] px-3 py-2 text-sm font-medium text-[#647086]">
                 <LockIcon className="h-3.5 w-3.5 shrink-0" />
                 <span>Session expired — this thread is read-only.</span>
               </div>
             )}
 
-            <div className="space-y-2 border bg-muted/20 p-4">
-              <p className="text-xs font-medium text-muted-foreground">Original announcement</p>
-              <p className="whitespace-pre-wrap text-sm leading-6">{thread.originalBody}</p>
+            <div className="space-y-2 rounded-lg border border-[#d8def0] bg-[#f8f9ff] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.08em] text-[#004ac6]">Original announcement</p>
+              <p className="whitespace-pre-wrap text-sm font-medium leading-6 text-[#0b1c30]">{thread.originalBody}</p>
               {thread.requiresAck && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs font-bold text-[#647086]">
                   {thread.isHost
                     ? thread.hasAcked
                       ? `${thread.threadParticipantName} acknowledged this message.`
@@ -136,16 +136,16 @@ export function AnnouncementThreadDialog({
             </div>
 
             {thread.messages.length > 0 ? (
-              <div className="max-h-64 space-y-3 overflow-y-auto border p-4">
+              <div className="max-h-64 space-y-3 overflow-y-auto rounded-lg border border-[#d8def0] bg-white p-4">
                 {thread.messages.map((message) => (
                   <div key={message.id} className={cn("space-y-1", message.isMine ? "text-right" : "text-left")}>
-                    <p className="text-xs font-medium text-muted-foreground">
+                    <p className="text-xs font-bold text-[#647086]">
                       {message.isMine ? "You" : message.senderName} · {formatMessageTime(message.createdAt)}
                     </p>
                     <p
                       className={cn(
-                        "inline-block whitespace-pre-wrap px-3 py-2 text-sm leading-6",
-                        message.isMine ? "bg-primary/10 text-left" : "bg-muted/50",
+                        "inline-block max-w-[90%] rounded-lg px-3 py-2 text-left text-sm font-medium leading-6 whitespace-pre-wrap",
+                        message.isMine ? "bg-[#e5eeff] text-[#0b1c30]" : "bg-[#f8f9ff] text-[#0b1c30]",
                       )}
                     >
                       {message.body}
@@ -154,12 +154,12 @@ export function AnnouncementThreadDialog({
                 ))}
               </div>
             ) : (
-              !isExpired && <p className="text-sm text-muted-foreground">No replies yet.</p>
+              !isExpired && <p className="text-sm font-medium text-[#647086]">No replies yet.</p>
             )}
 
             {!isExpired && (
               <div className="space-y-2">
-                <label htmlFor="announcement-reply" className="text-sm font-medium">
+                <label htmlFor="announcement-reply" className="text-sm font-bold text-[#0b1c30]">
                   Write a reply
                 </label>
                 <textarea
@@ -170,8 +170,7 @@ export function AnnouncementThreadDialog({
                   rows={3}
                   maxLength={2000}
                   className={cn(
-                    "placeholder:text-muted-foreground bg-input flex min-h-20 w-full resize-y border px-3 py-2 text-base transition-[color,box-shadow,border-color] outline-none md:text-sm",
-                    "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                    "flex min-h-20 w-full resize-y rounded-lg border border-[#c3c6d7] bg-white px-3 py-2 text-base font-medium text-[#0b1c30] outline-none transition-[border-color,box-shadow] placeholder:text-[#7b8496] focus-visible:border-[#004ac6] focus-visible:ring-2 focus-visible:ring-[#004ac6]/20 md:text-sm",
                   )}
                 />
               </div>

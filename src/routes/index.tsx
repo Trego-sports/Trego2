@@ -15,7 +15,8 @@ import {
   UsersIcon,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
-import tregoLogo from "@/static/trego1.avif";
+import { SiteFooter } from "@/components/layout/site-footer";
+import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -154,7 +155,7 @@ function HomePage() {
           <OrganizerSection />
           <StepsSection />
         </main>
-        <HomeFooter />
+        <SiteFooter className="mt-16" />
       </div>
     </>
   );
@@ -616,31 +617,6 @@ function StepCard({ step, index }: { step: (typeof steps)[number]; index: number
   );
 }
 
-function HomeFooter() {
-  return (
-    <footer className="mt-16 w-full border-t border-[#243448] bg-[#0b1c30] py-6 text-white">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-5 md:flex-row md:px-8">
-        <div className="flex flex-col items-center gap-2 md:items-start">
-          <span className="flex items-center gap-2 text-sm font-bold">
-            <DumbbellIcon className="size-5" />
-            Trego
-          </span>
-          <span className="text-xs font-medium text-[#d3e4fe]">
-            © 2026 Trego Sports Coordination. All rights reserved.
-          </span>
-        </div>
-        <nav className="flex flex-wrap justify-center gap-4 md:gap-6">
-          <FooterLink to="/privacy">Privacy Policy</FooterLink>
-          <FooterLink to="/terms">Terms of Service</FooterLink>
-          <FooterLink to="/privacy">Cookie Policy</FooterLink>
-          <FooterLink to="/login">Support</FooterLink>
-          <FooterLink to="/login">Contact Us</FooterLink>
-        </nav>
-      </div>
-    </footer>
-  );
-}
-
 function StatBlock({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col">
@@ -683,13 +659,5 @@ function MiniPanel({
         <p className={`mt-1 text-xs font-medium ${mutedClassName}`}>{description}</p>
       </div>
     </div>
-  );
-}
-
-function FooterLink({ to, children }: { to: "/privacy" | "/terms" | "/login"; children: string }) {
-  return (
-    <Link to={to} className="text-xs font-medium text-[#d3e4fe] transition hover:text-white">
-      {children}
-    </Link>
   );
 }

@@ -4,19 +4,19 @@ import { cva, VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const alertVariants = cva(
-	"relative w-full border px-5 py-4 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*5)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-4 gap-y-1 items-start [&>svg]:size-5 [&>svg]:translate-y-0.5 [&>svg]:text-current border-l-[6px]",
+	"relative grid w-full grid-cols-[0_1fr] items-start gap-y-1 rounded-lg border px-5 py-4 text-sm shadow-[0_1px_2px_rgba(15,23,42,0.04)] has-[>svg]:grid-cols-[calc(var(--spacing)*5)_1fr] has-[>svg]:gap-x-4 [&>svg]:size-5 [&>svg]:translate-y-0.5 [&>svg]:text-current",
 	{
 		variants: {
 			variant: {
 				default:
-					"bg-card text-card-foreground border-border border-l-border [&_*[data-slot=alert-description]]:text-muted-foreground",
+					"border-[#c3c6d7] bg-white text-[#0b1c30] [&_*[data-slot=alert-description]]:text-[#647086]",
 				warning:
-					"bg-warning border-warning-border border-l-warning-foreground text-warning-foreground [&_*[data-slot=alert-description]]:text-warning-foreground/90",
+					"border-[#fde68a] bg-[#fff7d6] text-[#7a4d00] [&_*[data-slot=alert-description]]:text-[#7a4d00]/90",
 				danger:
-					"bg-danger border-danger-border border-l-danger-foreground text-danger-foreground [&_*[data-slot=alert-description]]:text-danger-foreground/90",
-				info: "bg-info border-info-border border-l-info-foreground text-info-foreground [&_*[data-slot=alert-description]]:text-info-foreground/90",
+					"border-[#fecaca] bg-[#fff1f2] text-[#991b1b] [&_*[data-slot=alert-description]]:text-[#991b1b]/90",
+				info: "border-[#bfdbfe] bg-[#eff6ff] text-[#004ac6] [&_*[data-slot=alert-description]]:text-[#004ac6]/90",
 				success:
-					"bg-success border-success-border border-l-success-foreground text-success-foreground [&_*[data-slot=alert-description]]:text-success-foreground/90",
+					"border-[#bbf7d0] bg-[#f0fdf4] text-[#166534] [&_*[data-slot=alert-description]]:text-[#166534]/90",
 			},
 		},
 		defaultVariants: {
@@ -45,7 +45,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"h4">) {
 		<h4
 			data-slot="alert-title"
 			className={cn(
-				"col-start-2 min-h-4 font-semibold tracking-tight text-base",
+				"col-start-2 min-h-4 text-base font-black tracking-tight",
 				className
 			)}
 			{...props}
@@ -61,7 +61,7 @@ function AlertDescription({
 		<div
 			data-slot="alert-description"
 			className={cn(
-				"col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+				"col-start-2 grid justify-items-start gap-1 text-sm font-medium [&_p]:leading-relaxed",
 				className
 			)}
 			{...props}

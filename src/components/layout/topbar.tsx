@@ -3,7 +3,7 @@ import { ArrowLeftIcon, LogOutIcon, PlusCircleIcon, UserIcon } from "lucide-reac
 import type { ReactNode } from "react";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { $clearSession } from "@/lib/session";
-import tregoLogo from "@/static/trego1.avif";
+import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export function TopBar() {
   const router = useRouter();

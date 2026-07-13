@@ -60,7 +60,7 @@ export function AnnouncementNotificationActions({ notification }: { notification
     <>
       <div className="flex flex-wrap gap-2">
         {!isExpired && threadState?.requiresAck && !threadState.isHost && !threadState.hasAcked && (
-          <span className="inline-flex items-center border border-amber-700/30 bg-amber-700/10 px-2.5 py-1 text-xs font-medium text-amber-900">
+          <span className="inline-flex items-center rounded-full bg-[#fff7d6] px-2.5 py-1 text-xs font-black text-[#7a4d00]">
             Acknowledgment required
           </span>
         )}

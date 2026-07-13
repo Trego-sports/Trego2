@@ -8,11 +8,12 @@ import { NextGameCard } from "@/components/dashboard/next-game-card";
 import { RecommendedGamesCard } from "@/components/dashboard/recommended-games-card";
 import { UpcomingGamesCard } from "@/components/dashboard/upcoming-games-card";
 import { YourPastGamesCard, YourSportsCard } from "@/components/dashboard/your-sports-card";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { calendarQueries } from "@/modules/calendar/queries";
 import { gameQueries } from "@/modules/games/queries";
 import { userQueries } from "@/modules/profile/queries";
-import tregoLogo from "@/static/trego1.avif";
+import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export const Route = createFileRoute("/_authed/dashboard")({
   component: DashboardPage,
@@ -117,6 +118,7 @@ function DashboardPage() {
           </div>
         </main>
 
+        <SiteFooter className="pb-24 md:ml-64 md:pb-6" />
         <MobileBottomNav />
       </div>
     </>

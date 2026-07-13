@@ -74,7 +74,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
 
   return (
     <>
-      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
+      <Card className="rounded-lg border-[#c3c6d7] bg-white shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
@@ -82,13 +82,15 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
             </span>
             Game Logistics
           </CardTitle>
-          <CardDescription>Transfer host ownership or remove players from this game.</CardDescription>
+          <CardDescription className="text-[#647086]">
+            Transfer host ownership or remove players from this game.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">
           <section className="space-y-4">
             <div className="space-y-1">
-              <h2 className="text-sm font-semibold">Transfer host</h2>
-              <p className="text-sm text-muted-foreground">
+              <h2 className="text-sm font-bold text-[#0b1c30]">Transfer host</h2>
+              <p className="text-sm font-medium text-[#647086]">
                 The new host will receive host permissions immediately. You can leave the game after transferring.
               </p>
             </div>
@@ -101,7 +103,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                     value={selectedNewHostUserId}
                     onValueChange={(value) => setSelectedNewHostUserId(value as string)}
                   >
-                    <SelectTrigger id="new-host-select" className="h-11 w-full border-[#c3c5d9] bg-white">
+                    <SelectTrigger id="new-host-select" className="h-11 w-full border-[#c3c6d7] bg-white">
                       <SelectValue>{selectedNewHost ? selectedNewHost.name : "Select a participant..."}</SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -123,7 +125,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 </Button>
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">
+              <p className="rounded-lg border border-dashed border-[#c3c6d7] bg-[#f8f9ff] p-4 text-sm font-medium text-[#647086]">
                 Add another participant before transferring host ownership.
               </p>
             )}
@@ -131,8 +133,8 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
 
           <section className="space-y-4">
             <div className="space-y-1">
-              <h2 className="text-sm font-semibold">Remove players</h2>
-              <p className="text-sm text-muted-foreground">Removed players will no longer be part of this game.</p>
+              <h2 className="text-sm font-bold text-[#0b1c30]">Remove players</h2>
+              <p className="text-sm font-medium text-[#647086]">Removed players will no longer be part of this game.</p>
             </div>
 
             {removableParticipants.length > 0 ? (
@@ -140,11 +142,13 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 {removableParticipants.map((participant) => (
                   <div
                     key={participant.userId}
-                    className="flex flex-col gap-3 rounded-lg border border-[#e0e3e5] bg-[#f8f9ff] p-3 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-3 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-3 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">{participant.name}</p>
-                      {participant.joinedViaInvite && <p className="text-xs text-muted-foreground">Joined by invite</p>}
+                      <p className="truncate text-sm font-bold text-[#0b1c30]">{participant.name}</p>
+                      {participant.joinedViaInvite && (
+                        <p className="text-xs font-medium text-[#647086]">Joined by invite</p>
+                      )}
                     </div>
                     <Button
                       type="button"
@@ -160,7 +164,9 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">There are no other players in this game yet.</p>
+              <p className="rounded-lg border border-dashed border-[#c3c6d7] bg-[#f8f9ff] p-4 text-sm font-medium text-[#647086]">
+                There are no other players in this game yet.
+              </p>
             )}
           </section>
         </CardContent>

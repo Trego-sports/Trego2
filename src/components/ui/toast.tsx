@@ -50,7 +50,7 @@ function ToastList() {
 						swipeDirection={["right", "down"]}
 						data-slot="toast"
 						className={cn(
-							"bg-popover absolute right-0 bottom-0 left-auto z-[calc(1000-var(--toast-index))] mr-0 flex w-full items-center justify-between gap-1.5 border border-l-[6px] bg-clip-padding p-4 transition-all [transition-property:opacity,transform] duration-200 ease-out select-none",
+							"absolute right-0 bottom-0 left-auto z-[calc(1000-var(--toast-index))] mr-0 flex w-full items-center justify-between gap-3 rounded-lg border bg-white bg-clip-padding p-4 text-[#0b1c30] shadow-[0_18px_45px_rgba(15,23,42,0.16)] transition-all [transition-property:opacity,transform] duration-200 ease-out select-none",
 							"after:absolute after:bottom-full after:left-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']", // Fill the gap between toasts
 							"[transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+calc(min(var(--toast-index),10)*-1*var(--gap))))_scale(calc(max(0,1-(var(--toast-index)*0.1))))]", // Initial position and scale
 							"data-[expanded]:[transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y)))]", // Expanded state animation
@@ -58,15 +58,14 @@ function ToastList() {
 							"data-[ending-style]:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))] data-[expanded]:data-[ending-style]:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]", // Right swipe animation
 							"data-[ending-style]:data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+150%))] data-[expanded]:data-[ending-style]:data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+150%))]", // Down swipe animation
 							toast.type === "success" &&
-								"bg-success border-success-border border-l-success-foreground text-success-foreground",
+								"border-[#bbf7d0] bg-[#f0fdf4] text-[#166534]",
 							toast.type === "error" &&
-								"bg-danger border-danger-border border-l-danger-foreground text-danger-foreground",
+								"border-[#fecaca] bg-[#fff1f2] text-[#991b1b]",
 							toast.type === "info" &&
-								"bg-info border-info-border border-l-info-foreground text-info-foreground",
+								"border-[#bfdbfe] bg-[#eff6ff] text-[#004ac6]",
 							toast.type === "warning" &&
-								"bg-warning border-warning-border border-l-warning-foreground text-warning-foreground",
-							!toast.type &&
-								"bg-card border-border border-l-border text-card-foreground"
+								"border-[#fde68a] bg-[#fff7d6] text-[#7a4d00]",
+							!toast.type && "border-[#c3c6d7]"
 						)}
 						style={{
 							["--gap" as string]: "0.8rem",
@@ -86,11 +85,11 @@ function ToastList() {
 
 							<div className="flex flex-col">
 								<Toast.Title
-									className="text-[13px] leading-relaxed font-medium"
+									className="text-[13px] leading-relaxed font-black"
 									data-slot="toast-title"
 								/>
 								<Toast.Description
-									className="text-[13px] leading-normal"
+									className="text-[13px] leading-normal font-medium opacity-90"
 									data-slot="toast-description"
 								/>
 							</div>

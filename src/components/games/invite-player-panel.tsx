@@ -76,7 +76,7 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
 
   return (
     <>
-      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
+      <Card className="rounded-lg border-[#c3c6d7] bg-white shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
@@ -84,15 +84,19 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
             </span>
             Invite Player
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-[#647086]">
             Host-only override that adds a player even if public attendance rules would block them.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {isLoadingCandidates ? (
-            <p className="text-sm text-[#434656]">Loading players...</p>
+            <p className="rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-4 text-sm font-medium text-[#647086]">
+              Loading players...
+            </p>
           ) : isFull ? (
-            <p className="text-sm text-[#434656]">This game is full.</p>
+            <p className="rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-4 text-sm font-medium text-[#647086]">
+              This game is full.
+            </p>
           ) : (
             <>
               {candidates.length > 0 ? (
@@ -100,7 +104,7 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   <div className="space-y-2">
                     <Label htmlFor="invite-player-select">Invite from friends</Label>
                     <Select value={selectedUserId} onValueChange={(value) => setSelectedUserId(value as string)}>
-                      <SelectTrigger id="invite-player-select" className="h-11 w-full border-[#c3c5d9] bg-white">
+                      <SelectTrigger id="invite-player-select" className="h-11 w-full border-[#c3c6d7] bg-white">
                         <SelectValue>{selectedCandidate ? selectedCandidate.name : "Select a player..."}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
@@ -123,8 +127,8 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   </Button>
                 </div>
               ) : (
-                <div className="rounded-lg border border-dashed border-[#c3c5d9] bg-[#f8f9ff] p-5 text-center">
-                  <UserPlusIcon className="mx-auto mb-2 size-8 text-[#737688]" />
+                <div className="rounded-lg border border-dashed border-[#c3c6d7] bg-[#f8f9ff] p-5 text-center">
+                  <UserPlusIcon className="mx-auto mb-2 size-8 text-[#647086]" />
                   <p className="text-sm font-semibold text-[#0b1c30]">No available friends to invite.</p>
                 </div>
               )}
@@ -134,7 +138,7 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-[#737688]">Or invite by email</span>
+                  <span className="bg-white px-2 font-semibold text-[#647086]">Or invite by email</span>
                 </div>
               </div>
 

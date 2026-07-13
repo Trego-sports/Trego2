@@ -108,7 +108,7 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
 
   return (
     <>
-      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
+      <Card className="rounded-lg border-[#c3c6d7] bg-white shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
@@ -116,14 +116,14 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
             </span>
             Game Announcements
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-[#647086]">
             Send a message to all or selected participants. They will receive an in-app notification.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {recipientCandidates.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-[#c3c5d9] bg-[#f8f9ff] p-5 text-center">
-              <MegaphoneIcon className="mx-auto mb-2 size-8 text-[#737688]" />
+            <div className="rounded-lg border border-dashed border-[#c3c6d7] bg-[#f8f9ff] p-5 text-center">
+              <MegaphoneIcon className="mx-auto mb-2 size-8 text-[#647086]" />
               <p className="text-sm font-semibold text-[#0b1c30]">Add participants before sending announcements.</p>
             </div>
           ) : (
@@ -137,7 +137,7 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                   placeholder="e.g. Location change, Bring equipment"
                   maxLength={120}
                 />
-                <p className="text-xs text-muted-foreground">{trimmedTitle.length}/120 characters</p>
+                <p className="text-xs font-medium text-[#647086]">{trimmedTitle.length}/120 characters</p>
               </div>
 
               <div className="space-y-2">
@@ -150,11 +150,11 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                   rows={4}
                   maxLength={2000}
                   className={cn(
-                    "placeholder:text-muted-foreground flex min-h-24 w-full resize-y rounded-lg border border-[#c3c5d9] bg-white px-3 py-2 text-base transition-[color,box-shadow,border-color] outline-none md:text-sm",
-                    "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                    "flex min-h-24 w-full resize-y rounded-lg border border-[#c3c6d7] bg-white px-3 py-2 text-base text-[#0b1c30] shadow-sm outline-none transition-[color,box-shadow,border-color] placeholder:text-[#8a93a8] md:text-sm",
+                    "focus-visible:border-[#004ac6] focus-visible:ring-2 focus-visible:ring-[#004ac6]/20",
                   )}
                 />
-                <p className="text-xs text-muted-foreground">{trimmedBody.length}/2000 characters</p>
+                <p className="text-xs font-medium text-[#647086]">{trimmedBody.length}/2000 characters</p>
               </div>
 
               <div className="space-y-2">
@@ -178,30 +178,33 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                 </Select>
               </div>
 
-              <label className="flex cursor-pointer items-center gap-3 text-sm">
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-3 text-sm font-medium text-[#0b1c30]">
                 <input
                   type="checkbox"
                   checked={requiresAck}
                   onChange={(event) => setRequiresAck(event.target.checked)}
-                  className="size-4 border"
+                  className="size-4 accent-[#004ac6]"
                 />
                 <span>Require participants to acknowledge this message</span>
               </label>
 
               {audienceType === "selected" && (
-                <div className="space-y-3 border p-4">
-                  <p className="text-sm font-medium">Select participants</p>
+                <div className="space-y-3 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-4">
+                  <p className="text-sm font-bold text-[#0b1c30]">Select participants</p>
                   <div className="space-y-2">
                     {recipientCandidates.map((participant) => {
                       const isSelected = selectedRecipientIds.includes(participant.userId);
 
                       return (
-                        <label key={participant.userId} className="flex cursor-pointer items-center gap-3 text-sm">
+                        <label
+                          key={participant.userId}
+                          className="flex cursor-pointer items-center gap-3 rounded-lg bg-white p-3 text-sm font-medium text-[#0b1c30]"
+                        >
                           <input
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => toggleRecipient(participant.userId)}
-                            className="size-4 border"
+                            className="size-4 accent-[#004ac6]"
                           />
                           <span>{participant.name}</span>
                         </label>
@@ -222,14 +225,16 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
             </>
           )}
 
-          <div className="space-y-3 border-t pt-6">
+          <div className="space-y-3 border-t border-[#e4e8f2] pt-6">
             <div>
-              <h3 className="text-sm font-medium">Announcement History</h3>
-              <p className="text-xs text-muted-foreground">Previously sent announcements for this game.</p>
+              <h3 className="text-sm font-bold text-[#0b1c30]">Announcement History</h3>
+              <p className="text-xs font-medium text-[#647086]">Previously sent announcements for this game.</p>
             </div>
 
             {isLoadingAnnouncements ? (
-              <p className="text-sm text-muted-foreground">Loading announcement history...</p>
+              <p className="rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-4 text-sm font-medium text-[#647086]">
+                Loading announcement history...
+              </p>
             ) : announcements.length > 0 ? (
               <div className="space-y-3">
                 {announcements.map((announcement) => {
@@ -241,47 +246,49 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                   return (
                     <div
                       key={announcement.id}
-                      className="space-y-3 rounded-lg border border-[#e0e3e5] bg-[#f8f9ff] p-4"
+                      className="space-y-3 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-4"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-2">
                         <div className="space-y-1">
-                          <p className="font-medium leading-snug">{announcement.title}</p>
-                          <div className="flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
-                            <span>
+                          <p className="font-bold leading-snug text-[#0b1c30]">{announcement.title}</p>
+                          <div className="flex flex-wrap gap-2 text-xs font-semibold text-[#647086]">
+                            <span className="rounded-full bg-[#e5eeff] px-2 py-1 text-[#004ac6]">
                               {announcement.audienceType === "all" ? "All participants" : "Selected participants"}
                             </span>
-                            {announcement.requiresAck && <span>· Ack required</span>}
+                            {announcement.requiresAck && (
+                              <span className="rounded-full bg-[#fff4d8] px-2 py-1 text-[#946200]">Ack required</span>
+                            )}
                             {announcement.replyThreadCount > 0 && (
-                              <span>
-                                · {announcement.replyThreadCount} conversation
+                              <span className="rounded-full bg-white px-2 py-1 text-[#647086]">
+                                {announcement.replyThreadCount} conversation
                                 {announcement.replyThreadCount === 1 ? "" : "s"}
                               </span>
                             )}
                           </div>
                         </div>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs font-semibold text-[#647086]">
                           {formatAnnouncementTime(announcement.createdAt)}
                         </p>
                       </div>
-                      <p className="whitespace-pre-wrap text-sm leading-6">{announcement.body}</p>
+                      <p className="whitespace-pre-wrap text-sm leading-6 text-[#263248]">{announcement.body}</p>
                       {announcement.audienceType === "selected" && (
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs font-medium text-[#647086]">
                           Sent to: {announcement.recipients.map((recipient) => recipient.name).join(", ")}
                         </p>
                       )}
                       {announcement.requiresAck && (
                         <div className="grid gap-2 text-xs sm:grid-cols-2">
-                          <div className="border border-green-700/20 bg-green-700/5 p-3">
-                            <p className="font-medium text-green-900">Acknowledged</p>
-                            <p className="mt-1 text-muted-foreground">
+                          <div className="rounded-lg border border-[#bbf7d0] bg-[#f0fdf4] p-3">
+                            <p className="font-bold text-[#166534]">Acknowledged</p>
+                            <p className="mt-1 font-medium text-[#647086]">
                               {acknowledgedRecipients.length > 0
                                 ? acknowledgedRecipients.map((recipient) => recipient.name).join(", ")
                                 : "No one yet"}
                             </p>
                           </div>
-                          <div className="border border-amber-700/20 bg-amber-700/5 p-3">
-                            <p className="font-medium text-amber-900">Pending ack</p>
-                            <p className="mt-1 text-muted-foreground">
+                          <div className="rounded-lg border border-[#fde68a] bg-[#fffbeb] p-3">
+                            <p className="font-bold text-[#92400e]">Pending ack</p>
+                            <p className="mt-1 font-medium text-[#647086]">
                               {pendingRecipients.length > 0
                                 ? pendingRecipients.map((recipient) => recipient.name).join(", ")
                                 : "Everyone acknowledged"}
@@ -312,7 +319,10 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                 })}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">No announcements sent yet.</p>
+              <div className="rounded-lg border border-dashed border-[#c3c6d7] bg-[#f8f9ff] p-5 text-center">
+                <p className="text-sm font-bold text-[#0b1c30]">No announcements sent yet.</p>
+                <p className="mt-1 text-xs font-medium text-[#647086]">Updates you send will appear here.</p>
+              </div>
             )}
           </div>
         </CardContent>
@@ -338,9 +348,9 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
               {requiresAck ? " Participants will be asked to acknowledge the message." : ""}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-2 border bg-muted/30 p-3">
-            <p className="text-sm font-medium">{trimmedTitle}</p>
-            <p className="whitespace-pre-wrap text-sm leading-6">{trimmedBody}</p>
+          <div className="space-y-2 rounded-lg border border-[#c3c6d7] bg-[#f8f9ff] p-3">
+            <p className="text-sm font-bold text-[#0b1c30]">{trimmedTitle}</p>
+            <p className="whitespace-pre-wrap text-sm leading-6 text-[#263248]">{trimmedBody}</p>
           </div>
           <DialogFooter>
             <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
