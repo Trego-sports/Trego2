@@ -23,10 +23,10 @@ function AuthedLayout() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#eff4ff] text-[#0b1c30] [font-family:Inter,ui-sans-serif,system-ui,sans-serif]">
       <TopBar />
-      <main className="py-10">
-        <div className="px-8 max-w-7xl mx-auto">
+      <main className="py-8 md:py-10">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
           <Outlet />
         </div>
       </main>

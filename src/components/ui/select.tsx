@@ -33,7 +33,7 @@ function SelectValue({
 	return (
 		<BaseSelect.Value
 			data-slot="select-value"
-			className={cn("text-sm", className)}
+			className={cn("text-sm font-medium text-[#0b1c30]", className)}
 			{...props}
 		/>
 	)
@@ -52,7 +52,7 @@ function SelectTrigger({
 			data-slot="select-trigger"
 			data-size={size}
 			className={cn(
-				"group [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-invalid:ring-2 aria-invalid:ring-destructive aria-invalid:border-destructive bg-input hover:border-ring flex w-fit items-center justify-between gap-2 border px-3 py-2 text-sm whitespace-nowrap transition-[color,box-shadow,border-color] outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-[popup-open]:[&_*[data-slot=select-icon]]:rotate-180 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+				"group flex w-fit items-center justify-between gap-2 rounded-lg border border-[#c3c6d7] bg-white px-3 py-2 text-sm font-medium whitespace-nowrap text-[#0b1c30] shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none select-none transition-[border-color,box-shadow,background-color] hover:border-[#9aa9c8] focus-visible:border-[#004ac6] focus-visible:ring-2 focus-visible:ring-[#004ac6]/20 aria-invalid:border-[#b91c1c] aria-invalid:ring-2 aria-invalid:ring-[#b91c1c]/20 data-[disabled]:pointer-events-none data-[disabled]:bg-[#f1f5fb] data-[disabled]:text-[#7b8496] data-[disabled]:opacity-70 data-[size=default]:h-10 data-[size=sm]:h-9 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-[popup-open]:[&_*[data-slot=select-icon]]:rotate-180 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='text-'])]:text-[#647086] [&_svg:not([class*='size-'])]:size-4",
 				className
 			)}
 			{...props}
@@ -88,7 +88,7 @@ function SelectContent({
 				<BaseSelect.Popup
 					data-slot="select-content"
 					className={cn(
-						"bg-popover text-popover-foreground data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-[var(--available-height)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-x-hidden overflow-y-auto border p-1",
+						"data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 data-[open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-[var(--available-height)] min-w-[var(--anchor-width)] origin-[var(--transform-origin)] overflow-x-hidden overflow-y-auto rounded-lg border border-[#c3c6d7] bg-white p-1 text-[#0b1c30] shadow-[0_18px_45px_rgba(15,23,42,0.14)]",
 						position === "item-aligned" &&
 							"[&_*[data-slot=select-item]]:min-w-[var(--anchor-width)]",
 						className
@@ -112,12 +112,12 @@ function SelectItem({
 		<BaseSelect.Item
 			data-slot="select-item"
 			className={cn(
-				"data-highlighted:bg-accent data-highlighted:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+				"relative flex w-full cursor-default items-center gap-2 rounded-md py-2 pr-8 pl-2 text-sm font-medium text-[#0b1c30] outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-highlighted:bg-[#e5eeff] data-highlighted:text-[#004ac6] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='text-'])]:text-[#647086] [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
 				className
 			)}
 			{...props}
 		>
-			<span className="absolute right-2 flex size-3.5 items-center justify-center">
+			<span className="absolute right-2 flex size-3.5 items-center justify-center text-[#004ac6]">
 				<BaseSelect.ItemIndicator>
 					<CheckIcon className="size-4" />
 				</BaseSelect.ItemIndicator>
@@ -135,7 +135,7 @@ function SelectLabel({
 		<BaseSelect.GroupLabel
 			data-slot="select-label"
 			className={cn(
-				"text-muted-foreground px-2 py-1.5 text-xs font-medium",
+				"px-2 py-1.5 text-xs font-black tracking-[0.08em] text-[#647086] uppercase",
 				className
 			)}
 			{...props}
@@ -150,7 +150,7 @@ function SelectSeparator({
 	return (
 		<BaseSelect.Separator
 			data-slot="select-separator"
-			className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
+			className={cn("pointer-events-none -mx-1 my-1 h-px bg-[#d8def0]", className)}
 			{...props}
 		/>
 	)
@@ -164,7 +164,7 @@ function SelectScrollUpButton({
 		<BaseSelect.ScrollUpArrow
 			data-slot="select-scroll-up-button"
 			className={cn(
-				"bg-popover top-px left-[1px] z-[100] flex w-[calc(100%-2px)] cursor-default items-center justify-center py-1",
+				"top-px left-[1px] z-[100] flex w-[calc(100%-2px)] cursor-default items-center justify-center bg-white py-1 text-[#647086]",
 				className
 			)}
 			{...props}
@@ -182,7 +182,7 @@ function SelectScrollDownButton({
 		<BaseSelect.ScrollDownArrow
 			data-slot="select-scroll-down-button"
 			className={cn(
-				"bg-popover bottom-px left-[1px] z-[100] flex w-[calc(100%-2px)] cursor-default items-center justify-center py-1",
+				"bottom-px left-[1px] z-[100] flex w-[calc(100%-2px)] cursor-default items-center justify-center bg-white py-1 text-[#647086]",
 				className
 			)}
 			{...props}

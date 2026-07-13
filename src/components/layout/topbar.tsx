@@ -1,14 +1,14 @@
-import { Link, useMatchRoute, useRouter } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "lucide-react";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { ArrowLeftIcon, LogOutIcon, PlusCircleIcon, UserIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import { NotificationBell } from "@/components/notifications/notification-bell";
-import { Button } from "@/components/ui/button";
 import { $clearSession } from "@/lib/session";
 import tregoLogo from "@/static/trego1.avif";
 
 export function TopBar() {
   const router = useRouter();
-  const matchRoute = useMatchRoute();
-  const isDashboard = matchRoute({ to: "/dashboard" });
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const context = getHeaderContext(pathname);
 
   const handleLogout = async () => {
     await $clearSession();
@@ -16,37 +16,101 @@ export function TopBar() {
   };
 
   return (
-    <div className="sticky top-0 z-40 h-16 border-b bg-background px-8">
-      <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
-        {isDashboard ? (
+    <header className="sticky top-0 z-40 border-b border-[#c3c6d7] bg-[#f8f9ff]/95 shadow-[0_2px_10px_rgba(15,23,42,0.04)] backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-8">
+        <div className="flex min-w-0 items-center gap-3">
           <Link
             to="/dashboard"
-            reloadDocument
-            className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+            aria-label="Back to dashboard"
+            className="flex size-10 shrink-0 items-center justify-center rounded-lg text-[#0b1c30] transition hover:bg-[#e5eeff] active:scale-[0.96]"
           >
-            <img src={tregoLogo} alt="Trego Logo" className="h-8" />
-            <h1 className="text-xl font-bold">Trego</h1>
+            <ArrowLeftIcon className="size-5" />
           </Link>
-        ) : (
-          <Link
-            to="/dashboard"
-            reloadDocument
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
-          >
-            <div className="flex items-center justify-center h-8 w-8 rounded-md hover:bg-accent">
-              <ArrowLeftIcon className="h-4 w-4" />
-            </div>
-            <img src={tregoLogo} alt="Trego Logo" className="h-8" />
-            <h1 className="text-xl font-bold">Trego</h1>
+          <Link to="/dashboard" className="hidden items-center gap-3 transition-opacity hover:opacity-80 sm:flex">
+            <img src={tregoLogo} alt="Trego Logo" className="h-8 w-auto object-contain" />
+            <span className="text-2xl font-black tracking-tight text-[#004ac6] [font-family:'Hanken_Grotesk',Inter,ui-sans-serif,sans-serif]">
+              Trego
+            </span>
           </Link>
-        )}
-        <div className="flex items-center gap-2">
+          <div className="min-w-0 border-l border-[#d8def0] pl-3 sm:ml-1">
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#004ac6]">{context.eyebrow}</p>
+            <h1 className="truncate text-base font-black leading-5 text-[#0b1c30] [font-family:'Hanken_Grotesk',Inter,ui-sans-serif,sans-serif] md:text-lg">
+              {context.title}
+            </h1>
+          </div>
+        </div>
+
+        <nav className="hidden items-center gap-1 md:flex">
+          <HeaderLink to="/dashboard" label="Home" active={pathname === "/dashboard"} />
+          <HeaderLink
+            to="/games/create"
+            label="Create"
+            active={pathname === "/games/create"}
+            icon={<PlusCircleIcon />}
+          />
+          <HeaderLink to="/profile" label="Profile" active={pathname === "/profile"} icon={<UserIcon />} />
+        </nav>
+
+        <div className="flex shrink-0 items-center gap-2">
           <NotificationBell />
-          <Button variant="ghost" onClick={handleLogout}>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="hidden h-10 items-center gap-2 rounded-lg px-3 text-sm font-bold text-[#38485d] transition hover:bg-[#e5eeff] hover:text-[#004ac6] active:scale-[0.96] sm:inline-flex"
+          >
+            <LogOutIcon className="size-4" />
             Logout
-          </Button>
+          </button>
         </div>
       </div>
-    </div>
+    </header>
   );
+}
+
+function HeaderLink({
+  to,
+  label,
+  active,
+  icon,
+}: {
+  to: "/dashboard" | "/games/create" | "/profile";
+  label: string;
+  active: boolean;
+  icon?: ReactNode;
+}) {
+  return (
+    <Link
+      to={to}
+      className={`inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-bold transition active:scale-[0.96] ${
+        active ? "bg-[#dae2fd] text-[#00174b]" : "text-[#38485d] hover:bg-[#e5eeff] hover:text-[#004ac6]"
+      }`}
+    >
+      {icon && <span className="[&_svg]:size-4">{icon}</span>}
+      {label}
+    </Link>
+  );
+}
+
+function getHeaderContext(pathname: string) {
+  if (pathname === "/games/create") {
+    return { eyebrow: "Host setup", title: "Create Game" };
+  }
+
+  if (pathname.includes("/manage")) {
+    return { eyebrow: "Host tools", title: "Manage Game" };
+  }
+
+  if (pathname.includes("/attendance")) {
+    return { eyebrow: "Host tools", title: "Attendance" };
+  }
+
+  if (pathname === "/profile") {
+    return { eyebrow: "Player profile", title: "Profile" };
+  }
+
+  if (pathname.includes("/users/")) {
+    return { eyebrow: "Player profile", title: "Player" };
+  }
+
+  return { eyebrow: "Trego", title: "Game hub" };
 }
