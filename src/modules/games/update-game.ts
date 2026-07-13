@@ -5,9 +5,12 @@ import { gamesTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
 import { syncGameForAllParticipants } from "@/modules/calendar/sync";
-import { createGameSchema } from "./create-game";
+import { createGameBaseSchema, validateAttendanceRestriction } from "./create-game";
 
-export const updateGameSchema = createGameSchema.omit({ sport: true }).extend({ gameId: z.string() });
+export const updateGameSchema = createGameBaseSchema
+  .omit({ sport: true })
+  .extend({ gameId: z.string() })
+  .superRefine(validateAttendanceRestriction);
 export type UpdateGameInput = z.input<typeof updateGameSchema>;
 
 export const $updateGame = createServerFn({ method: "POST" })

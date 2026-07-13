@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect, useMatchRoute } from "@tanstack/react-router";
 import { TopBar } from "@/components/layout/topbar";
 import { $getUserId } from "@/lib/session";
 
@@ -15,6 +15,13 @@ export const Route = createFileRoute("/_authed")({
 });
 
 function AuthedLayout() {
+  const matchRoute = useMatchRoute();
+  const isDashboard = matchRoute({ to: "/dashboard" });
+
+  if (isDashboard) {
+    return <Outlet />;
+  }
+
   return (
     <div>
       <TopBar />

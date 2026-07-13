@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, ErrorComponent } from "@tanstack/react-router";
-import { CalendarIcon, MapPinIcon, UserIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
+import { GameCompactListItem } from "@/components/dashboard/game-card-system";
 import { AttendanceStatsCard } from "@/components/profile/attendance-stats-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { userQueries } from "@/modules/profile/queries";
@@ -82,38 +83,9 @@ function UserViewPage() {
             <CardDescription>All games this player has participated in</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {profile.games.map((game) => (
-                <div key={game.id} className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0">
-                  <div className="space-y-1 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">{game.title}</span>
-                      <span className="text-xs px-2 py-0.5 bg-muted text-muted-foreground">{game.sport}</span>
-                      {game.isHost && (
-                        <span className="text-xs px-2 py-0.5 bg-primary text-primary-foreground font-medium">Host</span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <CalendarIcon className="h-3 w-3" />
-                        <span>
-                          {game.scheduledAt.toLocaleString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                            hour: "numeric",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPinIcon className="h-3 w-3" />
-                        <span>{game.locationName}</span>
-                      </div>
-                      <div className="text-xs text-muted-foreground">Host: {game.hostName}</div>
-                    </div>
-                  </div>
-                </div>
+                <GameCompactListItem key={game.id} game={game} status="joined" />
               ))}
             </div>
           </CardContent>

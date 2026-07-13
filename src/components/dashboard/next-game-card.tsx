@@ -1,22 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import {
-  CalendarIcon,
-  ClockIcon,
-  MapPinIcon,
-  NavigationIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-  UserMinusIcon,
-  UsersIcon,
-} from "lucide-react";
+import { CalendarIcon, ClockIcon, NavigationIcon, PlusCircleIcon, SettingsIcon, UserMinusIcon } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildGoogleCalendarTemplateUrl } from "@/modules/calendar/build-google-template-url";
 import { calendarQueries } from "@/modules/calendar/queries";
 import { useLeaveGame } from "@/modules/games/mutations";
 import { gameQueries } from "@/modules/games/queries";
+import type { DashboardGame } from "@/modules/games/types";
+import { GameActionButton, GameFeaturedCard, getGameStatus } from "./game-card-system";
 import { ViewPlayersDialog } from "./view-players-dialog";
 
 export function NextGameCard() {
@@ -24,42 +15,34 @@ export function NextGameCard() {
   const [showPlayersDialog, setShowPlayersDialog] = useState(false);
   const { data: upcomingGames } = useSuspenseQuery(gameQueries.getUpcomingGames());
   const { data: calendarStatus } = useSuspenseQuery(calendarQueries.getStatus());
-
   const nextGame = upcomingGames?.[0];
 
-  // Show empty state if no game
   if (!nextGame) {
     return (
-      <Card>
-        <CardContent className="py-12 text-center">
-          <ClockIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No Upcoming Games</h3>
-          <p className="text-sm text-muted-foreground mb-4">Join a game or create one to get started!</p>
-          <Link to="/games/create">
-            <Button>
-              <PlusCircleIcon className="h-4 w-4 mr-2" />
-              Create Your First Game
-            </Button>
-          </Link>
-        </CardContent>
-      </Card>
+      <section>
+        <SectionTitle>Next Game</SectionTitle>
+        <div className="rounded-lg border border-[#c3c5d9] bg-white p-8 text-center shadow-sm">
+          <ClockIcon className="mx-auto mb-3 size-10 text-[#c3c5d9]" />
+          <h2 className="text-lg font-bold text-[#0b1c30]">No upcoming match</h2>
+          <p className="mt-1 text-sm text-[#434656]">Join a game or create one to get your next action ready.</p>
+          <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              to="/games/create"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#004ac6] px-4 text-sm font-semibold text-white"
+            >
+              <PlusCircleIcon className="size-4" />
+              Create Game
+            </Link>
+            <Link
+              to="/profile"
+              className="inline-flex h-10 items-center justify-center rounded-lg border border-[#c3c5d9] px-4 text-sm font-semibold text-[#004ac6]"
+            >
+              Tune Recommendations
+            </Link>
+          </div>
+        </div>
+      </section>
     );
-  }
-
-  // Calculate countdown
-  const now = new Date();
-  const diff = nextGame.scheduledAt.getTime() - now.getTime();
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-  let countdown: string | null = null;
-  if (days > 0) {
-    countdown = `${days} ${days === 1 ? "day" : "days"}`;
-  } else if (hours > 0) {
-    countdown = `${hours} ${hours === 1 ? "hour" : "hours"}`;
-  } else {
-    countdown = `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
   }
 
   const handleAddToCalendar = () => {
@@ -79,141 +62,58 @@ export function NextGameCard() {
   };
 
   const handleGetDirections = () => {
-    // Create Google Maps directions URL using coordinates
     const mapsUrl = new URL("https://www.google.com/maps/dir/");
     mapsUrl.searchParams.set("api", "1");
     mapsUrl.searchParams.set("destination", `${nextGame.location.lat},${nextGame.location.lon}`);
-
     window.open(mapsUrl.toString(), "_blank");
   };
 
+  const isLeaving = leaveMutation.isPending && leaveMutation.variables === nextGame.id;
+
   return (
     <>
-      <Card className="overflow-hidden">
-        <CardHeader>
-          <CardTitle>Next game</CardTitle>
-        </CardHeader>
-
-        <CardContent className="px-6 space-y-4">
-          {/* Main event details with countdown */}
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl font-bold">{nextGame.title}</h2>
-                <span className="text-xs px-2 py-1 bg-muted rounded">{nextGame.sport}</span>
-                {nextGame.isHost && (
-                  <span className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded font-medium">Host</span>
-                )}
-              </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1.5">
-                  <CalendarIcon className="h-4 w-4" />
-                  <span>
-                    {nextGame.scheduledAt.toLocaleString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPinIcon className="h-4 w-4" />
-                  <span>{nextGame.locationName}</span>
-                  {nextGame.distance && <span className="text-xs">({nextGame.distance} km)</span>}
-                </div>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold">{countdown}</div>
-              <p className="text-xs text-muted-foreground">until start</p>
-            </div>
-          </div>
-
-          {/* Player bar and Quick Actions side by side */}
-          <div className="grid gap-4 md:grid-cols-2">
-            {/* Players Section */}
-            <div className="space-y-2">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground flex items-center gap-1.5">
-                    <UsersIcon className="h-3.5 w-3.5" />
-                    Players
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 text-xs"
-                      onClick={() => setShowPlayersDialog(true)}
-                    >
-                      View Players
-                    </Button>
-                    <div className="flex items-center gap-1">
-                      <UsersIcon className="h-4 w-4" />
-                      <span className="text-sm font-semibold">
-                        {nextGame.spotsFilled}/{nextGame.spotsTotal}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full h-1.5 bg-muted">
-                  <div
-                    className="h-full bg-primary transition-all"
-                    style={{ width: `${(nextGame.spotsFilled / nextGame.spotsTotal) * 100}%` }}
-                  />
-                </div>
-                <div className="pt-1">
-                  <span className="text-xs text-muted-foreground">Host: </span>
-                  <span className="text-xs font-medium">{nextGame.hostName}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">Quick Actions</span>
-              </div>
-              <div className="space-y-1.5">
-                <Button variant="outline" className="w-full justify-start" size="sm" onClick={handleGetDirections}>
-                  <NavigationIcon className="h-4 w-4 mr-2" />
-                  Get Directions
-                </Button>
-                {calendarStatus.connected && calendarStatus.syncEnabled ? (
-                  <p className="text-xs text-muted-foreground px-1">Synced to Google Calendar (1h reminder)</p>
-                ) : null}
-                <Button variant="outline" className="w-full justify-start" size="sm" onClick={handleAddToCalendar}>
-                  <CalendarIcon className="h-4 w-4 mr-2" />
-                  {calendarStatus.connected && calendarStatus.syncEnabled
-                    ? "Add to Calendar manually"
-                    : "Add to Calendar"}
-                </Button>
-                {nextGame.isHost ? (
-                  <Link to="/games/$gameId/manage" params={{ gameId: nextGame.id }}>
-                    <Button variant="outline" className="w-full justify-start" size="sm">
-                      <SettingsIcon className="h-4 w-4 mr-2" />
-                      Manage
-                    </Button>
-                  </Link>
-                ) : (
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                    size="sm"
-                    disabled={leaveMutation.isPending && leaveMutation.variables === nextGame.id}
-                    onClick={() => leaveMutation.mutate(nextGame.id)}
-                  >
-                    <UserMinusIcon className="h-4 w-4 mr-2" />
-                    {leaveMutation.isPending && leaveMutation.variables === nextGame.id ? "Leaving..." : "Leave Game"}
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <section>
+        <SectionTitle>Next Game</SectionTitle>
+        <GameFeaturedCard
+          game={nextGame}
+          status={getGameStatus(nextGame, true)}
+          countdown={formatCountdown(nextGame)}
+          calendarNote={calendarStatus.connected && calendarStatus.syncEnabled ? "Synced to Google Calendar" : null}
+          onViewPlayers={() => setShowPlayersDialog(true)}
+          actions={
+            <>
+              <GameActionButton variant="secondary" onClick={() => setShowPlayersDialog(true)}>
+                Details
+              </GameActionButton>
+              <GameActionButton variant="primary" icon={NavigationIcon} onClick={handleGetDirections}>
+                Route
+              </GameActionButton>
+              <GameActionButton variant="utility" icon={CalendarIcon} onClick={handleAddToCalendar}>
+                Calendar
+              </GameActionButton>
+              {nextGame.isHost ? (
+                <Link
+                  to="/games/$gameId/manage"
+                  params={{ gameId: nextGame.id }}
+                  className="inline-flex h-10 min-w-24 items-center justify-center gap-2 rounded-lg border border-[#c3c5d9] bg-white px-4 text-sm font-semibold text-[#004ac6] transition hover:bg-[#eff4ff]"
+                >
+                  <SettingsIcon className="size-4" />
+                  Manage
+                </Link>
+              ) : (
+                <GameActionButton
+                  variant="danger"
+                  icon={UserMinusIcon}
+                  disabled={isLeaving}
+                  onClick={() => leaveMutation.mutate(nextGame.id)}
+                >
+                  {isLeaving ? "Leaving..." : "Leave"}
+                </GameActionButton>
+              )}
+            </>
+          }
+        />
+      </section>
       <ViewPlayersDialog
         gameId={nextGame.id}
         gameTitle={nextGame.title}
@@ -222,4 +122,22 @@ export function NextGameCard() {
       />
     </>
   );
+}
+
+function SectionTitle({ children }: { children: string }) {
+  return (
+    <h2 className="mb-4 text-2xl font-semibold leading-8 text-[#0b1c30] [font-family:'Hanken_Grotesk',Inter,ui-sans-serif,sans-serif]">
+      {children}
+    </h2>
+  );
+}
+
+function formatCountdown(game: DashboardGame) {
+  const diff = game.scheduledAt.getTime() - Date.now();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+  if (days > 0) return `In ${days} ${days === 1 ? "Day" : "Days"}`;
+  if (hours > 0) return `In ${hours} ${hours === 1 ? "Hour" : "Hours"}`;
+  return "Starting Soon";
 }

@@ -20,50 +20,61 @@ export function ViewPlayersDialog({ gameId, gameTitle, open, onOpenChange }: Vie
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="border-[#c3c5d9] bg-[#f8f9ff] sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <UsersIcon className="h-5 w-5" />
+          <DialogTitle className="flex items-center gap-2 text-[#0b1c30]">
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
+              <UsersIcon className="size-5" />
+            </span>
             Players
           </DialogTitle>
-          <DialogDescription>{gameTitle}</DialogDescription>
+          <DialogDescription className="line-clamp-2">{gameTitle}</DialogDescription>
         </DialogHeader>
-        <div className="max-h-[400px] overflow-y-auto">
+        <div className="max-h-[400px] overflow-y-auto rounded-lg border border-[#e0e3e5] bg-white p-2">
           {isPending ? (
-            <div className="py-8 text-center text-sm text-muted-foreground">Loading players...</div>
+            <div className="py-8 text-center text-sm text-[#434656]">Loading players...</div>
           ) : participants && participants.length > 0 ? (
             <div className="space-y-2">
               {participants.map((participant) => (
-                <div key={participant.userId} className="flex items-center gap-3 py-2 border-b last:border-0">
-                  <div className="h-10 w-10 flex items-center justify-center bg-muted rounded-full flex-shrink-0 overflow-hidden">
+                <div
+                  key={participant.userId}
+                  className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-[#eff4ff]"
+                >
+                  <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#d3e4fe] text-[#004ac6]">
                     {participant.profilePictureUrl ? (
                       <img
                         src={participant.profilePictureUrl}
                         alt={participant.name}
-                        className="h-full w-full object-cover"
+                        className="size-full object-cover"
                       />
                     ) : (
-                      <UserIcon className="h-5 w-5 text-muted-foreground" />
+                      <UserIcon className="size-5" />
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
                       <Link
                         to="/users/$userId"
                         params={{ userId: participant.userId }}
-                        className="font-medium text-sm truncate hover:underline"
+                        className="truncate text-sm font-bold text-[#0b1c30] hover:underline"
                         onClick={() => onOpenChange(false)}
                       >
                         {participant.name}
                       </Link>
                       {participant.userId === userId && (
-                        <span className="text-xs px-2 py-0.5 bg-muted text-muted-foreground font-medium">Me</span>
+                        <span className="rounded-full bg-[#e6e8ea] px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.05em] text-[#434656]">
+                          Me
+                        </span>
                       )}
                       {participant.isHost && (
-                        <span className="text-xs px-2 py-0.5 bg-primary text-primary-foreground font-medium">Host</span>
+                        <span className="rounded-full bg-[#d3e4fe] px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.05em] text-[#0038b6]">
+                          Host
+                        </span>
                       )}
                       {participant.joinedViaInvite && (
-                        <span className="text-xs px-2 py-0.5 bg-muted text-muted-foreground font-medium">Invited</span>
+                        <span className="rounded-full bg-[#e6e8ea] px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.05em] text-[#434656]">
+                          Invited
+                        </span>
                       )}
                     </div>
                   </div>
@@ -71,7 +82,7 @@ export function ViewPlayersDialog({ gameId, gameTitle, open, onOpenChange }: Vie
               ))}
             </div>
           ) : (
-            <div className="py-8 text-center text-sm text-muted-foreground">No players yet</div>
+            <div className="py-8 text-center text-sm text-[#434656]">No players yet</div>
           )}
         </div>
       </DialogContent>
