@@ -74,10 +74,12 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
 
   return (
     <>
-      <Card>
+      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <ShieldCheckIcon className="h-4 w-4" />
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
+              <ShieldCheckIcon className="size-5" />
+            </span>
             Game Logistics
           </CardTitle>
           <CardDescription>Transfer host ownership or remove players from this game.</CardDescription>
@@ -99,7 +101,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                     value={selectedNewHostUserId}
                     onValueChange={(value) => setSelectedNewHostUserId(value as string)}
                   >
-                    <SelectTrigger id="new-host-select" className="w-full">
+                    <SelectTrigger id="new-host-select" className="h-11 w-full border-[#c3c5d9] bg-white">
                       <SelectValue>{selectedNewHost ? selectedNewHost.name : "Select a participant..."}</SelectValue>
                     </SelectTrigger>
                     <SelectContent>
@@ -113,7 +115,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 </div>
                 <Button
                   type="button"
-                  className="w-full sm:translate-y-2 sm:w-auto"
+                  className="w-full bg-[#004ac6] sm:translate-y-2 sm:w-auto"
                   onClick={() => setIsTransferDialogOpen(true)}
                   disabled={!selectedNewHostUserId || transferGameHost.isPending}
                 >
@@ -138,7 +140,7 @@ export function GameLogisticsPanel({ gameId }: GameLogisticsPanelProps) {
                 {removableParticipants.map((participant) => (
                   <div
                     key={participant.userId}
-                    className="flex flex-col gap-3 border-b pb-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
+                    className="flex flex-col gap-3 rounded-lg border border-[#e0e3e5] bg-[#f8f9ff] p-3 sm:flex-row sm:items-center sm:justify-between"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">{participant.name}</p>

@@ -76,10 +76,12 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
 
   return (
     <>
-      <Card>
+      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <UserPlusIcon className="h-4 w-4" />
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
+              <UserPlusIcon className="size-5" />
+            </span>
             Invite Player
           </CardTitle>
           <CardDescription>
@@ -88,9 +90,9 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           {isLoadingCandidates ? (
-            <p className="text-sm text-muted-foreground">Loading players...</p>
+            <p className="text-sm text-[#434656]">Loading players...</p>
           ) : isFull ? (
-            <p className="text-sm text-muted-foreground">This game is full.</p>
+            <p className="text-sm text-[#434656]">This game is full.</p>
           ) : (
             <>
               {candidates.length > 0 ? (
@@ -98,7 +100,7 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   <div className="space-y-2">
                     <Label htmlFor="invite-player-select">Invite from friends</Label>
                     <Select value={selectedUserId} onValueChange={(value) => setSelectedUserId(value as string)}>
-                      <SelectTrigger id="invite-player-select" className="w-full">
+                      <SelectTrigger id="invite-player-select" className="h-11 w-full border-[#c3c5d9] bg-white">
                         <SelectValue>{selectedCandidate ? selectedCandidate.name : "Select a player..."}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
@@ -111,12 +113,20 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                     </Select>
                   </div>
 
-                  <Button type="button" onClick={handleInvite} disabled={!selectedUserId || isInviting}>
+                  <Button
+                    type="button"
+                    className="bg-[#004ac6]"
+                    onClick={handleInvite}
+                    disabled={!selectedUserId || isInviting}
+                  >
                     {isInviting ? "Inviting..." : "Invite Player"}
                   </Button>
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No available friends to invite.</p>
+                <div className="rounded-lg border border-dashed border-[#c3c5d9] bg-[#f8f9ff] p-5 text-center">
+                  <UserPlusIcon className="mx-auto mb-2 size-8 text-[#737688]" />
+                  <p className="text-sm font-semibold text-[#0b1c30]">No available friends to invite.</p>
+                </div>
               )}
 
               <div className="relative">
@@ -124,7 +134,7 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">Or invite by email</span>
+                  <span className="bg-white px-2 text-[#737688]">Or invite by email</span>
                 </div>
               </div>
 
@@ -146,7 +156,12 @@ export function InvitePlayerPanel({ gameId }: InvitePlayerPanelProps) {
                   />
                 </div>
 
-                <Button type="button" onClick={handleEmailInvite} disabled={!email.trim() || isInviting}>
+                <Button
+                  type="button"
+                  className="bg-[#004ac6]"
+                  onClick={handleEmailInvite}
+                  disabled={!email.trim() || isInviting}
+                >
                   {isInviting ? "Inviting..." : "Invite by Email"}
                 </Button>
               </div>

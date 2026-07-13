@@ -108,10 +108,12 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
 
   return (
     <>
-      <Card>
+      <Card className="rounded-xl border-[#d8dadc] bg-white shadow-sm md:rounded-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <MegaphoneIcon className="h-4 w-4" />
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#d3e4fe] text-[#004ac6]">
+              <MegaphoneIcon className="size-5" />
+            </span>
             Game Announcements
           </CardTitle>
           <CardDescription>
@@ -120,7 +122,10 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
         </CardHeader>
         <CardContent className="space-y-6">
           {recipientCandidates.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Add participants before sending announcements.</p>
+            <div className="rounded-lg border border-dashed border-[#c3c5d9] bg-[#f8f9ff] p-5 text-center">
+              <MegaphoneIcon className="mx-auto mb-2 size-8 text-[#737688]" />
+              <p className="text-sm font-semibold text-[#0b1c30]">Add participants before sending announcements.</p>
+            </div>
           ) : (
             <>
               <div className="space-y-2">
@@ -145,7 +150,7 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                   rows={4}
                   maxLength={2000}
                   className={cn(
-                    "placeholder:text-muted-foreground bg-input flex min-h-24 w-full resize-y border px-3 py-2 text-base transition-[color,box-shadow,border-color] outline-none md:text-sm",
+                    "placeholder:text-muted-foreground flex min-h-24 w-full resize-y rounded-lg border border-[#c3c5d9] bg-white px-3 py-2 text-base transition-[color,box-shadow,border-color] outline-none md:text-sm",
                     "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                   )}
                 />
@@ -206,7 +211,12 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                 </div>
               )}
 
-              <Button type="button" onClick={() => setConfirmOpen(true)} disabled={!canSend || isSending}>
+              <Button
+                type="button"
+                className="bg-[#004ac6]"
+                onClick={() => setConfirmOpen(true)}
+                disabled={!canSend || isSending}
+              >
                 {isSending ? "Sending..." : "Send Announcement"}
               </Button>
             </>
@@ -229,7 +239,10 @@ export function GameAnnouncementPanel({ gameId }: GameAnnouncementPanelProps) {
                   const pendingRecipients = announcement.recipients.filter((recipient) => !recipient.acknowledgedAt);
 
                   return (
-                    <div key={announcement.id} className="space-y-3 border p-4">
+                    <div
+                      key={announcement.id}
+                      className="space-y-3 rounded-lg border border-[#e0e3e5] bg-[#f8f9ff] p-4"
+                    >
                       <div className="flex flex-wrap items-start justify-between gap-2">
                         <div className="space-y-1">
                           <p className="font-medium leading-snug">{announcement.title}</p>
