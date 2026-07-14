@@ -1,4 +1,4 @@
-import { UserIcon } from "lucide-react";
+import { CameraIcon, Trash2Icon, UserIcon } from "lucide-react";
 import { type ChangeEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -68,23 +68,32 @@ export function ProfileAvatarUpload({ name, profilePictureUrl }: ProfileAvatarUp
   };
 
   return (
-    <div className="flex flex-col items-center gap-3 sm:items-end">
-      <div className="flex size-24 items-center justify-center overflow-hidden rounded-full bg-muted">
+    <div className="flex flex-col items-center gap-3">
+      <div className="relative flex size-32 items-center justify-center overflow-hidden rounded-lg bg-[#dce9ff] shadow-[0_8px_24px_rgba(15,23,42,0.08)] outline outline-4 outline-white">
         {displayedUrl ? (
           <img src={displayedUrl} alt={name} className="size-full object-cover" />
         ) : (
-          <UserIcon className="size-12 text-muted-foreground" />
+          <UserIcon className="size-14 text-[#004ac6]" />
         )}
+        <button
+          type="button"
+          disabled={isPending}
+          onClick={() => fileInputRef.current?.click()}
+          className="absolute right-2 bottom-2 flex size-10 items-center justify-center rounded-lg border border-[#c3c6d7] bg-white text-[#38485d] shadow-sm transition hover:bg-[#eff4ff] hover:text-[#004ac6] active:scale-[0.96] disabled:pointer-events-none disabled:opacity-60"
+          aria-label="Upload profile photo"
+        >
+          <CameraIcon className="size-4" />
+        </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-2 sm:justify-end">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={AVATAR_CONTENT_TYPES.join(",")}
-          className="hidden"
-          onChange={handleFileChange}
-        />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={AVATAR_CONTENT_TYPES.join(",")}
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <div className="flex flex-wrap justify-center gap-2">
         <Button
           type="button"
           variant="outline"
@@ -92,16 +101,17 @@ export function ProfileAvatarUpload({ name, profilePictureUrl }: ProfileAvatarUp
           disabled={isPending}
           onClick={() => fileInputRef.current?.click()}
         >
-          {uploadProfilePicture.isPending ? "Uploading..." : "Upload photo"}
+          {uploadProfilePicture.isPending ? "Uploading..." : "Upload"}
         </Button>
         {profilePictureUrl && (
           <Button type="button" variant="ghost" size="sm" disabled={isPending} onClick={handleRemove}>
+            <Trash2Icon className="size-3.5" />
             {removeProfilePicture.isPending ? "Removing..." : "Remove"}
           </Button>
         )}
       </div>
 
-      <p className="max-w-48 text-center text-xs text-muted-foreground sm:text-right">JPG, PNG, or WebP up to 2MB</p>
+      <p className="max-w-48 text-center text-xs font-medium text-[#647086]">JPG, PNG, or WebP up to 2MB</p>
     </div>
   );
 }

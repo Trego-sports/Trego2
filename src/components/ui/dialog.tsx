@@ -34,7 +34,7 @@ function DialogOverlay({
 		<BaseDialog.Backdrop
 			data-slot="dialog-overlay"
 			className={cn(
-				"fixed inset-0 bg-black/50 transition-all duration-200 [&[data-ending-style]]:opacity-0 [&[data-starting-style]]:opacity-0",
+				"fixed inset-0 bg-[#071426]/55 backdrop-blur-sm transition-opacity duration-200 [&[data-ending-style]]:opacity-0 [&[data-starting-style]]:opacity-0",
 				className
 			)}
 			{...props}
@@ -56,8 +56,8 @@ function DialogContent({
 			<BaseDialog.Popup
 				data-slot="dialog-content"
 				className={cn(
-					"bg-card text-card-foreground fixed z-50 grid w-full sm:max-w-[calc(100%-2rem)]",
-					"gap-4 border p-6 shadow-lg duration-200 outline-none sm:max-w-lg sm:scale-[calc(1-0.1*var(--nested-dialogs))]",
+					"fixed z-50 grid w-full rounded-t-xl border border-[#c3c6d7] bg-white text-[#0b1c30] shadow-[0_24px_70px_rgba(15,23,42,0.24)] sm:max-w-[calc(100%-2rem)] sm:rounded-lg",
+					"gap-4 p-6 duration-200 outline-none sm:max-w-lg sm:scale-[calc(1-0.1*var(--nested-dialogs))]",
 					"fixed bottom-0 w-full sm:top-[50%] sm:bottom-auto sm:left-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%]",
 					"duration-200",
 					"data-[starting-style]:translate-y-full data-[starting-style]:opacity-0",
@@ -70,7 +70,7 @@ function DialogContent({
 			>
 				{children}
 				{showCloseButton && (
-					<DialogClose className="ring-offset-card focus:ring-ring text-muted-foreground absolute top-4 right-4 opacity-50 transition-opacity hover:opacity-100 focus:ring-[3px] focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+					<DialogClose className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-lg text-[#647086] opacity-80 transition hover:bg-[#e5eeff] hover:text-[#004ac6] focus:ring-2 focus:ring-[#004ac6]/20 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
 						<XIcon />
 						<span className="sr-only">Close</span>
 					</DialogClose>
@@ -110,7 +110,10 @@ function DialogTitle({
 	return (
 		<BaseDialog.Title
 			data-slot="dialog-title"
-			className={cn("text-lg leading-none font-semibold", className)}
+			className={cn(
+				"text-2xl leading-tight font-black text-[#0b1c30] [font-family:'Hanken_Grotesk',Inter,ui-sans-serif,sans-serif]",
+				className
+			)}
 			{...props}
 		/>
 	)
@@ -123,7 +126,7 @@ function DialogDescription({
 	return (
 		<BaseDialog.Description
 			data-slot="dialog-description"
-			className={cn("text-muted-foreground text-sm", className)}
+			className={cn("text-sm font-medium leading-6 text-[#647086]", className)}
 			{...props}
 		/>
 	)

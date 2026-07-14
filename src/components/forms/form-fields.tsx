@@ -17,7 +17,7 @@ export function TextField({ label, description, ...inputProps }: TextFieldProps)
       {(label || description) && (
         <div className="flex items-center gap-2">
           {label && <Label>{label}</Label>}
-          {description && <span className="text-sm text-muted-foreground">{description}</span>}
+          {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
         </div>
       )}
       <Input
@@ -26,7 +26,7 @@ export function TextField({ label, description, ...inputProps }: TextFieldProps)
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
       />
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }
@@ -45,7 +45,7 @@ export function SelectField<T extends string = string>({ label, options, descrip
     <div className="grid gap-2">
       <div className="flex items-center gap-2">
         <Label>{label}</Label>
-        {description && <span className="text-sm text-muted-foreground">{description}</span>}
+        {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
       </div>
       <Select value={field.state.value as string} onValueChange={(value) => field.handleChange(value as T)}>
         <SelectTrigger className="w-full">
@@ -59,7 +59,7 @@ export function SelectField<T extends string = string>({ label, options, descrip
           ))}
         </SelectContent>
       </Select>
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }
@@ -77,7 +77,7 @@ export function NumberField({ label, description, ...inputProps }: NumberFieldPr
     <div className="grid gap-2">
       <div className="flex items-center gap-2">
         <Label>{label}</Label>
-        {description && <span className="text-sm text-muted-foreground">{description}</span>}
+        {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
       </div>
       <Input
         {...inputProps}
@@ -86,7 +86,7 @@ export function NumberField({ label, description, ...inputProps }: NumberFieldPr
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(parseInt(e.target.value, 10) || 0)}
       />
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }
@@ -115,10 +115,10 @@ export function CheckboxField({ label, description, ...inputProps }: CheckboxFie
         />
         <span className="grid gap-1">
           <span>{label}</span>
-          {description && <span className="text-sm font-normal text-muted-foreground">{description}</span>}
+          {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
         </span>
       </Label>
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }
@@ -137,7 +137,7 @@ export function DateTimeField({ label, description, ...inputProps }: DateTimeFie
     <div className="grid gap-2">
       <div className="flex items-center gap-2">
         <Label>{label}</Label>
-        {description && <span className="text-sm text-muted-foreground">{description}</span>}
+        {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
       </div>
       <Input
         {...inputProps}
@@ -146,7 +146,7 @@ export function DateTimeField({ label, description, ...inputProps }: DateTimeFie
         onChange={(e) => field.handleChange(new Date(e.target.value))}
         onBlur={field.handleBlur}
       />
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }
@@ -166,7 +166,7 @@ export function MultiSelectField<T extends string = string>({ label, options, de
     <div className="grid gap-2">
       <div className="flex items-center gap-2">
         <Label>{label}</Label>
-        {description && <span className="text-sm text-muted-foreground">{description}</span>}
+        {description && <span className="text-sm font-medium text-[#647086]">{description}</span>}
       </div>
       <Select multiple value={selectedValues} onValueChange={(value) => field.handleChange(value as T[])}>
         <SelectTrigger className="w-full">
@@ -186,7 +186,7 @@ export function MultiSelectField<T extends string = string>({ label, options, de
           ))}
         </SelectContent>
       </Select>
-      <p className="text-sm text-destructive min-h-5">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
+      <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
 }

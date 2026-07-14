@@ -61,10 +61,8 @@ function AttendanceNotificationStatus({ status }: { status: "present" | "absent"
   return (
     <span
       className={cn(
-        "inline-flex w-fit items-center border px-2.5 py-1 text-xs font-semibold",
-        isPresent
-          ? "border-green-700/30 bg-green-700/10 text-green-800"
-          : "border-red-700/30 bg-red-700/10 text-red-800",
+        "inline-flex w-fit items-center rounded-full px-2.5 py-1 text-xs font-black",
+        isPresent ? "bg-[#dcfce7] text-[#166534]" : "bg-[#fee2e2] text-[#991b1b]",
       )}
     >
       {isPresent ? "Present" : "Absent"}
@@ -105,39 +103,45 @@ function NotificationListItem({
   const attendanceStatus = getAttendanceStatus(notification);
 
   return (
-    <li className={cn("border-b px-1 py-4 last:border-b-0", isUnread && "bg-accent/30", isSelected && "bg-primary/5")}>
+    <li
+      className={cn(
+        "rounded-lg border border-[#d8def0] bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition",
+        isUnread && "border-[#9db9f6] bg-[#f4f8ff]",
+        isSelected && "border-[#004ac6] bg-[#eff4ff]",
+      )}
+    >
       <div className="flex items-start gap-3">
         {selectMode ? (
           <input
             type="checkbox"
             checked={isSelected}
             onChange={() => onToggleSelect(notification.id)}
-            className="mt-2 size-4 shrink-0 cursor-pointer border"
+            className="mt-2 size-4 shrink-0 cursor-pointer rounded border-[#9aa3b8] accent-[#004ac6]"
             aria-label={`Select notification: ${notification.title}`}
           />
         ) : (
           <span
             className={cn(
-              "mt-2 size-2 shrink-0 border",
-              isUnread ? "border-primary bg-primary" : "border-muted-foreground bg-transparent",
+              "mt-2 size-2.5 shrink-0 rounded-full border",
+              isUnread ? "border-[#004ac6] bg-[#004ac6]" : "border-[#c3c6d7] bg-transparent",
             )}
             aria-hidden="true"
           />
         )}
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <p className="font-medium leading-snug">{notification.title}</p>
+            <p className="font-black leading-snug text-[#0b1c30]">{notification.title}</p>
             <span className="sr-only">{isUnread ? "Unread" : "Read"}</span>
-            <span className="text-xs text-muted-foreground">
+            <span className="rounded-full bg-[#e5eeff] px-2 py-0.5 text-xs font-bold text-[#004ac6]">
               {notificationTypeLabels[notification.type] ?? "Notification"}
             </span>
           </div>
-          <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{notification.body}</p>
+          <p className="whitespace-pre-wrap text-sm font-medium leading-6 text-[#647086]">{notification.body}</p>
           {attendanceStatus && <AttendanceNotificationStatus status={attendanceStatus} />}
           {!selectMode && isAnnouncementNotification(notification) && (
             <AnnouncementNotificationActions notification={notification} />
           )}
-          <p className="text-xs text-muted-foreground">{formatNotificationTime(notification.createdAt)}</p>
+          <p className="text-xs font-bold text-[#647086]">{formatNotificationTime(notification.createdAt)}</p>
         </div>
         {!selectMode && (
           <div className="flex shrink-0 items-center gap-1">
@@ -267,7 +271,7 @@ export function NotificationBell() {
       >
         <BellIcon />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center border border-background bg-destructive px-1 py-0.5 text-[10px] font-semibold leading-none text-destructive-foreground">
+          <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center rounded-full border-2 border-white bg-[#b91c1c] px-1 py-0.5 text-[10px] font-black leading-none text-white">
             {visibleUnreadCount}
           </span>
         )}
@@ -321,19 +325,19 @@ export function NotificationBell() {
           </DialogHeader>
 
           <div className="relative">
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#647086]" />
             <input
               type="text"
               placeholder="Search notifications..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="placeholder:text-muted-foreground bg-input w-full border py-2 pr-8 pl-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="w-full rounded-lg border border-[#c3c6d7] bg-white py-2.5 pr-8 pl-9 text-sm font-medium text-[#0b1c30] shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none placeholder:text-[#7b8496] focus-visible:border-[#004ac6] focus-visible:ring-2 focus-visible:ring-[#004ac6]/20"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute top-1/2 right-3 -translate-y-1/2 text-[#647086] hover:text-[#004ac6]"
                 aria-label="Clear search"
               >
                 <XIcon className="h-4 w-4" />
@@ -347,31 +351,33 @@ export function NotificationBell() {
                 type="checkbox"
                 checked={allVisibleSelected}
                 onChange={handleToggleAll}
-                className="size-4 border"
+                className="size-4 rounded border-[#9aa3b8] accent-[#004ac6]"
               />
-              <span className="text-muted-foreground">{allVisibleSelected ? "Deselect all" : "Select all"}</span>
+              <span className="font-medium text-[#647086]">{allVisibleSelected ? "Deselect all" : "Select all"}</span>
               {selectedIds.size > 0 && (
-                <span className="ml-auto text-xs text-muted-foreground">{selectedIds.size} selected</span>
+                <span className="ml-auto text-xs font-bold text-[#647086]">{selectedIds.size} selected</span>
               )}
             </label>
           )}
 
-          <div className="max-h-[55vh] overflow-y-auto border">
+          <div className="max-h-[55vh] overflow-y-auto rounded-lg border border-[#d8def0] bg-[#f8f9ff] p-3">
             {isLoadingNotifications ? (
-              <div className="flex min-h-48 items-center justify-center gap-2 text-sm text-muted-foreground">
+              <div className="flex min-h-48 items-center justify-center gap-2 text-sm font-medium text-[#647086]">
                 <Loader2Icon className="h-4 w-4 animate-spin" />
                 Loading notifications...
               </div>
             ) : !hasNotifications ? (
               <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-6 text-center">
-                <InboxIcon className="h-8 w-8 text-muted-foreground" />
+                <div className="flex size-14 items-center justify-center rounded-full bg-[#e5eeff] text-[#004ac6]">
+                  <InboxIcon className="h-7 w-7" />
+                </div>
                 <div>
-                  <p className="font-medium">No notifications yet</p>
-                  <p className="text-sm text-muted-foreground">New game and friend updates will appear here.</p>
+                  <p className="font-black text-[#0b1c30]">No notifications yet</p>
+                  <p className="text-sm font-medium text-[#647086]">New game and friend updates will appear here.</p>
                 </div>
               </div>
             ) : filteredNotifications.length > 0 ? (
-              <ul>
+              <ul className="space-y-3">
                 {filteredNotifications.map((notification) => (
                   <NotificationListItem
                     key={notification.id}
@@ -388,10 +394,12 @@ export function NotificationBell() {
               </ul>
             ) : (
               <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-6 text-center">
-                <SearchIcon className="h-8 w-8 text-muted-foreground" />
+                <div className="flex size-14 items-center justify-center rounded-full bg-[#e5eeff] text-[#004ac6]">
+                  <SearchIcon className="h-7 w-7" />
+                </div>
                 <div>
-                  <p className="font-medium">No results</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="font-black text-[#0b1c30]">No results</p>
+                  <p className="text-sm font-medium text-[#647086]">
                     No notifications match &ldquo;{searchQuery.trim()}&rdquo;.
                   </p>
                 </div>
@@ -400,7 +408,7 @@ export function NotificationBell() {
           </div>
 
           {isFetchingNotifications && !isLoadingNotifications && (
-            <p className="text-xs text-muted-foreground">Refreshing notifications...</p>
+            <p className="text-xs font-medium text-[#647086]">Refreshing notifications...</p>
           )}
         </DialogContent>
       </Dialog>

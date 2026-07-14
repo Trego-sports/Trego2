@@ -1,5 +1,6 @@
 import { createFileRoute, ErrorComponent, Link } from "@tanstack/react-router";
-import tregoLogo from "@/static/trego1.avif";
+import { SiteFooter } from "@/components/layout/site-footer";
+import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export const Route = createFileRoute("/privacy")({
   component: PrivacyPolicyPage,
@@ -11,7 +12,7 @@ const CONTACT_EMAIL = "harryliu446@gmail.com";
 
 function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <header className="border-b">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-3">
@@ -24,7 +25,7 @@ function PrivacyPolicyPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-6 py-12">
+      <main className="mx-auto max-w-3xl flex-1 px-6 py-12">
         <h1 className="text-3xl font-bold tracking-tight">Privacy Policy</h1>
         <p className="mt-2 text-sm text-muted-foreground">Last updated: {LAST_UPDATED}</p>
 
@@ -161,6 +162,7 @@ function PrivacyPolicyPage() {
           </Link>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }
