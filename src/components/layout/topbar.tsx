@@ -56,10 +56,11 @@ export function TopBar() {
           <button
             type="button"
             onClick={handleLogout}
-            className="hidden h-10 items-center gap-2 rounded-lg px-3 text-sm font-bold text-[#38485d] transition hover:bg-[#e5eeff] hover:text-[#004ac6] active:scale-[0.96] sm:inline-flex"
+            aria-label="Logout"
+            className="inline-flex size-10 items-center justify-center gap-2 rounded-lg text-sm font-bold text-[#38485d] transition hover:bg-[#e5eeff] hover:text-[#004ac6] active:scale-[0.96] sm:w-auto sm:px-3"
           >
             <LogOutIcon className="size-4" />
-            Logout
+            <span className="hidden sm:inline">Logout</span>
           </button>
         </div>
       </div>

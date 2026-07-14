@@ -1,6 +1,15 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, ErrorComponent, Link } from "@tanstack/react-router";
-import { DumbbellIcon, HomeIcon, PlusCircleIcon, SearchIcon, UserIcon, UserPlusIcon, ZapIcon } from "lucide-react";
+import { createFileRoute, ErrorComponent, Link, useRouter } from "@tanstack/react-router";
+import {
+  DumbbellIcon,
+  HomeIcon,
+  LogOutIcon,
+  PlusCircleIcon,
+  SearchIcon,
+  UserIcon,
+  UserPlusIcon,
+  ZapIcon,
+} from "lucide-react";
 import { CalendarConnectPromptDialog } from "@/components/calendar/calendar-connect-prompt-dialog";
 import { CompleteSetupAlert } from "@/components/complete-setup-alert";
 import { MyFriendsCard } from "@/components/dashboard/my-friends-card";
@@ -10,6 +19,7 @@ import { UpcomingGamesCard } from "@/components/dashboard/upcoming-games-card";
 import { YourPastGamesCard, YourSportsCard } from "@/components/dashboard/your-sports-card";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { NotificationBell } from "@/components/notifications/notification-bell";
+import { $clearSession } from "@/lib/session";
 import { calendarQueries } from "@/modules/calendar/queries";
 import { gameQueries } from "@/modules/games/queries";
 import { userQueries } from "@/modules/profile/queries";
@@ -175,6 +185,13 @@ function DesktopSidebar({ name, profilePictureUrl }: { name: string; profilePict
 }
 
 function MobileTopBar() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await $clearSession();
+    router.navigate({ to: "/login" });
+  };
+
   return (
     <header className="fixed top-0 right-0 left-0 z-50 flex h-16 items-center justify-between border-b border-[#e5eeff] bg-[#f8f9ff] px-4 shadow-sm md:hidden">
       <Link to="/dashboard" className="flex size-8 items-center justify-center">
@@ -186,7 +203,17 @@ function MobileTopBar() {
       >
         Trego
       </Link>
-      <NotificationBell />
+      <div className="flex items-center gap-1">
+        <NotificationBell />
+        <button
+          type="button"
+          onClick={handleLogout}
+          aria-label="Logout"
+          className="flex size-10 items-center justify-center rounded-lg text-[#38485d] transition hover:bg-[#e5eeff] hover:text-[#004ac6] active:scale-[0.96]"
+        >
+          <LogOutIcon className="size-4" />
+        </button>
+      </div>
     </header>
   );
 }

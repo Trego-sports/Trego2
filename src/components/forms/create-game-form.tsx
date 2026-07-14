@@ -37,7 +37,7 @@ const locations = [
   },
 ];
 
-const featuredSports = sportsSchema.options.slice(0, 5);
+const sportOptions = sportsSchema.options;
 
 export function CreateGameForm() {
   const createGame = useCreateGame();
@@ -81,7 +81,7 @@ export function CreateGameForm() {
               <div className="space-y-3">
                 <Label className="text-xs font-black uppercase tracking-[0.12em] text-[#434656]">Select Sport</Label>
                 <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-1 md:grid md:grid-cols-5 md:overflow-visible">
-                  {featuredSports.map((sport) => {
+                  {sportOptions.map((sport) => {
                     const isSelected = field.state.value === sport;
                     return (
                       <button

@@ -93,9 +93,27 @@ export function ManageGameForm({ gameId }: ManageGameFormProps) {
               {(field) => <field.TextField label="Location" placeholder="e.g., Downtown Rec Center" />}
             </form.AppField>
 
-            <div className="hidden">
-              <form.AppField name="location.lat">{(field) => <field.TextField label="Latitude" />}</form.AppField>
-              <form.AppField name="location.lon">{(field) => <field.TextField label="Longitude" />}</form.AppField>
+            <div className="grid gap-5 md:grid-cols-2">
+              <form.AppField name="location.lat">
+                {(field) => (
+                  <field.TextField
+                    label="Latitude"
+                    description="Update when moving venues"
+                    inputMode="decimal"
+                    placeholder="43.472077"
+                  />
+                )}
+              </form.AppField>
+              <form.AppField name="location.lon">
+                {(field) => (
+                  <field.TextField
+                    label="Longitude"
+                    description="Used for routes and calendar sync"
+                    inputMode="decimal"
+                    placeholder="-80.546056"
+                  />
+                )}
+              </form.AppField>
             </div>
           </div>
         </FormSection>
