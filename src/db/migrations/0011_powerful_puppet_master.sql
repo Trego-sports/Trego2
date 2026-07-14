@@ -1,0 +1,1 @@
+ALTER TABLE "friend_requests" ADD COLUMN "request_message" text;

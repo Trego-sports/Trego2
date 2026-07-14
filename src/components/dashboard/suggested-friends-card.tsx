@@ -3,24 +3,24 @@ import { Link } from "@tanstack/react-router";
 import { UserIcon, UserPlusIcon, UsersIcon } from "lucide-react";
 import { userQueries } from "@/modules/profile/queries";
 
-export function MyFriendsCard() {
-  const { data: friends } = useSuspenseQuery(userQueries.getMyFriends());
+export function SuggestedFriendsCard() {
+  const { data: suggestedFriends } = useSuspenseQuery(userQueries.getSuggestedFriends());
 
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold leading-8 text-[#0b1c30] [font-family:'Hanken_Grotesk',Inter,ui-sans-serif,sans-serif]">
-          Friends
+          Suggested Friends
         </h2>
-        <Link to="/profile" className="text-sm font-semibold text-[#004ac6]">
-          Find Friends
+        <Link to="/friends" className="text-sm font-semibold text-[#004ac6]">
+          Open Friends
         </Link>
       </div>
 
-      {friends.length > 0 ? (
+      {suggestedFriends.length > 0 ? (
         <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-[#e5eeff] md:rounded-lg md:border md:border-[#c3c6d7] md:ring-0">
           <div className="space-y-3">
-            {friends.map((friend) => (
+            {suggestedFriends.map((friend) => (
               <Link
                 key={friend.userId}
                 to="/users/$userId"
@@ -51,14 +51,14 @@ export function MyFriendsCard() {
           </div>
           <h3 className="mt-5 text-base font-bold text-[#0b1c30]">Build your squad</h3>
           <p className="mx-auto mt-2 max-w-xs text-xs leading-5 text-[#434655]">
-            Connect with friends to easily invite them to games and see what they're playing.
+            Play more games to discover people you may want to connect with.
           </p>
           <Link
-            to="/profile"
+            to="/friends"
             className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#004ac6] px-5 text-sm font-semibold text-white"
           >
             <UserPlusIcon className="size-4" />
-            Invite Friends
+            Find Friends
           </Link>
         </div>
       )}

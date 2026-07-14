@@ -71,6 +71,27 @@
       "when": 1781116069284,
       "tag": "0009_announcement_survive_game_deletion",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782577468559,
+      "tag": "0010_cute_bastion",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1782578518852,
+      "tag": "0011_powerful_puppet_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1782579218735,
+      "tag": "0012_natural_drax",
+      "breakpoints": true
     }
   ]
 }

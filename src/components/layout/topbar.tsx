@@ -1,14 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
-import { ArrowLeftIcon, LogOutIcon, PlusCircleIcon, UserIcon } from "lucide-react";
+import { ArrowLeftIcon, LogOutIcon, PlusCircleIcon, UserIcon, UsersIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { $clearSession } from "@/lib/session";
+import { friendQueries } from "@/modules/friends";
 import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export function TopBar() {
   const router = useRouter();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const context = getHeaderContext(pathname);
+  const { data: friends = [] } = useQuery(friendQueries.getMyFriends());
+  const { data: friendRequests } = useQuery(friendQueries.getFriendRequests());
+  const unreadFriendMessages = friends.reduce((total, friend) => total + friend.unreadCount, 0);
+  const friendNoticeCount = unreadFriendMessages + (friendRequests?.incoming.length ?? 0);
 
   const handleLogout = async () => {
     await $clearSession();
@@ -42,6 +48,9 @@ export function TopBar() {
 
         <nav className="hidden items-center gap-1 md:flex">
           <HeaderLink to="/dashboard" label="Home" active={pathname === "/dashboard"} />
+          <HeaderLink to="/friends" label="Friends" active={pathname.startsWith("/friends")} icon={<UsersIcon />}>
+            {friendNoticeCount > 0 && <FriendNoticeBadge count={friendNoticeCount} />}
+          </HeaderLink>
           <HeaderLink
             to="/games/create"
             label="Create"
@@ -52,6 +61,18 @@ export function TopBar() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
+          <Link
+            to="/friends"
+            aria-label="Friends"
+            className={`relative flex size-10 items-center justify-center rounded-lg transition md:hidden ${
+              pathname.startsWith("/friends")
+                ? "bg-[#dae2fd] text-[#00174b]"
+                : "text-[#38485d] hover:bg-[#e5eeff] hover:text-[#004ac6]"
+            }`}
+          >
+            <UsersIcon className="size-5" />
+            {friendNoticeCount > 0 && <FriendNoticeBadge count={friendNoticeCount} />}
+          </Link>
           <NotificationBell />
           <button
             type="button"
@@ -73,22 +94,33 @@ function HeaderLink({
   label,
   active,
   icon,
+  children,
 }: {
-  to: "/dashboard" | "/games/create" | "/profile";
+  to: "/dashboard" | "/friends" | "/games/create" | "/profile";
   label: string;
   active: boolean;
   icon?: ReactNode;
+  children?: ReactNode;
 }) {
   return (
     <Link
       to={to}
-      className={`inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-bold transition active:scale-[0.96] ${
+      className={`relative inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-bold transition active:scale-[0.96] ${
         active ? "bg-[#dae2fd] text-[#00174b]" : "text-[#38485d] hover:bg-[#e5eeff] hover:text-[#004ac6]"
       }`}
     >
-      {icon && <span className="[&_svg]:size-4">{icon}</span>}
+      {icon && <span className="relative [&_svg]:size-4">{icon}</span>}
       {label}
+      {children}
     </Link>
+  );
+}
+
+function FriendNoticeBadge({ count }: { count: number }) {
+  return (
+    <span className="-right-1.5 -top-1.5 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-[#ca3700] px-1 text-[10px] font-bold leading-none text-white">
+      {count > 9 ? "9+" : count}
+    </span>
   );
 }
 
@@ -103,6 +135,10 @@ function getHeaderContext(pathname: string) {
 
   if (pathname.includes("/attendance")) {
     return { eyebrow: "Host tools", title: "Attendance" };
+  }
+
+  if (pathname.startsWith("/friends")) {
+    return { eyebrow: "Player network", title: "Friends" };
   }
 
   if (pathname === "/profile") {

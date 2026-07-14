@@ -16,6 +16,7 @@ import type { SkillLevel, Sport } from "@/modules/sports/sports";
 
 export type AttendanceStatus = "present" | "absent";
 export type GameAnnouncementAudienceType = "all" | "selected";
+export type FriendRequestStatus = "pending" | "accepted" | "declined" | "cancelled";
 export type NotificationType =
   | "game_joined"
   | "game_created"
@@ -67,6 +68,79 @@ export const playerSportsTable = pgTable(
     position: text("position"),
   },
   (table) => [unique().on(table.userId, table.sport)],
+);
+
+export const friendRequestsTable = pgTable(
+  "friend_requests",
+  {
+    id: text("id").primaryKey(),
+    requesterUserId: text("requester_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    recipientUserId: text("recipient_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    requestMessage: text("request_message"),
+    status: text("status").notNull().default("pending").$type<FriendRequestStatus>(),
+    respondedAt: timestamp("responded_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_friend_requests_requester").on(table.requesterUserId),
+    index("idx_friend_requests_recipient").on(table.recipientUserId),
+    unique("friend_requests_requester_recipient_unique").on(table.requesterUserId, table.recipientUserId),
+    check("friend_requests_not_self_check", sql`${table.requesterUserId} <> ${table.recipientUserId}`),
+    check("friend_requests_status_check", sql`${table.status} IN ('pending', 'accepted', 'declined', 'cancelled')`),
+  ],
+);
+
+export const friendshipsTable = pgTable(
+  "friendships",
+  {
+    userAId: text("user_a_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    userBId: text("user_b_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    requestedByUserId: text("requested_by_user_id").references(() => usersTable.id, { onDelete: "set null" }),
+    acceptedByUserId: text("accepted_by_user_id").references(() => usersTable.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userAId, table.userBId] }),
+    index("idx_friendships_user_b").on(table.userBId),
+    check("friendships_order_check", sql`${table.userAId} < ${table.userBId}`),
+  ],
+);
+
+export const friendMessagesTable = pgTable(
+  "friend_messages",
+  {
+    id: text("id").primaryKey(),
+    userAId: text("user_a_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    userBId: text("user_b_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    senderUserId: text("sender_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    readAt: timestamp("read_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("idx_friend_messages_pair_created").on(table.userAId, table.userBId, table.createdAt),
+    index("idx_friend_messages_unread").on(table.userAId, table.userBId, table.senderUserId, table.readAt),
+    check("friend_messages_order_check", sql`${table.userAId} < ${table.userBId}`),
+    check(
+      "friend_messages_sender_check",
+      sql`${table.senderUserId} = ${table.userAId} OR ${table.senderUserId} = ${table.userBId}`,
+    ),
+  ],
 );
 
 export const gamesTable = pgTable(

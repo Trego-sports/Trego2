@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull, notInArray } from "drizzle-orm";
 import { z } from "zod";
 import { type NotificationMetadata, type NotificationType, notificationsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
@@ -45,7 +45,13 @@ export const $getMyNotifications = createServerFn({ method: "GET" })
         createdAt: notificationsTable.createdAt,
       })
       .from(notificationsTable)
-      .where(and(eq(notificationsTable.recipientUserId, context.userId), isNull(notificationsTable.deletedAt)))
+      .where(
+        and(
+          eq(notificationsTable.recipientUserId, context.userId),
+          isNull(notificationsTable.deletedAt),
+          notInArray(notificationsTable.type, ["friend_request_received", "friend_request_accepted"]),
+        ),
+      )
       .orderBy(desc(notificationsTable.createdAt))
       .limit(data.limit);
   });

@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { $isSetupCompleted } from "./does-user-have-sports";
-import { $getMyFriends } from "./get-my-friends";
 import { $getMyProfile } from "./get-my-profile";
+import { $getSuggestedFriends } from "./get-suggested-friends";
 import { $getUserProfile } from "./get-user-profile";
 
 export const userQueries = {
@@ -11,10 +11,10 @@ export const userQueries = {
       queryFn: async () => await $isSetupCompleted(),
     }),
 
-  getMyFriends: () =>
+  getSuggestedFriends: () =>
     queryOptions({
-      queryKey: ["my-friends"],
-      queryFn: async () => await $getMyFriends(),
+      queryKey: ["suggested-friends"],
+      queryFn: async () => await $getSuggestedFriends(),
     }),
 
   getMyProfile: () =>

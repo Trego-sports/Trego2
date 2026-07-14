@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { and, eq, isNull, sql } from "drizzle-orm";
+import { and, eq, isNull, notInArray, sql } from "drizzle-orm";
 import { notificationsTable } from "@/db/tables";
 import { authMiddleware } from "@/lib/middleware/auth";
 import { dbMiddleware } from "@/lib/middleware/db";
@@ -18,6 +18,7 @@ export const $getUnreadNotificationCount = createServerFn({ method: "GET" })
           eq(notificationsTable.recipientUserId, context.userId),
           isNull(notificationsTable.readAt),
           isNull(notificationsTable.deletedAt),
+          notInArray(notificationsTable.type, ["friend_request_received", "friend_request_accepted"]),
         ),
       );
 

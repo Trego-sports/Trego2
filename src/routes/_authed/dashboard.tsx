@@ -8,13 +8,14 @@ import {
   SearchIcon,
   UserIcon,
   UserPlusIcon,
+  UsersIcon,
   ZapIcon,
 } from "lucide-react";
 import { CalendarConnectPromptDialog } from "@/components/calendar/calendar-connect-prompt-dialog";
 import { CompleteSetupAlert } from "@/components/complete-setup-alert";
-import { MyFriendsCard } from "@/components/dashboard/my-friends-card";
 import { NextGameCard } from "@/components/dashboard/next-game-card";
 import { RecommendedGamesCard } from "@/components/dashboard/recommended-games-card";
+import { SuggestedFriendsCard } from "@/components/dashboard/suggested-friends-card";
 import { UpcomingGamesCard } from "@/components/dashboard/upcoming-games-card";
 import { YourPastGamesCard, YourSportsCard } from "@/components/dashboard/your-sports-card";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -32,7 +33,7 @@ export const Route = createFileRoute("/_authed/dashboard")({
     // Kick off data fetching immediately.
     context.queryClient.ensureQueryData(userQueries.isSetupCompleted());
     context.queryClient.ensureQueryData(userQueries.getMyProfile());
-    context.queryClient.ensureQueryData(userQueries.getMyFriends());
+    context.queryClient.ensureQueryData(userQueries.getSuggestedFriends());
     context.queryClient.ensureQueryData(gameQueries.getUpcomingGames());
     context.queryClient.ensureQueryData(gameQueries.getRecommendedGames());
     context.queryClient.ensureQueryData(gameQueries.getPastGames());
@@ -115,14 +116,14 @@ function DashboardPage() {
                 </div>
                 <div className="grid gap-8 xl:hidden">
                   <YourSportsCard />
-                  <MyFriendsCard />
+                  <SuggestedFriendsCard />
                 </div>
               </div>
 
               <aside className="hidden flex-col gap-6 xl:flex">
                 <QuickActionsCard />
                 <YourSportsCard />
-                <MyFriendsCard />
+                <SuggestedFriendsCard />
               </aside>
             </div>
           </div>
@@ -141,6 +142,7 @@ function DesktopSidebar({ name, profilePictureUrl }: { name: string; profilePict
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
     { label: "Create", icon: PlusCircleIcon, to: "/games/create" as const },
     { label: "My Games", icon: DumbbellIcon, to: "/dashboard" as const },
+    { label: "Friends", icon: UsersIcon, to: "/friends" as const },
     { label: "Profile", icon: UserIcon, to: "/profile" as const },
   ];
 
@@ -224,6 +226,7 @@ function MobileBottomNav() {
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
     { label: "Create", icon: PlusCircleIcon, to: "/games/create" as const },
     { label: "My Games", icon: DumbbellIcon, to: "/dashboard" as const },
+    { label: "Friends", icon: UsersIcon, to: "/friends" as const },
     { label: "Profile", icon: UserIcon, to: "/profile" as const },
   ];
 
@@ -251,7 +254,7 @@ function MobileBottomNav() {
 function QuickActionsCard() {
   const actions = [
     { label: "Host Game", icon: PlusCircleIcon, to: "/games/create" as const },
-    { label: "Invite Friend", icon: UserPlusIcon, to: "/profile" as const },
+    { label: "Invite Friend", icon: UserPlusIcon, to: "/friends" as const },
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
     { label: "Preferences", icon: UserIcon, to: "/profile" as const },
   ];
