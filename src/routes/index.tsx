@@ -16,9 +16,17 @@ import {
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { $getPlatformStats } from "@/modules/home/get-platform-stats";
 import tregoLogo from "@/static/trego-logo-mark.svg";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      return await $getPlatformStats();
+    } catch {
+      return { playerCount: 0, gameCount: 0 };
+    }
+  },
   component: HomePage,
   errorComponent: ErrorComponent,
 });
@@ -350,6 +358,9 @@ function MobileHostSection() {
 }
 
 function HeroSection() {
+  const { playerCount, gameCount } = Route.useLoaderData();
+  const numberFormatter = new Intl.NumberFormat();
+
   return (
     <section className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[0.94fr_1.06fr]">
       <div className="flex flex-col gap-6">
@@ -383,9 +394,9 @@ function HeroSection() {
           </Link>
         </div>
         <div className="mt-6 flex items-center gap-6 border-t border-[#c3c6d7] pt-7">
-          <StatBlock value="50k+" label="Active Players" />
+          <StatBlock value={numberFormatter.format(playerCount)} label="Registered Players" />
           <div className="h-10 w-px bg-[#c3c6d7]" />
-          <StatBlock value="10k+" label="Games Hosted" />
+          <StatBlock value={numberFormatter.format(gameCount)} label="Games Hosted" />
         </div>
       </div>
 

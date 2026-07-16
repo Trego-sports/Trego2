@@ -142,13 +142,20 @@ export function DateTimeField({ label, description, ...inputProps }: DateTimeFie
       <Input
         {...inputProps}
         type="datetime-local"
-        value={field.state.value instanceof Date ? field.state.value.toISOString().slice(0, 16) : ""}
+        value={field.state.value instanceof Date ? formatLocalDateTime(field.state.value) : ""}
         onChange={(e) => field.handleChange(new Date(e.target.value))}
         onBlur={field.handleBlur}
       />
       <p className="min-h-5 text-sm font-medium text-[#b91c1c]">{!field.state.meta.isValid ? errors : "\u00A0"}</p>
     </div>
   );
+}
+
+function formatLocalDateTime(value: Date): string {
+  if (Number.isNaN(value.getTime())) return "";
+
+  const pad = (part: number) => part.toString().padStart(2, "0");
+  return `${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}T${pad(value.getHours())}:${pad(value.getMinutes())}`;
 }
 
 interface MultiSelectFieldProps<T extends string = string> {
