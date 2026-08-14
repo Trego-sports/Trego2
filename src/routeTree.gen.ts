@@ -17,11 +17,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedProfileRouteImport } from './routes/_authed/profile'
 import { Route as AuthedFriendsRouteImport } from './routes/_authed/friends'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
+import { Route as AuthedCommunityRouteImport } from './routes/_authed/community'
 import { Route as ApiCallbacksGoogleCalendarRouteImport } from './routes/api/callbacks/google-calendar'
 import { Route as ApiCallbacksGoogleRouteImport } from './routes/api/callbacks/google'
 import { Route as AuthedUsersUserIdRouteImport } from './routes/_authed/users.$userId'
 import { Route as AuthedGamesCreateRouteImport } from './routes/_authed/games.create'
 import { Route as AuthedFriendsUserIdRouteImport } from './routes/_authed/friends_.$userId'
+import { Route as AuthedCommunityPostIdRouteImport } from './routes/_authed/community_.$postId'
 import { Route as ApiAvatarsUserIdFilenameRouteImport } from './routes/api/avatars/$userId/$filename'
 import { Route as AuthedGamesGameIdManageRouteImport } from './routes/_authed/games.$gameId.manage'
 import { Route as AuthedGamesGameIdAttendanceRouteImport } from './routes/_authed/games.$gameId.attendance'
@@ -65,6 +67,11 @@ const AuthedDashboardRoute = AuthedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedCommunityRoute = AuthedCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const ApiCallbacksGoogleCalendarRoute =
   ApiCallbacksGoogleCalendarRouteImport.update({
     id: '/api/callbacks/google-calendar',
@@ -91,6 +98,11 @@ const AuthedFriendsUserIdRoute = AuthedFriendsUserIdRouteImport.update({
   path: '/friends/$userId',
   getParentRoute: () => AuthedRoute,
 } as any)
+const AuthedCommunityPostIdRoute = AuthedCommunityPostIdRouteImport.update({
+  id: '/community_/$postId',
+  path: '/community/$postId',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const ApiAvatarsUserIdFilenameRoute =
   ApiAvatarsUserIdFilenameRouteImport.update({
     id: '/api/avatars/$userId/$filename',
@@ -114,9 +126,11 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/community': typeof AuthedCommunityRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/friends': typeof AuthedFriendsRoute
   '/profile': typeof AuthedProfileRoute
+  '/community/$postId': typeof AuthedCommunityPostIdRoute
   '/friends/$userId': typeof AuthedFriendsUserIdRoute
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
@@ -131,9 +145,11 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/community': typeof AuthedCommunityRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/friends': typeof AuthedFriendsRoute
   '/profile': typeof AuthedProfileRoute
+  '/community/$postId': typeof AuthedCommunityPostIdRoute
   '/friends/$userId': typeof AuthedFriendsUserIdRoute
   '/games/create': typeof AuthedGamesCreateRoute
   '/users/$userId': typeof AuthedUsersUserIdRoute
@@ -150,9 +166,11 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/_authed/community': typeof AuthedCommunityRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
   '/_authed/friends': typeof AuthedFriendsRoute
   '/_authed/profile': typeof AuthedProfileRoute
+  '/_authed/community_/$postId': typeof AuthedCommunityPostIdRoute
   '/_authed/friends_/$userId': typeof AuthedFriendsUserIdRoute
   '/_authed/games/create': typeof AuthedGamesCreateRoute
   '/_authed/users/$userId': typeof AuthedUsersUserIdRoute
@@ -169,9 +187,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacy'
     | '/terms'
+    | '/community'
     | '/dashboard'
     | '/friends'
     | '/profile'
+    | '/community/$postId'
     | '/friends/$userId'
     | '/games/create'
     | '/users/$userId'
@@ -186,9 +206,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacy'
     | '/terms'
+    | '/community'
     | '/dashboard'
     | '/friends'
     | '/profile'
+    | '/community/$postId'
     | '/friends/$userId'
     | '/games/create'
     | '/users/$userId'
@@ -204,9 +226,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/privacy'
     | '/terms'
+    | '/_authed/community'
     | '/_authed/dashboard'
     | '/_authed/friends'
     | '/_authed/profile'
+    | '/_authed/community_/$postId'
     | '/_authed/friends_/$userId'
     | '/_authed/games/create'
     | '/_authed/users/$userId'
@@ -286,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedDashboardRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/community': {
+      id: '/_authed/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AuthedCommunityRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/api/callbacks/google-calendar': {
       id: '/api/callbacks/google-calendar'
       path: '/api/callbacks/google-calendar'
@@ -321,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedFriendsUserIdRouteImport
       parentRoute: typeof AuthedRoute
     }
+    '/_authed/community_/$postId': {
+      id: '/_authed/community_/$postId'
+      path: '/community/$postId'
+      fullPath: '/community/$postId'
+      preLoaderRoute: typeof AuthedCommunityPostIdRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/api/avatars/$userId/$filename': {
       id: '/api/avatars/$userId/$filename'
       path: '/api/avatars/$userId/$filename'
@@ -346,9 +384,11 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthedRouteChildren {
+  AuthedCommunityRoute: typeof AuthedCommunityRoute
   AuthedDashboardRoute: typeof AuthedDashboardRoute
   AuthedFriendsRoute: typeof AuthedFriendsRoute
   AuthedProfileRoute: typeof AuthedProfileRoute
+  AuthedCommunityPostIdRoute: typeof AuthedCommunityPostIdRoute
   AuthedFriendsUserIdRoute: typeof AuthedFriendsUserIdRoute
   AuthedGamesCreateRoute: typeof AuthedGamesCreateRoute
   AuthedUsersUserIdRoute: typeof AuthedUsersUserIdRoute
@@ -357,9 +397,11 @@ interface AuthedRouteChildren {
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedCommunityRoute: AuthedCommunityRoute,
   AuthedDashboardRoute: AuthedDashboardRoute,
   AuthedFriendsRoute: AuthedFriendsRoute,
   AuthedProfileRoute: AuthedProfileRoute,
+  AuthedCommunityPostIdRoute: AuthedCommunityPostIdRoute,
   AuthedFriendsUserIdRoute: AuthedFriendsUserIdRoute,
   AuthedGamesCreateRoute: AuthedGamesCreateRoute,
   AuthedUsersUserIdRoute: AuthedUsersUserIdRoute,

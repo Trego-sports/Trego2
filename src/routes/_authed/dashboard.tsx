@@ -4,6 +4,7 @@ import {
   DumbbellIcon,
   HomeIcon,
   LogOutIcon,
+  MessagesSquareIcon,
   PlusCircleIcon,
   SearchIcon,
   UserIcon,
@@ -140,6 +141,7 @@ function DesktopSidebar({ name, profilePictureUrl }: { name: string; profilePict
   const navItems = [
     { label: "Home", icon: HomeIcon, to: "/dashboard" as const, active: true },
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
+    { label: "Community", icon: MessagesSquareIcon, to: "/community" as const },
     { label: "Create", icon: PlusCircleIcon, to: "/games/create" as const },
     { label: "My Games", icon: DumbbellIcon, to: "/dashboard" as const },
     { label: "Friends", icon: UsersIcon, to: "/friends" as const },
@@ -224,6 +226,7 @@ function MobileBottomNav() {
   const items = [
     { label: "Home", icon: HomeIcon, to: "/dashboard" as const, active: true },
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
+    { label: "Community", icon: MessagesSquareIcon, to: "/community" as const },
     { label: "Create", icon: PlusCircleIcon, to: "/games/create" as const },
     { label: "My Games", icon: DumbbellIcon, to: "/dashboard" as const },
     { label: "Friends", icon: UsersIcon, to: "/friends" as const },
@@ -254,9 +257,9 @@ function MobileBottomNav() {
 function QuickActionsCard() {
   const actions = [
     { label: "Host Game", icon: PlusCircleIcon, to: "/games/create" as const },
+    { label: "Community", icon: MessagesSquareIcon, to: "/community" as const },
     { label: "Invite Friend", icon: UserPlusIcon, to: "/friends" as const },
     { label: "Discover", icon: SearchIcon, to: "/dashboard" as const },
-    { label: "Preferences", icon: UserIcon, to: "/profile" as const },
   ];
 
   return (
