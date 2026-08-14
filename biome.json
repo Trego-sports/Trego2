@@ -17,6 +17,7 @@
       "!**/.magicpath",
       "!**/src/db/migrations/meta",
       "!**/src/routeTree.gen.ts",
+      "!**/src/db/migrations/meta",
       "!**/src/styles.css",
       "!**/src/components/ui"
     ]
