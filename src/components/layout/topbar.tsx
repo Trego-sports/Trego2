@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
-import { ArrowLeftIcon, LogOutIcon, PlusCircleIcon, UserIcon, UsersIcon } from "lucide-react";
+import { ArrowLeftIcon, LogOutIcon, MessagesSquareIcon, PlusCircleIcon, UserIcon, UsersIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { $clearSession } from "@/lib/session";
@@ -48,6 +48,12 @@ export function TopBar() {
 
         <nav className="hidden items-center gap-1 md:flex">
           <HeaderLink to="/dashboard" label="Home" active={pathname === "/dashboard"} />
+          <HeaderLink
+            to="/community"
+            label="Community"
+            active={pathname.startsWith("/community")}
+            icon={<MessagesSquareIcon />}
+          />
           <HeaderLink to="/friends" label="Friends" active={pathname.startsWith("/friends")} icon={<UsersIcon />}>
             {friendNoticeCount > 0 && <FriendNoticeBadge count={friendNoticeCount} />}
           </HeaderLink>
@@ -61,6 +67,17 @@ export function TopBar() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
+          <Link
+            to="/community"
+            aria-label="Community"
+            className={`flex size-10 items-center justify-center rounded-lg transition md:hidden ${
+              pathname.startsWith("/community")
+                ? "bg-[#dae2fd] text-[#00174b]"
+                : "text-[#38485d] hover:bg-[#e5eeff] hover:text-[#004ac6]"
+            }`}
+          >
+            <MessagesSquareIcon className="size-5" />
+          </Link>
           <Link
             to="/friends"
             aria-label="Friends"
@@ -96,7 +113,7 @@ function HeaderLink({
   icon,
   children,
 }: {
-  to: "/dashboard" | "/friends" | "/games/create" | "/profile";
+  to: "/dashboard" | "/community" | "/friends" | "/games/create" | "/profile";
   label: string;
   active: boolean;
   icon?: ReactNode;
@@ -135,6 +152,10 @@ function getHeaderContext(pathname: string) {
 
   if (pathname.includes("/attendance")) {
     return { eyebrow: "Host tools", title: "Attendance" };
+  }
+
+  if (pathname.startsWith("/community")) {
+    return { eyebrow: "Player network", title: "Community" };
   }
 
   if (pathname.startsWith("/friends")) {

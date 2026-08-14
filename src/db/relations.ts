@@ -1,5 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
+  communityCommentsTable,
+  communityPostsTable,
   friendMessagesTable,
   friendRequestsTable,
   friendshipsTable,
@@ -34,6 +36,8 @@ export const usersRelations = relations(usersTable, ({ one, many }) => ({
   friendshipsAsUserB: many(friendshipsTable, { relationName: "friendshipUserB" }),
   requestedFriendships: many(friendshipsTable, { relationName: "friendshipRequestedBy" }),
   acceptedFriendships: many(friendshipsTable, { relationName: "friendshipAcceptedBy" }),
+  communityPosts: many(communityPostsTable),
+  communityComments: many(communityCommentsTable),
 }));
 
 export const oauthAccountsRelations = relations(oauthAccountsTable, ({ one }) => ({
@@ -97,6 +101,31 @@ export const friendMessagesRelations = relations(friendMessagesTable, ({ one }) 
     fields: [friendMessagesTable.userAId, friendMessagesTable.userBId],
     references: [friendshipsTable.userAId, friendshipsTable.userBId],
   }),
+}));
+
+export const communityPostsRelations = relations(communityPostsTable, ({ one, many }) => ({
+  author: one(usersTable, {
+    fields: [communityPostsTable.authorUserId],
+    references: [usersTable.id],
+  }),
+  comments: many(communityCommentsTable),
+}));
+
+export const communityCommentsRelations = relations(communityCommentsTable, ({ one, many }) => ({
+  post: one(communityPostsTable, {
+    fields: [communityCommentsTable.postId],
+    references: [communityPostsTable.id],
+  }),
+  author: one(usersTable, {
+    fields: [communityCommentsTable.authorUserId],
+    references: [usersTable.id],
+  }),
+  parent: one(communityCommentsTable, {
+    fields: [communityCommentsTable.parentCommentId],
+    references: [communityCommentsTable.id],
+    relationName: "communityCommentReplies",
+  }),
+  replies: many(communityCommentsTable, { relationName: "communityCommentReplies" }),
 }));
 
 export const gamesRelations = relations(gamesTable, ({ one, many }) => ({

@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import {
   boolean,
   check,
+  foreignKey,
   index,
   integer,
   jsonb,
@@ -139,6 +140,58 @@ export const friendMessagesTable = pgTable(
     check(
       "friend_messages_sender_check",
       sql`${table.senderUserId} = ${table.userAId} OR ${table.senderUserId} = ${table.userBId}`,
+    ),
+  ],
+);
+
+export const communityPostsTable = pgTable(
+  "community_posts",
+  {
+    id: text("id").primaryKey(),
+    authorUserId: text("author_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [
+    index("idx_community_posts_feed").on(table.deletedAt, table.createdAt),
+    index("idx_community_posts_author").on(table.authorUserId, table.createdAt),
+  ],
+);
+
+export const communityCommentsTable = pgTable(
+  "community_comments",
+  {
+    id: text("id").primaryKey(),
+    postId: text("post_id")
+      .notNull()
+      .references(() => communityPostsTable.id, { onDelete: "cascade" }),
+    authorUserId: text("author_user_id")
+      .notNull()
+      .references(() => usersTable.id, { onDelete: "cascade" }),
+    parentCommentId: text("parent_comment_id"),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [
+    unique("community_comments_id_post_unique").on(table.id, table.postId),
+    foreignKey({
+      name: "community_comments_parent_same_post_fk",
+      columns: [table.parentCommentId, table.postId],
+      foreignColumns: [table.id, table.postId],
+    }).onDelete("cascade"),
+    index("idx_community_comments_post_created").on(table.postId, table.createdAt),
+    index("idx_community_comments_parent_created").on(table.parentCommentId, table.createdAt),
+    index("idx_community_comments_author").on(table.authorUserId),
+    check(
+      "community_comments_not_self_parent_check",
+      sql`${table.parentCommentId} IS NULL OR ${table.parentCommentId} <> ${table.id}`,
     ),
   ],
 );
